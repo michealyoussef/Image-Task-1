@@ -22,7 +22,7 @@ namespace WindowsFormsApplication1
             try
             {
                 FileStream FS = new
-                    FileStream("G:/college/4th year/Image/LABS/LABS/IP'15 1st Lab/Images/P3/CAT44.ppm", FileMode.Open);
+                    FileStream(path, FileMode.Open);
                 StreamReader SR = new StreamReader(FS);
              /*
               * read the ppm file 
@@ -34,6 +34,7 @@ namespace WindowsFormsApplication1
               */
 
                 ImageType = SR.ReadLine();
+                Console.WriteLine("\n type : "+ImageType);
                 String WidthHight = SR.ReadLine();
                 if (WidthHight[0] == '#')
                 {

@@ -23,8 +23,17 @@ namespace WindowsFormsApplication1
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Image im =new Image();
-            pictureBox1.Image = im.ImageBitmap;
+
+            OpenFileDialog ofd = new OpenFileDialog();
+
+            if (ofd.ShowDialog() == DialogResult.OK && !string.IsNullOrEmpty(ofd.FileName))
+            {
+                Image im = new Image();
+                pictureBox1.Image = im.read(ofd.FileName);
+            //    pictureBox1.Image = new PNMReader().ReadImage(ofd.FileName);
+            }
+            
+            
         }
     }
 }

@@ -20,14 +20,15 @@ namespace WindowsFormsApplication1
 
         public Image() 
         {
-          // P3file=new P3_File(ImagePath);
-            //michael ghane this path **************************
-            ImageBitmap = new Bitmap("G:/college/4th year/Image/LABS/LABS/IP'15 1st Lab/Images/P3/CAT44.ppm");
+
         }
-        public void read(String path)
+        public Bitmap read(String path)
         {
-            
-            
+            P3file = new P3_File(ImagePath);
+            ImageBitmap = P3file.ImageBitmap;
+
+          //  ImageBitmap = new Bitmap(path);
+            return ImageBitmap;
         }
 
     }
