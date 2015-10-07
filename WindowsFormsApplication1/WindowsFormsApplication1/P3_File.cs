@@ -49,18 +49,20 @@ namespace WindowsFormsApplication1
                 tmp = SR.ReadToEnd();
                     String[] PixelsColors = tmp.Split(' ');
                     ImageBitmap = new Bitmap(ImageWidth, ImageHight);
-                    for (int y = 0; y < ImageHight; ++y)
+                    Color[] colors = new Color[PixelsColors.Length];
+                    int k = 0;
+                    for (int i = 0; i < PixelsColors.Length; i += 3)
                     {
-                        int FX = 0;
-                        for (int x = 0; x < (3 * ImageWidth); x += 3)
-                        { 
-                            int Red = int.Parse(PixelsColors[(y * ImageWidth + x)]);
-                            int Green = int.Parse(PixelsColors[(y * ImageWidth + x + 1)]);
-                            int Blue = int.Parse(PixelsColors[(y * ImageWidth + x + 2)]);
-                            ImageBitmap.SetPixel(FX, y, Color.FromArgb(Red, Green, Blue));
-                            FX++;
-                        }
+                        if (k >= PixelsColors.Length / 3)
+                            break;
+                        colors[k++] = Color.FromArgb(int.Parse(PixelsColors[i]), int.Parse(PixelsColors[i + 1]), int.Parse(PixelsColors[i + 2]));
                     }
+                    int k1 = 0;
+                    for (int i = 0; i < ImageHight; i++)
+                        for (int j = 0; j < ImageWidth; j++)
+                        {
+                            ImageBitmap.SetPixel(j, i, colors[k1++]);
+                        }
                 
                 SR.Close();
             

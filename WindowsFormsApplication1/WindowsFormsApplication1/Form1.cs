@@ -30,7 +30,8 @@ namespace WindowsFormsApplication1
             {
                 Image im = new Image();
                 pictureBox1.Image = im.Read(ofd.FileName);
-            //    pictureBox1.Image = new PNMReader().ReadImage(ofd.FileName);
+                pictureBox1.Size = im.ImageBitmap.Size;
+                //    pictureBox1.Image = new PNMReader().ReadImage(ofd.FileName);
             }
             
             
