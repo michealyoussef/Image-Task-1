@@ -11,64 +11,65 @@ namespace WindowsFormsApplication1
     {
         private String ImageType;
         private String Comment;
-        private int  ImageWidth;
+        private int ImageWidth;
         private int ImageHight;
         private int ImageMaxColoredValue;
-       // private Buffer ImageBuffer;
+        // private Buffer ImageBuffer;
         public Bitmap ImageBitmap;
         public P3_File(String path)
         {
-            
+
             try
             {
                 FileStream FS = new
-                    FileStream(path, FileMode.Open);
+                    FileStream(path, FileMode.OpenOrCreate);
                 StreamReader SR = new StreamReader(FS);
-             /*
-              * read the ppm file 
-              * P3
-              * #comment
-              * width hight 
-              * max colored pixel 
-              * width * hight (R G B) pixels
-              */
+                /*
+                 * read the ppm file 
+                 * P3
+                 * #comment
+                 * width hight 
+                 * max colored pixel 
+                 * width * hight (R G B) pixels
+                 */
 
                 ImageType = SR.ReadLine();
-                Console.WriteLine("\n type : "+ImageType);
+                Console.WriteLine("\n type : " + ImageType);
                 String WidthHight = SR.ReadLine();
                 if (WidthHight[0] == '#')
                 {
                     Comment = WidthHight;
-                    WidthHight = SR.ReadLine();        
+                    WidthHight = SR.ReadLine();
                 }
 
                 String[] resolution = WidthHight.Split(' ');
                 ImageWidth = int.Parse(resolution[0]);
                 ImageHight = int.Parse(resolution[1]);
                 ImageMaxColoredValue = int.Parse(SR.ReadLine());
-                string tmp="";/* we will use it to put the pixels of the image*/
+                string tmp = "";/* we will use it to put the pixels of the image*/
 
                 while (SR.Peek() != -1)
                 {
 
-                    tmp += SR.ReadLine();
+                    tmp = SR.ReadLine();
                 }
-                String []PixelsColors=tmp.Split(' ','\n');
-                for (int y = 0; y < ImageHight;++y ) 
-                {
-                    for (int x = 0; x < 3*ImageWidth;x+=3 ) 
+                    String[] PixelsColors = tmp.Split(' ', '\n');
+                    
+                    for (int y = 0; y < ImageHight; ++y)
                     {
-                        int Red= int.Parse(PixelsColors[(y * ImageWidth + x)]);
-                        int Green = int.Parse(PixelsColors[(y * ImageWidth + x + 1)]);
-                        int Blue = int.Parse(PixelsColors[(y * ImageWidth + x+2)]);
-                        ImageBitmap.SetPixel(x, y, Color.FromArgb(Red, Green,Blue ));
+                        for (int x = 0; x < 3 * ImageWidth; x += 3)
+                        {
+                            int Red = int.Parse(PixelsColors[(y * ImageWidth + x)]);
+                            int Green = int.Parse(PixelsColors[(y * ImageWidth + x + 1)]);
+                            int Blue = int.Parse(PixelsColors[(y * ImageWidth + x + 2)]);
+                            ImageBitmap.SetPixel(x, y, Color.FromArgb(Red, Green, Blue));
+                        }
                     }
-
-                }
+                
                 SR.Close();
             }
             catch { Console.WriteLine("\n Error : File Not Exist !!!"); }
-            
+
         }
     }
 }

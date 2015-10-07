@@ -29,7 +29,7 @@ namespace WindowsFormsApplication1
             if (ofd.ShowDialog() == DialogResult.OK && !string.IsNullOrEmpty(ofd.FileName))
             {
                 Image im = new Image();
-                pictureBox1.Image = im.read(ofd.FileName);
+                pictureBox1.Image = im.Read(ofd.FileName);
             //    pictureBox1.Image = new PNMReader().ReadImage(ofd.FileName);
             }
             

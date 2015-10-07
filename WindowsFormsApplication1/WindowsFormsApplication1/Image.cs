@@ -22,12 +22,12 @@ namespace WindowsFormsApplication1
         {
 
         }
-        public Bitmap read(String path)
+        public Bitmap Read(String path)
         {
-            P3file = new P3_File(ImagePath);
+            P3file = new P3_File(path);
             ImageBitmap = P3file.ImageBitmap;
 
-          //  ImageBitmap = new Bitmap(path);
+            //ImageBitmap = new Bitmap(path);
             return ImageBitmap;
         }
 
