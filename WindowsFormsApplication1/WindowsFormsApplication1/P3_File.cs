@@ -19,8 +19,6 @@ namespace WindowsFormsApplication1
         public P3_File(String path)
         {
 
-            try
-            {
                 FileStream FS = new
                     FileStream(path, FileMode.OpenOrCreate);
                 StreamReader SR = new StreamReader(FS);
@@ -50,22 +48,22 @@ namespace WindowsFormsApplication1
 
                 tmp = SR.ReadToEnd();
                     String[] PixelsColors = tmp.Split(' ');
-                    
+                    ImageBitmap = new Bitmap(ImageWidth, ImageHight);
                     for (int y = 0; y < ImageHight; ++y)
                     {
+                        int FX = 0;
                         for (int x = 0; x < (3 * ImageWidth); x += 3)
-                        {
+                        { 
                             int Red = int.Parse(PixelsColors[(y * ImageWidth + x)]);
                             int Green = int.Parse(PixelsColors[(y * ImageWidth + x + 1)]);
                             int Blue = int.Parse(PixelsColors[(y * ImageWidth + x + 2)]);
-                            ImageBitmap.SetPixel(x, y, Color.FromArgb(Red, Green, Blue));
+                            ImageBitmap.SetPixel(FX, y, Color.FromArgb(Red, Green, Blue));
+                            FX++;
                         }
                     }
                 
                 SR.Close();
-            }
-            catch { Console.WriteLine("\n Error : File Not Exist !!!"); }
-
+            
         }
     }
 }
