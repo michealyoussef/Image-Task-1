@@ -48,16 +48,12 @@ namespace WindowsFormsApplication1
                 ImageMaxColoredValue = int.Parse(SR.ReadLine());
                 string tmp = "";/* we will use it to put the pixels of the image*/
 
-                while (SR.Peek() != -1)
-                {
-
-                    tmp = SR.ReadLine();
-                }
-                    String[] PixelsColors = tmp.Split(' ', '\n');
+                tmp = SR.ReadToEnd();
+                    String[] PixelsColors = tmp.Split(' ');
                     
                     for (int y = 0; y < ImageHight; ++y)
                     {
-                        for (int x = 0; x < 3 * ImageWidth; x += 3)
+                        for (int x = 0; x < (3 * ImageWidth); x += 3)
                         {
                             int Red = int.Parse(PixelsColors[(y * ImageWidth + x)]);
                             int Green = int.Parse(PixelsColors[(y * ImageWidth + x + 1)]);
