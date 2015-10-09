@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
+using System.IO;
 
 namespace WindowsFormsApplication1
 {
@@ -18,7 +19,7 @@ namespace WindowsFormsApplication1
         private P3_File P3file;
 
 
-        public Image() 
+        public Image()
         {
 
         }
@@ -26,11 +27,11 @@ namespace WindowsFormsApplication1
         {
             P3file = new P3_File(path);
             ImageBitmap = P3file.ImageBitmap;
-
-            //ImageBitmap = new Bitmap(path);
             return ImageBitmap;
         }
-
+        public void savingpicture(String writen_path, Bitmap bt)
+        {
+           P3file.saving();
+        }
     }
-
 }
