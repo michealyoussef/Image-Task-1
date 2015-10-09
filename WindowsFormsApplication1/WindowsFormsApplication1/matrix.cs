@@ -44,6 +44,7 @@ namespace WindowsFormsApplication1
                     //Get the source position of the pixel
                     temp.SetPixel(i,j ,bmp.GetPixel(j, i));
                 }
+
             }
             return temp;
         }
