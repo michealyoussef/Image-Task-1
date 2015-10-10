@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -34,33 +35,34 @@ namespace WindowsFormsApplication1
             }
             return newBMP;
         }
-        public Bitmap RotatingRigth (Bitmap bmp, int XSize, int YSize)
+        public Bitmap RotatingRigth(Bitmap bmp, int XSize, int YSize)
+        {
+            Bitmap temp = new Bitmap(YSize, XSize);
+            Matrix mat = new Matrix();
+
+            for (int i = 0; i < YSize; i++)
+            {
+                for (int j = 0; j < XSize; j++)
+                {
+                    //Get the source position of the pixel
+                    // temp.SetPixel(i,j ,bmp.GetPixel(j, i));
+                }
+            }
+            return temp;
+        }
+        public Bitmap RotatingLeft(Bitmap bmp, int XSize, int YSize)
         {
             Bitmap temp = new Bitmap(YSize, XSize);
             for (int i = 0; i < YSize; i++)
             {
                 for (int j = 0; j < XSize; j++)
                 {
-                    //Get the source position of the pixel
-                    temp.SetPixel(i,j ,bmp.GetPixel(j, i));
-                }
 
+                    temp.SetPixel(i, j, bmp.GetPixel(XSize - j, YSize - i));
+                }
             }
             return temp;
         }
-        //public Bitmap RotatingLeft(Bitmap bmp, int XSize, int YSize)
-        //{
-        //    Bitmap temp = new Bitmap(YSize, XSize)
-        //    for (int i = 0; i < YSize; i++)
-        //    {
-        //        for (int j = 0; j < XSize; j++)
-        //        {
-                   
-        //            temp.SetPixel(j, i, bmp.GetPixel(j, i));
-        //        }
-        //    }
-        //    return temp;
-        //}
 
     }
 }

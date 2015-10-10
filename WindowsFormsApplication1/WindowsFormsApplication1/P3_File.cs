@@ -62,7 +62,7 @@ namespace WindowsFormsApplication1
                     ImageBitmap.SetPixel(j, i, colors[k1++]);
                 }
             matrix m = new matrix();
-            ImageBitmap = m.RotatingRigth(ImageBitmap, ImageWidth, ImageHight);//for scaling experiment
+            // ImageBitmap = m.NearestNeighborScale(ImageBitmap, ImageWidth*2*2, ImageHight*2*2);//for scaling experiment
             SR.Close();
 
         }
@@ -82,20 +82,18 @@ namespace WindowsFormsApplication1
              * width * hight (R G B) pixels
              */
 
-            String write="";
+            String write = "";
             SR.WriteLine(ImageType.ToString());
             SR.WriteLine(ImageBitmap.Width + " " + ImageBitmap.Height);
             for (int i = 0; i < ImageHight; i++)
             {
                 write = "";
-
                 for (int j = 0; j < ImageWidth; j++)
                 {
-                 write+= ImageBitmap.GetPixel(i, j).ToString()+" ";
+                    write += ImageBitmap.GetPixel(i, j).ToString() + " ";
                 }
                 SR.WriteLine(write);
             }
-
             return 0;
 
         }
