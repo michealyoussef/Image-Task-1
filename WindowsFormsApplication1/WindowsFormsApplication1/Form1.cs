@@ -49,11 +49,12 @@ namespace WindowsFormsApplication1
         {
             if (string.IsNullOrEmpty(textBox1.Text) == false && string.IsNullOrEmpty(textBox2.Text) == false)
             {
-                im.Scale(int.Parse(textBox1.Text.ToString()), int.Parse(textBox2.Text.ToString()), pictureBox1.CreateGraphics());
+                im.Scale(int.Parse(textBox1.Text.ToString()), int.Parse(textBox2.Text.ToString()),  pictureBox1.CreateGraphics());
 
             }
             else
             {
+
                 MessageBox.Show("please fill text box", "Error");
             }
         }
