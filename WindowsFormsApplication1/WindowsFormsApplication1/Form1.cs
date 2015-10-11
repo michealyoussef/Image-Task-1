@@ -49,8 +49,10 @@ namespace WindowsFormsApplication1
         {
             if (string.IsNullOrEmpty(textBox1.Text) == false && string.IsNullOrEmpty(textBox2.Text) == false)
             {
-                im.Scale(int.Parse(textBox1.Text.ToString()), int.Parse(textBox2.Text.ToString()),  pictureBox1.CreateGraphics());
-
+                //pictureBox1.Height = im.ImageHigh;
+                //pictureBox1.Width = im.ImageWidth;           
+                im.Scale(int.Parse(textBox1.Text.ToString()), int.Parse(textBox2.Text.ToString()), pictureBox1.CreateGraphics());
+               
             }
             else
             {
@@ -90,19 +92,17 @@ namespace WindowsFormsApplication1
             if (string.IsNullOrEmpty(textBox4.Text) == false && string.IsNullOrEmpty(textBox5.Text) == false)
             {
                 im.Shearing(int.Parse(textBox4.Text), int.Parse(textBox4.Text), pictureBox1.CreateGraphics());
+                
             }
             else
             {
                 MessageBox.Show("please fill text box", "Error");
             }
-
         }
-
         private void button9_Click(object sender, EventArgs e)
         {
             this.Close();
         }
-
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
 

@@ -71,7 +71,7 @@ namespace WindowsFormsApplication1
 
         public int saving()
         {
-            FileStream fsw = new FileStream("T.PPM", FileMode.Append, FileAccess.Write);
+            FileStream fsw = new FileStream("T.PPM",FileMode.Append ,FileAccess.Write);
             StreamWriter SR = new StreamWriter(fsw);
             /*
              * read the ppm file 

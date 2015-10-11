@@ -13,8 +13,8 @@ namespace WindowsFormsApplication1
     {
         private String ImagePath;
         public Bitmap ImageBitmap;
-        private int ImageWidth;
-        private int ImageHigh;
+        public int ImageWidth;
+        public int ImageHigh;
         private int ImageMaxColorValue;
         private String ImageFormat;
         private P3_File P3file;
@@ -28,6 +28,8 @@ namespace WindowsFormsApplication1
         {
             P3file = new P3_File(path);
             ImageBitmap = P3file.ImageBitmap;
+            ImageHigh = ImageBitmap.Height;
+            ImageWidth = ImageBitmap.Width;
             return ImageBitmap;
         }
         public void savingpicture(String writen_path, Bitmap bt)
@@ -36,11 +38,19 @@ namespace WindowsFormsApplication1
         }
         public void Scale(float Xsize, float Ysize, Graphics gg)
         {
+            ImageWidth *= int.Parse(Xsize.ToString());
+            ImageHigh *= int.Parse(Ysize.ToString());
+
+
             Matrix mat = new Matrix();
-            mat.Scale(Xsize, Ysize);
+            mat.Scale(Xsize, Ysize);            
             Graphics g = gg;
-            gg.Transform = mat;
-            gg.DrawImage(ImageBitmap, 0, 0, ImageBitmap.Width * Xsize, ImageBitmap.Height * Ysize);
+            gg.Transform = mat;           
+            
+            gg.DrawImage(ImageBitmap, 0, 0, ImageBitmap.Width, ImageBitmap.Height);
+
+
+
         }
         public void Rotate(float angle, Graphics gg)
         {
@@ -49,7 +59,6 @@ namespace WindowsFormsApplication1
             Graphics g = gg;
             g.Transform = mat;
             g.DrawImage(ImageBitmap, 0, 0, ImageBitmap.Width, ImageBitmap.Height);
-
         }
         public void Shearing(float x, float y, Graphics gg)
         {
@@ -58,8 +67,6 @@ namespace WindowsFormsApplication1
             Graphics g = gg;
             g.Transform = mat;
             g.DrawImage(ImageBitmap, 0, 0, ImageBitmap.Width, ImageBitmap.Height);
-
-
         }
         public void all(float Xsize, float ysize, float angle, float shx, float shy, Graphics gg)
         {
@@ -70,7 +77,6 @@ namespace WindowsFormsApplication1
             Graphics g = gg;
             g.Transform = mat;
             g.DrawImage(ImageBitmap, 0, 0, ImageBitmap.Width, ImageBitmap.Height);
-
-        }
+         }
     }
 }
