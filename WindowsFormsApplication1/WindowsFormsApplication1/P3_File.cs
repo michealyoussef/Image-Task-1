@@ -9,10 +9,6 @@ namespace WindowsFormsApplication1
 {
     public class P3_File
     {
-
-        private String Comment;
-
-
         public Bitmap ImageBitmap;
 
         public P3_File()

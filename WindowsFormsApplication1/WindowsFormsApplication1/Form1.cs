@@ -27,22 +27,12 @@ namespace WindowsFormsApplication1
         private void button1_Click(object sender, EventArgs e)
         {
 
-            OpenFileDialog ofd = new OpenFileDialog();
-
-            if (ofd.ShowDialog() == DialogResult.OK && !string.IsNullOrEmpty(ofd.FileName))
-            {
-                pictureBox1.Image = im.Read(ofd.FileName);
-                pictureBox1.Size = im.ImageBitmap.Size;
-            }
+           
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            FolderBrowserDialog ofd = new FolderBrowserDialog();
-            if (ofd.ShowDialog() == DialogResult.OK && !string.IsNullOrEmpty(ofd.SelectedPath))
-            {
-                im.savingpicture(ofd.SelectedPath, im.ImageBitmap);
-            }
+           
         }
 
         private void button5_Click(object sender, EventArgs e)
@@ -106,6 +96,26 @@ namespace WindowsFormsApplication1
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+
+            if (ofd.ShowDialog() == DialogResult.OK && !string.IsNullOrEmpty(ofd.FileName))
+            {
+                pictureBox1.Image = im.Read(ofd.FileName);
+                pictureBox1.Size = im.ImageBitmap.Size;
+            }
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog ofd = new FolderBrowserDialog();
+            if (ofd.ShowDialog() == DialogResult.OK && !string.IsNullOrEmpty(ofd.SelectedPath))
+            {
+                im.savingpicture(ofd.SelectedPath, im.ImageBitmap);
+            }
         }
     }
 }
