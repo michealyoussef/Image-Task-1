@@ -17,7 +17,7 @@ namespace WindowsFormsApplication1
         public int ImageHigh;
         private int ImageMaxColorValue;
         private String ImageFormat;
-        private P3_File P3file;
+        private FileReading P3file;
         public LockBitmap ImageLockBitmap ;
 
         public MyImage()
@@ -29,7 +29,7 @@ namespace WindowsFormsApplication1
             String[] pa = path.Split('.');
             if (pa[pa.Length - 1] == "ppm")
             {
-                P3file = new P3_File(path);
+                P3file = new FileReading(path);
                 ImageBitmap = P3file.ImageBitmap;
                 ImageHigh = ImageBitmap.Height;
                 ImageWidth = ImageBitmap.Width;
@@ -42,7 +42,7 @@ namespace WindowsFormsApplication1
         }
         public void savingpicture(String writen_path, Bitmap bt)
         {
-            P3file.saving();
+          //  P3file.saving();
         }
         public void Scale(float Xsize, float Ysize, Graphics gg)
         {

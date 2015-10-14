@@ -7,42 +7,20 @@ using System.IO;
 using System.Drawing;
 namespace WindowsFormsApplication1
 {
-    class P3_File
+    public class P3_File
     {
-        private String ImageType;
+
         private String Comment;
-        private int ImageWidth;
-        private int ImageHight;
-        private int ImageMaxColoredValue;
-        // private Buffer ImageBuffer;
+
+
         public Bitmap ImageBitmap;
-        
-        public P3_File(String path)
+
+        public P3_File()
         {
-            FileStream FS = new FileStream(path, FileMode.OpenOrCreate);
-            StreamReader SR = new StreamReader(FS);
-            /*
-             * read the ppm file 
-             * P3
-             * #comment
-             * width hight 
-             * max colored pixel 
-             * width * hight (R G B) pixels
-             */
 
-            ImageType = SR.ReadLine();
-            Console.WriteLine("\n type : " + ImageType);
-            String WidthHight = SR.ReadLine();
-            if (WidthHight[0] == '#')
-            {
-                Comment = WidthHight;
-                WidthHight = SR.ReadLine();
-            }
-
-            String[] resolution = WidthHight.Split(' ');
-            ImageWidth = int.Parse(resolution[0]);
-            ImageHight = int.Parse(resolution[1]);
-            ImageMaxColoredValue = int.Parse(SR.ReadLine());
+        }
+        public P3_File(ref StreamReader SR, int ImageWidth, int ImageHight)
+        {
             string tmp = "";/* we will use it to put the pixels of the image*/
 
             tmp = SR.ReadToEnd();
@@ -62,41 +40,42 @@ namespace WindowsFormsApplication1
                 {
                     ImageBitmap.SetPixel(j, i, colors[k1++]);
                 }
-            matrix m = new matrix();
-            // ImageBitmap = m.NearestNeighborScale(ImageBitmap, ImageWidth*2*2, ImageHight*2*2);//for scaling experiment
+
             SR.Close();
 
         }
-
-
-
-        public int saving()
+        public int saving(Bitmap bt, string ImageType)
         {
-            FileStream fsw = new FileStream("T.PPM",FileMode.Append ,FileAccess.Write);
-            StreamWriter SR = new StreamWriter(fsw);
-            /*
-             * read the ppm file 
-             * P3
-             * #comment
-             * width hight 
-             * max colored pixel 
-             * width * hight (R G B) pixels
-             */
-
-            String write = "";
-            SR.WriteLine(ImageType.ToString());
-            SR.WriteLine(ImageBitmap.Width + " " + ImageBitmap.Height);
-            for (int i = 0; i < ImageHight; i++)
+            try
             {
-                write = "";
-                for (int j = 0; j < ImageWidth; j++)
+                FileStream fsw = new FileStream("T.PPM", FileMode.Append, FileAccess.Write);
+                StreamWriter SR = new StreamWriter(fsw);
+                /*
+                 * read the ppm file 
+                 * P3
+                 * #comment
+                 * width hight 
+                 * max colored pixel 
+                 * width * hight (R G B) pixels
+                 */
+                String write = "";
+                SR.WriteLine(ImageType.ToString());
+                SR.WriteLine(ImageBitmap.Width + " " + ImageBitmap.Height);
+                for (int i = 0; i < bt.Height; i++)
                 {
-                    write += ImageBitmap.GetPixel(i, j).ToString() + " ";
+                    write = "";
+                    for (int j = 0; j < bt.Width; j++)
+                    {
+                        write += ImageBitmap.GetPixel(i, j).ToString() + " ";
+                    }
+                    SR.WriteLine(write);
                 }
-                SR.WriteLine(write);
+                return 1;
             }
-            return 0;
-
+            catch
+            {
+                return 0;
+            }
         }
     }
 }
