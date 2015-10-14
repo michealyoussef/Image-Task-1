@@ -16,6 +16,7 @@ namespace WindowsFormsApplication1
         private int ImageMaxColoredValue;
         // private Buffer ImageBuffer;
         public Bitmap ImageBitmap;
+        
         public P3_File(String path)
         {
             FileStream FS = new FileStream(path, FileMode.OpenOrCreate);

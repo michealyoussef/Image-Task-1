@@ -9,27 +9,35 @@ using System.Drawing.Drawing2D;
 
 namespace WindowsFormsApplication1
 {
-    class Image
+    class MyImage
     {
         private String ImagePath;
-        public Bitmap ImageBitmap;
+        public Bitmap ImageBitmap = new Bitmap(1000,800);
         public int ImageWidth;
         public int ImageHigh;
         private int ImageMaxColorValue;
         private String ImageFormat;
         private P3_File P3file;
+        public LockBitmap ImageLockBitmap ;
 
-
-        public Image()
+        public MyImage()
         {
 
         }
         public Bitmap Read(String path)
         {
-            P3file = new P3_File(path);
-            ImageBitmap = P3file.ImageBitmap;
-            ImageHigh = ImageBitmap.Height;
-            ImageWidth = ImageBitmap.Width;
+            String[] pa = path.Split('.');
+            if (pa[pa.Length - 1] == "ppm")
+            {
+                P3file = new P3_File(path);
+                ImageBitmap = P3file.ImageBitmap;
+                ImageHigh = ImageBitmap.Height;
+                ImageWidth = ImageBitmap.Width;
+            }
+            else
+                ImageBitmap = new Bitmap(path);
+
+            ImageLockBitmap = new LockBitmap(ImageBitmap);
             return ImageBitmap;
         }
         public void savingpicture(String writen_path, Bitmap bt)

@@ -12,7 +12,7 @@ namespace WindowsFormsApplication1
 {
     public partial class Form1 : Form
     {
-        Image im = new Image();
+        MyImage im = new MyImage();
         public Form1()
         {
 
