@@ -1,0 +1,9 @@
+E:\media\qamar-ud-din\709E751C9E74DBD2\Qamaruddin\FCIS ASU\CS\Tasks\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe.config
+E:\media\qamar-ud-din\709E751C9E74DBD2\Qamaruddin\FCIS ASU\CS\Tasks\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe
+E:\media\qamar-ud-din\709E751C9E74DBD2\Qamaruddin\FCIS ASU\CS\Tasks\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.pdb
+E:\media\qamar-ud-din\709E751C9E74DBD2\Qamaruddin\FCIS ASU\CS\Tasks\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.csprojResolveAssemblyReference.cache
+E:\media\qamar-ud-din\709E751C9E74DBD2\Qamaruddin\FCIS ASU\CS\Tasks\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Form1.resources
+E:\media\qamar-ud-din\709E751C9E74DBD2\Qamaruddin\FCIS ASU\CS\Tasks\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Properties.Resources.resources
+E:\media\qamar-ud-din\709E751C9E74DBD2\Qamaruddin\FCIS ASU\CS\Tasks\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.csproj.GenerateResource.Cache
+E:\media\qamar-ud-din\709E751C9E74DBD2\Qamaruddin\FCIS ASU\CS\Tasks\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.exe
+E:\media\qamar-ud-din\709E751C9E74DBD2\Qamaruddin\FCIS ASU\CS\Tasks\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.pdb
