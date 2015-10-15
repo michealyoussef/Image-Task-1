@@ -42,6 +42,7 @@ namespace WindowsFormsApplication1
         }
         public void savingpicture(String writen_path, Bitmap bt)
         {
+            P3file.saving(bt,writen_path);
           //  P3file.saving();
         }
         public void Scale(float Xsize, float Ysize, Graphics gg)

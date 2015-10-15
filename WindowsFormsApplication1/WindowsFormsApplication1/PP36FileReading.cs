@@ -57,10 +57,10 @@ namespace WindowsFormsApplication1
                 FS.Close();
             }
         }
-        public int saving(Bitmap bt)
+        public int saving(Bitmap bt,String pt)
         {
-            if (ImageType == "p3")
-                return p3.saving(ImageBitmap, ImageType);
+            if (ImageType == "P3")
+                return p3.saving(ImageBitmap,this.Comment, ImageType,pt);
             return 0;
         }
 
