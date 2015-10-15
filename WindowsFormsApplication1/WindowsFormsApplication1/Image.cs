@@ -27,7 +27,7 @@ namespace WindowsFormsApplication1
         public Bitmap Read(String path)
         {
             String[] pa = path.Split('.');
-            if (pa[pa.Length - 1] == "ppm")
+            if (pa[pa.Length - 1] == "ppm"|| pa[pa.Length - 1] == "PPM")
             {
                 P3file = new PP36FileReading(path);
                 ImageBitmap = P3file.ImageBitmap;

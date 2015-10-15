@@ -21,7 +21,7 @@ namespace WindowsFormsApplication1
         public PP36FileReading(String path)
         {
             FileStream FS = new FileStream(path, FileMode.OpenOrCreate);
-            StreamReader SR = new StreamReader(FS);
+            StreamReader SR = new StreamReader(FS);            
             /*
             * read the ppm file 
             * P3
@@ -50,6 +50,7 @@ namespace WindowsFormsApplication1
             }
             else if (ImageType == "P6")
             {
+               
                 p6 = new P6_File(ref FS, ImageWidth, ImageHight);
                 this.ImageBitmap = p6.ImageBitmap;
                 SR.Close();
