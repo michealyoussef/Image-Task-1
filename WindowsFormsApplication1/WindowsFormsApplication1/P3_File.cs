@@ -66,8 +66,7 @@ namespace WindowsFormsApplication1
                     {
                         write += ImageBitmap.GetPixel(j, i).R + " "+ImageBitmap.GetPixel(j, i).G+" "+ ImageBitmap.GetPixel(j, i).B+" ";
                     }
-                    SR.WriteLine(write);
-                    
+                    SR.WriteLine(write);                    
                 }
                 SR.Close();
                 fsw.Close();

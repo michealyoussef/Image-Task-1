@@ -13,15 +13,16 @@ namespace WindowsFormsApplication1
         public Bitmap ImageBitmap;
         public P6_File(ref FileStream FS, int ImageWidth, int ImageHight)
         {
+            FS.Position = 0;
             ImageBitmap = new Bitmap(ImageWidth, ImageHight);
             int X = 0, Y = 0, Z = 0;
             for (int i = 0; i < ImageHight; i++)
                 for (int j = 0; j < ImageWidth; j++)
-                {                   
-                       X = FS.ReadByte();
-                        Y = FS.ReadByte();  
-                        Z = FS.ReadByte();
-                    if (Z==-1||X==-1||Y==-1)
+                {
+                    X = FS.ReadByte();
+                    Y = FS.ReadByte();
+                    Z = FS.ReadByte();
+                    if (Z == -1 || X == -1 || Y == -1)
                         break;
                     ImageBitmap.SetPixel(j, i, Color.FromArgb(X, Y, Z));
                 }
