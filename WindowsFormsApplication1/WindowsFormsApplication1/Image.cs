@@ -9,7 +9,7 @@ using System.Drawing.Drawing2D;
 
 namespace WindowsFormsApplication1
 {
-    class MyImage
+    class ImageController
     {
         private String ImagePath;
         public Bitmap ImageBitmap = new Bitmap(1000,800);
@@ -17,10 +17,10 @@ namespace WindowsFormsApplication1
         public int ImageHigh;
         private int ImageMaxColorValue;
         private String ImageFormat;
-        private FileReading P3file;
-        public LockBitmap ImageLockBitmap ;
+        private PP36FileReading P3file;
+        public bufferedLockBitmap ImageLockBitmap ;
 
-        public MyImage()
+        public ImageController()
         {
 
         }
@@ -29,7 +29,7 @@ namespace WindowsFormsApplication1
             String[] pa = path.Split('.');
             if (pa[pa.Length - 1] == "ppm")
             {
-                P3file = new FileReading(path);
+                P3file = new PP36FileReading(path);
                 ImageBitmap = P3file.ImageBitmap;
                 ImageHigh = ImageBitmap.Height;
                 ImageWidth = ImageBitmap.Width;
@@ -37,7 +37,7 @@ namespace WindowsFormsApplication1
             else
                 ImageBitmap = new Bitmap(path);
 
-            ImageLockBitmap = new LockBitmap(ImageBitmap);
+            ImageLockBitmap = new bufferedLockBitmap(ImageBitmap);
             return ImageBitmap;
         }
         public void savingpicture(String writen_path, Bitmap bt)

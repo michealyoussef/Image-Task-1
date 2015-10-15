@@ -18,12 +18,19 @@ namespace WindowsFormsApplication1
             Garray = new int[maxintensity+1];
             Barray = new int[maxintensity+1];
         }
-        public void drawing()
+        public void drawing(bufferedLockBitmap input_image)
         {
 
 
 
 
         }
+
+        public void get_series_for_chart_component()
+        {
+            // return series array to be rendered in chart in ui
+        }
+
+        
     }
 }
