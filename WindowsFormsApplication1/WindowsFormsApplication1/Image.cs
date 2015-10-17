@@ -36,7 +36,6 @@ namespace WindowsFormsApplication1
             }
             else
                 ImageBitmap = new Bitmap(path);
-
             ImageLockBitmap = new bufferedLockBitmap(ImageBitmap);
             return ImageBitmap;
         }
@@ -57,9 +56,6 @@ namespace WindowsFormsApplication1
             gg.Transform = mat;           
             
             gg.DrawImage(ImageBitmap, 0, 0, ImageBitmap.Width, ImageBitmap.Height);
-
-
-
         }
         public void Rotate(float angle, Graphics gg)
         {
@@ -87,5 +83,17 @@ namespace WindowsFormsApplication1
             g.Transform = mat;
             g.DrawImage(ImageBitmap, 0, 0, ImageBitmap.Width, ImageBitmap.Height);
          }
+        public Bitmap Grayscale()
+        {
+            Pixel_logic__Operations op = new Pixel_logic__Operations();
+            return op.Grayscale(this.ImageBitmap);
+
+        }
+        public Bitmap NOT()
+        {
+            Pixel_logic__Operations op = new Pixel_logic__Operations();
+            return op.notoperation(this.ImageBitmap);
+
+        }
     }
 }

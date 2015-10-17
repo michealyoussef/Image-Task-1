@@ -12,7 +12,7 @@ namespace WindowsFormsApplication1
 {
     class bufferedLockBitmap
     {
-        Bitmap source = null;
+        public Bitmap source = null;
         IntPtr Iptr = IntPtr.Zero;
         BitmapData bitmapData = null;
         public byte[] pixels { get; set; }
@@ -22,6 +22,7 @@ namespace WindowsFormsApplication1
         public bufferedLockBitmap(Bitmap source)
         {
             this.source = source;
+            
         }
         public void LockBits()
         {

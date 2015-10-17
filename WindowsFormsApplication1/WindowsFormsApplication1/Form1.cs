@@ -21,8 +21,7 @@ namespace WindowsFormsApplication1
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            trackBar1.Value = 10;
-
+            this.Cursor = Cursors.Arrow;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -39,9 +38,7 @@ namespace WindowsFormsApplication1
         private void button5_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(textBox1.Text) == false && string.IsNullOrEmpty(textBox2.Text) == false)
-            {
-                //pictureBox1.Height = im.ImageHigh;
-                //pictureBox1.Width = im.ImageWidth;           
+            {        
                 im.Scale(int.Parse(textBox1.Text.ToString()), int.Parse(textBox2.Text.ToString()), pictureBox1.CreateGraphics());
                
             }
@@ -120,9 +117,14 @@ namespace WindowsFormsApplication1
            
         }
 
-        private void trackBar1_Scroll(object sender, EventArgs e)
+        private void grayscaleToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            pictureBox1.Image=im.Grayscale();
+        }
 
+        private void nOTToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            pictureBox1.Image = im.NOT();
         }
     }
 }
