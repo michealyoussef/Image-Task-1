@@ -47,6 +47,7 @@
     <Compile Include="Benchmark.cs" />
     <Compile Include="BilinearInterpolation.cs" />
     <Compile Include="ImageTransformations.cs" />
+    <Compile Include="Pixel logic  Operations.cs" />
     <Compile Include="PP36FileReading.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>

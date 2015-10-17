@@ -7,3 +7,13 @@ E:\media\qamar-ud-din\709E751C9E74DBD2\Qamaruddin\FCIS ASU\CS\Tasks\WindowsForms
 E:\media\qamar-ud-din\709E751C9E74DBD2\Qamaruddin\FCIS ASU\CS\Tasks\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.pdb
 E:\media\qamar-ud-din\709E751C9E74DBD2\Qamaruddin\FCIS ASU\CS\Tasks\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.exe
 E:\media\qamar-ud-din\709E751C9E74DBD2\Qamaruddin\FCIS ASU\CS\Tasks\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.pdb
+C:\Users\micheal\Source\Repos\Image-Task-12\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe.config
+C:\Users\micheal\Source\Repos\Image-Task-12\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.exe
+C:\Users\micheal\Source\Repos\Image-Task-12\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.pdb
+C:\Users\micheal\Source\Repos\Image-Task-12\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe
+C:\Users\micheal\Source\Repos\Image-Task-12\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.pdb
+C:\Users\micheal\Source\Repos\Image-Task-12\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.csprojResolveAssemblyReference.cache
+C:\Users\micheal\Source\Repos\Image-Task-12\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Form1.resources
+C:\Users\micheal\Source\Repos\Image-Task-12\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Properties.Resources.resources
+C:\Users\micheal\Source\Repos\Image-Task-12\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Test_Matrix_Transformations.resources
+C:\Users\micheal\Source\Repos\Image-Task-12\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.csproj.GenerateResource.Cache

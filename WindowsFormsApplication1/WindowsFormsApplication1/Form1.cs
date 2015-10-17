@@ -15,12 +15,13 @@ namespace WindowsFormsApplication1
         ImageController im = new ImageController();
         public Form1()
         {
-
+            
             InitializeComponent();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            trackBar1.Value = 10;
 
         }
 
@@ -116,6 +117,12 @@ namespace WindowsFormsApplication1
             {
                 im.savingpicture(ofd.SelectedPath, im.ImageBitmap);
             }
+           
+        }
+
+        private void trackBar1_Scroll(object sender, EventArgs e)
+        {
+
         }
     }
 }
