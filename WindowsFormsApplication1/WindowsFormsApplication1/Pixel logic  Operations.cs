@@ -70,9 +70,11 @@ namespace WindowsFormsApplication1
             {
                 for (int j = 0; j < temp.Width; j++)
                 {
-                    R = input.GetPixel(j, i).R + dif;
-                    G = input.GetPixel(j, i).G + dif;
-                    B = input.GetPixel(j, i).B + dif;
+
+                    R = int.Parse(Math.Pow(double.Parse(input.GetPixel(j, i).R.ToString()), dif).ToString());
+                    G = int.Parse(Math.Pow(double.Parse(input.GetPixel(j, i).G.ToString()), dif).ToString());
+                    B = int.Parse(Math.Pow(double.Parse(input.GetPixel(j, i).B.ToString()), dif).ToString());
+
                     if (R > 255) R = 255;
                     else if (R < 0) R = 0;
                     if (G > 255) G = 255;
@@ -84,7 +86,91 @@ namespace WindowsFormsApplication1
             }
             return temp;
         }
-        public Bitmap
+        public Bitmap Addpictures(Bitmap pic1, Bitmap pic2, Double fraction)
+        {
+            if (pic1.Size == pic2.Size)
+            {
+                Bitmap temp = new Bitmap(pic1.Size.Width, pic1.Size.Height);
+                int R, G, B = 0;
+                double f;
+                for (int i = 0; i < temp.Height; i++)
+                {
+                    for (int j = 0; j < temp.Width; j++)
+                    {
+
+                        f = (double.Parse(pic1.GetPixel(j, i).R.ToString()) * fraction) + (double.Parse(pic2.GetPixel(j, i).R.ToString()) * (1 - fraction));
+                        R = Int32.Parse(f.ToString());
+                        f = (double.Parse(pic1.GetPixel(j, i).G.ToString()) * fraction) + (double.Parse(pic2.GetPixel(j, i).G.ToString()) * (1 - fraction));
+                        G = Int32.Parse(f.ToString());
+                        f = (double.Parse(pic1.GetPixel(j, i).B.ToString()) * fraction) + (double.Parse(pic2.GetPixel(j, i).B.ToString()) * (1 - fraction));
+                        B = Int32.Parse(f.ToString());
+                        temp.SetPixel(j, i, Color.FromArgb(R, G, B));
+                    }
+                }
+
+            }
+            return temp;
+        }
+
+        public Bitmap OR(Bitmap pic1, Bitmap pic2)//////na2s el contrast
+        {
+            if (pic1.Size == pic2.Size)
+            {
+                Bitmap temp = new Bitmap(pic1.Size.Width, pic1.Size.Height);
+                int R, G, B = 0;
+                for (int i = 0; i < temp.Height; i++)
+                {
+                    for (int j = 0; j < temp.Width; j++)
+                    {
+                        R = pic1.GetPixel(j, i).R | pic2.GetPixel(j, i).R;
+                        G = pic1.GetPixel(j, i).G | pic2.GetPixel(j, i).G;
+                        B = pic1.GetPixel(j, i).B | pic2.GetPixel(j, i).B;
+                        temp.SetPixel(j, i, Color.FromArgb(R, G, B));
+                    }
+                }
+            }
+            return temp;
+        }
+        public Bitmap AND(Bitmap pic1, Bitmap pic2)//////na2s el contrast
+        {
+            if (pic1.Size == pic2.Size)
+            {
+                Bitmap temp = new Bitmap(pic1.Size.Width, pic1.Size.Height);
+                int R, G, B = 0;
+                for (int i = 0; i < temp.Height; i++)
+                {
+                    for (int j = 0; j < temp.Width; j++)
+                    {
+                        R = pic1.GetPixel(j, i).R & pic2.GetPixel(j, i).R;
+                        G = pic1.GetPixel(j, i).G & pic2.GetPixel(j, i).G;
+                        B = pic1.GetPixel(j, i).B & pic2.GetPixel(j, i).B;
+                        temp.SetPixel(j, i, Color.FromArgb(R, G, B));
+                    }
+                }
+            }
+            return temp;
+        }
+
+
+        public Bitmap Subtraction(Bitmap pic1, Bitmap pic2)//////na2s el contrast
+        {
+            if (pic1.Size == pic2.Size)
+            {
+                temp = new Bitmap(pic1.Size.Width, pic1.Size.Height);
+                int R, G, B = 0;
+                for (int i = 0; i < temp.Height; i++)
+                {
+                    for (int j = 0; j < temp.Width; j++)
+                    {
+                        R = pic1.GetPixel(j, i).R - pic2.GetPixel(j, i).R;
+                        G = pic1.GetPixel(j, i).G + pic2.GetPixel(j, i).G;
+                        B = pic1.GetPixel(j, i).B + pic2.GetPixel(j, i).B;
+                        temp.SetPixel(j, i, Color.FromArgb(R, G, B));
+                    }
+                }
+            }
+            return temp;
+        }
 
     }
 }
