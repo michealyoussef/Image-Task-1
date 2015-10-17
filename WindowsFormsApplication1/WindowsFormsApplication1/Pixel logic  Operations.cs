@@ -13,6 +13,13 @@ namespace WindowsFormsApplication1
         public Pixel_logic__Operations()
         {
         }
+
+        public Bitmap contrast(Bitmap input, int NewMin,int  NewMax)
+        {
+
+
+            return temp;
+        }
         public Bitmap Brightness(Bitmap input, int dif)
         {
             temp = new Bitmap(input);
@@ -112,7 +119,7 @@ namespace WindowsFormsApplication1
             return temp;
         }
 
-        public Bitmap OR(Bitmap pic1, Bitmap pic2)//////na2s el contrast
+        public Bitmap OR(Bitmap pic1, Bitmap pic2)
         {
             if (pic1.Size == pic2.Size)
             {
