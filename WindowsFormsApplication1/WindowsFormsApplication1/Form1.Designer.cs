@@ -105,7 +105,7 @@
             // 
             // button8
             // 
-            this.button8.Location = new System.Drawing.Point(1175, 271);
+            this.button8.Location = new System.Drawing.Point(1175, 268);
             this.button8.Name = "button8";
             this.button8.Size = new System.Drawing.Size(75, 23);
             this.button8.TabIndex = 8;
@@ -115,9 +115,9 @@
             // 
             // button9
             // 
-            this.button9.Location = new System.Drawing.Point(928, 574);
+            this.button9.Location = new System.Drawing.Point(1196, 680);
             this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(75, 23);
+            this.button9.Size = new System.Drawing.Size(92, 37);
             this.button9.TabIndex = 9;
             this.button9.Text = "Close";
             this.button9.UseVisualStyleBackColor = true;
@@ -279,7 +279,7 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(12, 470);
+            this.label6.Location = new System.Drawing.Point(12, 371);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(85, 20);
             this.label6.TabIndex = 21;
@@ -287,7 +287,7 @@
             // 
             // trackBar1
             // 
-            this.trackBar1.Location = new System.Drawing.Point(145, 456);
+            this.trackBar1.Location = new System.Drawing.Point(145, 371);
             this.trackBar1.Maximum = 150;
             this.trackBar1.Minimum = -150;
             this.trackBar1.Name = "trackBar1";
@@ -301,7 +301,7 @@
             // numericUpDown1
             // 
             this.numericUpDown1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numericUpDown1.Location = new System.Drawing.Point(517, 463);
+            this.numericUpDown1.Location = new System.Drawing.Point(517, 372);
             this.numericUpDown1.Maximum = new decimal(new int[] {
             150,
             0,
@@ -322,7 +322,7 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(12, 527);
+            this.label7.Location = new System.Drawing.Point(12, 443);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(66, 20);
             this.label7.TabIndex = 22;
@@ -331,7 +331,7 @@
             // numericUpDown2
             // 
             this.numericUpDown2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numericUpDown2.Location = new System.Drawing.Point(517, 524);
+            this.numericUpDown2.Location = new System.Drawing.Point(517, 444);
             this.numericUpDown2.Maximum = new decimal(new int[] {
             150,
             0,
@@ -350,7 +350,7 @@
             // 
             // trackBar2
             // 
-            this.trackBar2.Location = new System.Drawing.Point(145, 507);
+            this.trackBar2.Location = new System.Drawing.Point(145, 441);
             this.trackBar2.Maximum = 150;
             this.trackBar2.Minimum = -150;
             this.trackBar2.Name = "trackBar2";
