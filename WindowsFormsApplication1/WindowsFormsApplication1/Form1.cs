@@ -148,8 +148,8 @@ namespace WindowsFormsApplication1
 
         private void trackBar2_Scroll(object sender, EventArgs e)
         {
-            numericUpDown1.Value = trackBar1.Value;
-            pictureBox1.Image = im.Brightness(Convert.ToInt32(numericUpDown2.Value));
+            numericUpDown1.Value = trackBar2.Value;
+            pictureBox1.Image = im.Brightness(trackBar2.Value);
 
         }
     }
