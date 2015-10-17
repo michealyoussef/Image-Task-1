@@ -12,13 +12,14 @@ namespace WindowsFormsApplication1
     class ImageController
     {
         private String ImagePath;
-        public Bitmap ImageBitmap = new Bitmap(1000,800);
+        public Bitmap ImageBitmap = new Bitmap(1000, 800);
         public int ImageWidth;
         public int ImageHigh;
         private int ImageMaxColorValue;
         private String ImageFormat;
         private PP36FileReading P3file;
-        public bufferedLockBitmap ImageLockBitmap ;
+        public bufferedLockBitmap ImageLockBitmap;
+        public Pixel_logic__Operations op;
 
         public ImageController()
         {
@@ -27,7 +28,7 @@ namespace WindowsFormsApplication1
         public Bitmap Read(String path)
         {
             String[] pa = path.Split('.');
-            if (pa[pa.Length - 1] == "ppm"|| pa[pa.Length - 1] == "PPM")
+            if (pa[pa.Length - 1] == "ppm" || pa[pa.Length - 1] == "PPM")
             {
                 P3file = new PP36FileReading(path);
                 ImageBitmap = P3file.ImageBitmap;
@@ -41,20 +42,19 @@ namespace WindowsFormsApplication1
         }
         public void savingpicture(String writen_path, Bitmap bt)
         {
-            P3file.saving(bt,writen_path);
-          //  P3file.saving();
+            P3file.saving(bt, writen_path);
+            //  P3file.saving();
         }
         public void Scale(float Xsize, float Ysize, Graphics gg)
         {
             ImageWidth *= int.Parse(Xsize.ToString());
             ImageHigh *= int.Parse(Ysize.ToString());
 
-
             Matrix mat = new Matrix();
-            mat.Scale(Xsize, Ysize);            
+            mat.Scale(Xsize, Ysize);
             Graphics g = gg;
-            gg.Transform = mat;           
-            
+            gg.Transform = mat;
+
             gg.DrawImage(ImageBitmap, 0, 0, ImageBitmap.Width, ImageBitmap.Height);
         }
         public void Rotate(float angle, Graphics gg)
@@ -82,18 +82,30 @@ namespace WindowsFormsApplication1
             Graphics g = gg;
             g.Transform = mat;
             g.DrawImage(ImageBitmap, 0, 0, ImageBitmap.Width, ImageBitmap.Height);
-         }
+        }
         public Bitmap Grayscale()
         {
-            Pixel_logic__Operations op = new Pixel_logic__Operations();
+            op = new Pixel_logic__Operations();
             return op.Grayscale(this.ImageBitmap);
-
         }
         public Bitmap NOT()
         {
-            Pixel_logic__Operations op = new Pixel_logic__Operations();
+            op = new Pixel_logic__Operations();
             return op.notoperation(this.ImageBitmap);
+        }
+        public Bitmap Brightness(int dif)
+        {
+            op = new Pixel_logic__Operations();
+            return op.Brightness(this.ImageBitmap, dif);
 
         }
+        public Bitmap Gamma(int dif)
+        {
+            op = new Pixel_logic__Operations();
+            return op.Gamma(this.ImageBitmap, dif);
+
+        }
+
+
     }
 }

@@ -15,32 +15,33 @@ namespace WindowsFormsApplication1
         ImageController im = new ImageController();
         public Form1()
         {
-            
+
             InitializeComponent();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            this.Cursor = Cursors.Arrow;
+
+
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
 
-           
+
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-           
+
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(textBox1.Text) == false && string.IsNullOrEmpty(textBox2.Text) == false)
-            {        
+            {
                 im.Scale(int.Parse(textBox1.Text.ToString()), int.Parse(textBox2.Text.ToString()), pictureBox1.CreateGraphics());
-               
+
             }
             else
             {
@@ -80,7 +81,7 @@ namespace WindowsFormsApplication1
             if (string.IsNullOrEmpty(textBox4.Text) == false && string.IsNullOrEmpty(textBox5.Text) == false)
             {
                 im.Shearing(int.Parse(textBox4.Text), int.Parse(textBox4.Text), pictureBox1.CreateGraphics());
-                
+
             }
             else
             {
@@ -114,17 +115,42 @@ namespace WindowsFormsApplication1
             {
                 im.savingpicture(ofd.SelectedPath, im.ImageBitmap);
             }
-           
+
         }
 
         private void grayscaleToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            pictureBox1.Image=im.Grayscale();
+            pictureBox1.Image = im.Grayscale();
         }
 
         private void nOTToolStripMenuItem_Click(object sender, EventArgs e)
         {
             pictureBox1.Image = im.NOT();
+        }
+
+        private void trackBar1_Scroll(object sender, EventArgs e)
+        {
+            numericUpDown1.Value = trackBar1.Value;
+            pictureBox1.Image = im.Brightness(trackBar1.Value);
+        }
+
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+        {
+            trackBar1.Value = decimal.ToInt32(numericUpDown1.Value);
+            pictureBox1.Image = im.Brightness(trackBar1.Value);
+        }
+
+        private void numericUpDown2_ValueChanged(object sender, EventArgs e)
+        {
+            trackBar1.Value = decimal.ToInt32(numericUpDown1.Value);
+            pictureBox1.Image = im.Brightness(Convert.ToInt32(numericUpDown2.Value));
+        }
+
+        private void trackBar2_Scroll(object sender, EventArgs e)
+        {
+            numericUpDown1.Value = trackBar1.Value;
+            pictureBox1.Image = im.Brightness(Convert.ToInt32(numericUpDown2.Value));
+
         }
     }
 }
