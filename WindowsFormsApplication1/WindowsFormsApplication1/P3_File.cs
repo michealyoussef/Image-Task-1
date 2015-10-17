@@ -18,7 +18,6 @@ namespace WindowsFormsApplication1
         public P3_File(ref StreamReader SR, int ImageWidth, int ImageHight)
         {
             string tmp = "";/* we will use it to put the pixels of the image*/
-
             tmp = SR.ReadToEnd();
             String[] PixelsColors = tmp.Split(' ');
             ImageBitmap = new Bitmap(ImageWidth, ImageHight);
@@ -40,11 +39,11 @@ namespace WindowsFormsApplication1
             SR.Close();
 
         }
-        public int saving(Bitmap bt,String ct, String ImageType ,String pt)
+        public int saving(Bitmap bt, String ct, String ImageType, String pt)
         {
             try
             {
-                FileStream fsw = new FileStream(pt+"/123.ppm",FileMode.Append, FileAccess.Write);
+                FileStream fsw = new FileStream(pt + "/123.ppm", FileMode.Append, FileAccess.Write);
                 StreamWriter SR = new StreamWriter(fsw);
                 /*
                  * read the ppm file 
@@ -64,9 +63,9 @@ namespace WindowsFormsApplication1
                     write = "";
                     for (int j = 0; j < bt.Width; j++)
                     {
-                        write += ImageBitmap.GetPixel(j, i).R + " "+ImageBitmap.GetPixel(j, i).G+" "+ ImageBitmap.GetPixel(j, i).B+" ";
+                        write += ImageBitmap.GetPixel(j, i).R + " " + ImageBitmap.GetPixel(j, i).G + " " + ImageBitmap.GetPixel(j, i).B + " ";
                     }
-                    SR.WriteLine(write);                    
+                    SR.WriteLine(write);
                 }
                 SR.Close();
                 fsw.Close();
