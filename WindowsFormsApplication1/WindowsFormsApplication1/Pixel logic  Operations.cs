@@ -111,7 +111,7 @@ namespace WindowsFormsApplication1
             //        input.SetPixel(j, i, Color.FromArgb(R , G,B));
             //    }
             //}
-            //return temp;
+            return temp;
 
         }
         public Bitmap notoperation(Bitmap input)
