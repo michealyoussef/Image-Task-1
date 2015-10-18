@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+# Visual Studio 14
+VisualStudioVersion = 14.0.22823.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFormsApplication1", "WindowsFormsApplication1\WindowsFormsApplication1.csproj", "{DD2BF898-B8B3-45BB-93CF-5744EB0A7696}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Image proccesing", "WindowsFormsApplication1\Image proccesing.csproj", "{DD2BF898-B8B3-45BB-93CF-5744EB0A7696}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
