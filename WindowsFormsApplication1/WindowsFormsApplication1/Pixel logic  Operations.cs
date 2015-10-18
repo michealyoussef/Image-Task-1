@@ -14,10 +14,37 @@ namespace WindowsFormsApplication1
         {
         }
 
-        public Bitmap contrast(Bitmap input, int NewMin,int  NewMax)
+        public Bitmap contrast(Bitmap input, int NewMin, int NewMax)
         {
 
 
+            return temp;
+        }
+        public Bitmap Bit_plane_slicing(Bitmap input, int number)
+        {
+            char[] Word = new char[8];
+            int p = 0;
+            for (int w = 7; w >= 0; w--)
+            {
+                if (w == number-1)
+                    Word[w] = '1';
+                else
+
+                    Word[w] = '0';
+            }
+            temp = new Bitmap(input);
+            byte R = 0;
+            byte res = byte.Parse(Word.ToString());
+            for (int i = 0; i < temp.Height; i++)
+            {
+                for (int j = 0; j < temp.Width; j++)
+                {
+                    p = input.GetPixel(j, i).A & res;
+                    if (R != 0) temp.SetPixel(j, i, Color.FromArgb(255, 255, 255));
+                    else if (R == 0)
+                        temp.SetPixel(j, i, Color.FromArgb(0, 0, 0));
+                }
+            }
             return temp;
         }
         public Bitmap Brightness(Bitmap input, int dif)

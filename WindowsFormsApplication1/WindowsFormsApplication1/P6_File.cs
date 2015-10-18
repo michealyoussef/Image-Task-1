@@ -28,8 +28,43 @@ namespace WindowsFormsApplication1
                 }
             FS.Close();
         }
-        public void saving()
+        public int saving(Bitmap bt, String ct, String ImageType, String pt)
         {
+            try
+            {
+                FileStream fsw = new FileStream(pt + "/123.ppm", FileMode.Append, FileAccess.Write);
+                StreamWriter SR = new StreamWriter(fsw);
+                /*
+                 * read the ppm file 
+                 * P3
+                 * #comment
+                 * width hight 
+                 * max colored pixel 
+                 * width * hight (R G B) pixels
+                 */
+                
+                SR.WriteLine(ImageType.ToString());
+                SR.WriteLine(ct);
+                SR.WriteLine(ImageBitmap.Width + " " + ImageBitmap.Height);
+                SR.WriteLine("255");
+                for (int i = 0; i < bt.Height; i++)
+                {
+                   
+                    for (int j = 0; j < bt.Width; j++)
+                    {
+                       fsw.WriteByte(ImageBitmap.GetPixel(j, i).R);
+                        fsw.WriteByte(ImageBitmap.GetPixel(j, i).G);
+                        fsw.WriteByte(ImageBitmap.GetPixel(j, i).B);
+                    }                    
+                }
+                SR.Close();
+                fsw.Close();
+                return 1;
+            }
+            catch
+            {
+                return 0;
+            }
 
         }
     }
