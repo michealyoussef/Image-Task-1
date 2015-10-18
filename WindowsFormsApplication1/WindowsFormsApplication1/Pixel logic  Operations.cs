@@ -22,29 +22,29 @@ namespace WindowsFormsApplication1
         }
         public Bitmap Bit_plane_slicing(Bitmap input, int number)
         {
-            //char[] Word = new byte[8];
-            //int p = 0;
-            //for (int w = 7; w >= 0; w--)
-            //{
-            //    if (w == number - 1)
-            //        Word[w] = '1';
-            //    else
+               byte[] Word = new byte[8];
+            int p = 0;
+            for (int w = 7; w >= 0; w--)
+            {
+                if (w == number - 1)
+                    Word[w] = 1;
+                else
 
-            //        Word[w] = '0';
-            //}
-            //temp = new Bitmap(input);
-            //byte R = 0;
-            //byte res = byte.Parse(Word.ToString());
-            //for (int i = 0; i < temp.Height; i++)
-            //{
-            //    for (int j = 0; j < temp.Width; j++)
-            //    {
-            //        p = input.GetPixel(j, i).A & res;
-            //        if (R != 0) temp.SetPixel(j, i, Color.FromArgb(255, 255, 255));
-            //        else if (R == 0)
-            //            temp.SetPixel(j, i, Color.FromArgb(0, 0, 0));
-            //    }
-            //}
+                    Word[w] = 0;
+            }
+            temp = new Bitmap(input);
+            byte R = 0;
+            byte res = byte.Parse(Word.ToString());
+            for (int i = 0; i < temp.Height; i++)
+            {
+                for (int j = 0; j < temp.Width; j++)
+                {
+                    p = input.GetPixel(j, i).A & res;
+                    if (R != 0) temp.SetPixel(j, i, Color.FromArgb(255, 255, 255));
+                    else if (R == 0)
+                        temp.SetPixel(j, i, Color.FromArgb(0, 0, 0));
+                }
+            }
             return temp;
         }
         public Bitmap Brightness(Bitmap input, int dif)
@@ -87,30 +87,30 @@ namespace WindowsFormsApplication1
         }
         public Bitmap Quantization(Bitmap input,int num)
         {
-            //num=int.Parse(Math.Log(num,2).ToString());
-            //int d = 8-num;
-            //temp = new Bitmap(input);
-            //byte[] word = new byte[8];
-            //for (int g = 7; g >= 0; g--)
-            //{
-            //    if (g > num - 1)
-            //    {
-            //        word[g] = 1;
+            num = int.Parse(Math.Log(num, 2).ToString());
+            int d = 8 - num;
+            temp = new Bitmap(input);
+            byte[] word = new byte[8];
+            for (int g = 7; g >= 0; g--)
+            {
+                if (g > num - 1)
+                {
+                    word[g] = 1;
 
-            //    }
-            //    else word[g] = 0;
-            //}
-            //int R, G, B;
-            //for (int i = 0; i < input.Height; i++)
-            //{
-            //    for (int j = 0; j < input.Width; j++)
-            //    {
-            //        R = input.GetPixel(j, i).A|Byte.Parse(word.ToString());
+                }
+                else word[g] = 0;
+            }
+            int R, G, B;
+            for (int i = 0; i < input.Height; i++)
+            {
+                for (int j = 0; j < input.Width; j++)
+                {
+                    R = input.GetPixel(j, i).A | Byte.Parse(word.ToString());
 
 
-            //        input.SetPixel(j, i, Color.FromArgb(R , G,B));
-            //    }
-            //}
+                    input.SetPixel(j, i, Color.FromArgb(R, G, B));
+                }
+            }
             return temp;
 
         }
@@ -148,7 +148,7 @@ namespace WindowsFormsApplication1
             }
             return temp;
         }
-        public Bitmap Addpictures(Bitmap pic1, Bitmap pic2, Double fraction)
+        public Bitmap Addpictures(Bitmap pic1, Bitmap pic2, double fraction)
         {
             if (pic1.Size == pic2.Size)
             {
@@ -159,12 +159,13 @@ namespace WindowsFormsApplication1
                 {
                     for (int j = 0; j < temp.Width; j++)
                     {
+                        double w = (double)pic1.GetPixel(j, i).R;
 
-                        f = (double.Parse(pic1.GetPixel(j, i).R.ToString()) * fraction) + (double.Parse(pic2.GetPixel(j, i).R.ToString()) * (1 - fraction));
+                        f = ((((double)pic1.GetPixel(j, i).R)) * fraction) + (((double)pic2.GetPixel(j, i).R) * (1 - fraction));
                         R = Int32.Parse(f.ToString());
-                        f = (double.Parse(pic1.GetPixel(j, i).G.ToString()) * fraction) + (double.Parse(pic2.GetPixel(j, i).G.ToString()) * (1 - fraction));
+                        f = ((((double)pic1.GetPixel(j, i).G)) * fraction) + (((double)pic2.GetPixel(j, i).G) * (1 - fraction));
                         G = Int32.Parse(f.ToString());
-                        f = (double.Parse(pic1.GetPixel(j, i).B.ToString()) * fraction) + (double.Parse(pic2.GetPixel(j, i).B.ToString()) * (1 - fraction));
+                        f = ((((double)pic1.GetPixel(j, i).B)) * fraction) + (((double)pic2.GetPixel(j, i).B) * (1 - fraction));
                         B = Int32.Parse(f.ToString());
                         temp.SetPixel(j, i, Color.FromArgb(R, G, B));
                     }
@@ -225,8 +226,8 @@ namespace WindowsFormsApplication1
                     for (int j = 0; j < temp.Width; j++)
                     {
                         R = pic1.GetPixel(j, i).R - pic2.GetPixel(j, i).R;
-                        G = pic1.GetPixel(j, i).G + pic2.GetPixel(j, i).G;
-                        B = pic1.GetPixel(j, i).B + pic2.GetPixel(j, i).B;
+                        G = pic1.GetPixel(j, i).G - pic2.GetPixel(j, i).G;
+                        B = pic1.GetPixel(j, i).B - pic2.GetPixel(j, i).B;
                         temp.SetPixel(j, i, Color.FromArgb(R, G, B));
                     }
                 }
