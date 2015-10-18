@@ -26,7 +26,7 @@ namespace WindowsFormsApplication1
             int p = 0;
             for (int w = 7; w >= 0; w--)
             {
-                if (w == number-1)
+                if (w == number - 1)
                     Word[w] = '1';
                 else
 
@@ -85,6 +85,24 @@ namespace WindowsFormsApplication1
             }
             return input;
         }
+        public Bitmap Quantization(Bitmap input,int num)
+        {
+            num=int.Parse(Math.Log(num,2).ToString());
+            int d = 8-num;
+            temp = new Bitmap(input);
+            char[] word = new char[8];
+            for (int g = 7; g >= 0; g--)
+            {
+                if (g > num - 1)
+                {
+                    word[g] = '1';
+
+                }
+                else word[g] = '0';
+            }
+            return temp;
+
+        }
         public Bitmap notoperation(Bitmap input)
         {
             for (int i = 0; i < input.Height; i++)
@@ -108,7 +126,6 @@ namespace WindowsFormsApplication1
                     R = int.Parse(Math.Pow(double.Parse(input.GetPixel(j, i).R.ToString()), dif).ToString());
                     G = int.Parse(Math.Pow(double.Parse(input.GetPixel(j, i).G.ToString()), dif).ToString());
                     B = int.Parse(Math.Pow(double.Parse(input.GetPixel(j, i).B.ToString()), dif).ToString());
-
                     if (R > 255) R = 255;
                     else if (R < 0) R = 0;
                     if (G > 255) G = 255;
