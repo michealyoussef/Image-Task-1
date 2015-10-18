@@ -13,6 +13,7 @@ namespace WindowsFormsApplication1
     public partial class Form1 : Form
     {
         ImageController im = new ImageController();
+       
         public Form1()
         {
 
@@ -21,7 +22,7 @@ namespace WindowsFormsApplication1
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+           
 
         }
 
@@ -150,6 +151,21 @@ namespace WindowsFormsApplication1
         {
             numericUpDown1.Value = trackBar2.Value;
             pictureBox1.Image = im.Brightness(trackBar2.Value);
+
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+
+            pictureBox1.Image=im.Flipping();   
+            im.ImageBitmap= im.Flipping();
+
+        }
+
+        private void button2_Click_1(object sender, EventArgs e)
+        {
+            pictureBox1.Image = im.Flippingvertical();
+            im.ImageBitmap = im.Flippingvertical();
 
         }
     }

@@ -105,6 +105,38 @@ namespace WindowsFormsApplication1
             return op.Gamma(this.ImageBitmap, dif);
 
         }
+        public Bitmap Flipping()
+        {
+            //flip images
+            ImageWidth = ImageBitmap.Width;
+            ImageHigh = ImageBitmap.Height;
+            Bitmap mimg = new Bitmap(ImageWidth, ImageHigh);
+            for (int i = 0; i < ImageHigh; i++)
+            {
+                for (int lx = 0; lx < ImageWidth; ++lx)
+                {
+                    Color p = ImageBitmap.GetPixel(ImageWidth-lx-1, i);
+                    mimg.SetPixel(lx , i, p);
+                }
+            }
+            return mimg;
+        }
+        public Bitmap Flippingvertical()
+        {
+            //flip images
+            ImageWidth = ImageBitmap.Width;
+            ImageHigh = ImageBitmap.Height;
+            Bitmap mimg = new Bitmap(ImageWidth, ImageHigh);
+            for (int i = 0; i < ImageHigh; i++)
+            {
+                for (int lx = 0; lx < ImageWidth; ++lx)
+                {
+                    Color p = ImageBitmap.GetPixel(lx ,ImageHigh- i-1);
+                    mimg.SetPixel(lx, i, p);
+                }
+            }
+            return mimg;
+        }
 
 
     }

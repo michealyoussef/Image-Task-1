@@ -22,8 +22,6 @@ namespace WindowsFormsApplication1
         {
 
 
-
-
         }
 
         public void get_series_for_chart_component()
