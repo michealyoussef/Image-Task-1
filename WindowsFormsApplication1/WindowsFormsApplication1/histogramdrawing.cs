@@ -13,7 +13,7 @@ namespace WindowsFormsApplication1
         public int[] Garray;
         public int[] Barray;
 
-        public Histogramdrawing(int maxintensity)
+        public Histogramdrawing()
         {
             Rarray = new int[256];
             Garray = new int[256];

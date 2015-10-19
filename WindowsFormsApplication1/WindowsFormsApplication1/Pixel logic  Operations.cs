@@ -4,49 +4,142 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace WindowsFormsApplication1
 {
     class Pixel_logic__Operations
     {
         Bitmap temp;
+        byte[] Word;
         public Pixel_logic__Operations()
         {
+            Word = new byte[8];
+            Word[0] = 1;
+            Word[1] = 2;
+            Word[2] = 4;
+            Word[3] = 8;
+            Word[4] = 16;
+            Word[5] = 32;
+            Word[6] = 64;
+            Word[7] = 128;
         }
 
-        public Bitmap contrast(Bitmap input, int NewMin, int NewMax)
+        public Bitmap contrast(Bitmap input, int x, int y)
         {
-
-
-            return temp;
-        }
-        public Bitmap Bit_plane_slicing(Bitmap input, int number)
-        {
-               byte[] Word = new byte[8];
-            int p = 0;
-            for (int w = 7; w >= 0; w--)
-            {
-                if (w == number - 1)
-                    Word[w] = 1;
-                else
-
-                    Word[w] = 0;
-            }
-            temp = new Bitmap(input);
-            byte R = 0;
-            byte res = byte.Parse(Word.ToString());
+            int NewMinR = 0, NewMinG = 0, NewMinB = 0, NewMaxR = 0, NewMaxG = 0, NewMaxB = 0;
+            temp = new Bitmap(input.Width, input.Height);
+            int minR = 1000, minG = 1000, minb = 1000;
+            int maxR = 0, maxG = 0, maxb = 0;
+            int te = 0;
+            int R, G, B;
             for (int i = 0; i < temp.Height; i++)
             {
                 for (int j = 0; j < temp.Width; j++)
                 {
-                    p = input.GetPixel(j, i).A & res;
-                    if (R != 0) temp.SetPixel(j, i, Color.FromArgb(255, 255, 255));
-                    else if (R == 0)
-                        temp.SetPixel(j, i, Color.FromArgb(0, 0, 0));
+                    te = input.GetPixel(j, i).R;
+                    if (te > maxR) maxR = te;
+
+                    te = input.GetPixel(j, i).G;
+                    if (te > maxG) maxG = te;
+
+                    te = input.GetPixel(j, i).B;
+                    if (te > maxb) maxb = te;
+
+                    te = input.GetPixel(j, i).R;
+                    if (te < minR) minR = te;
+
+                    te = input.GetPixel(j, i).G;
+                    if (te < minG) minG = te;
+
+                    te = input.GetPixel(j, i).B;
+                    if (te < minb) minb = te;
+
+                }
+            }
+            // if(minR<minb&&minR<minG)
+            // NewMin = minR + x;
+            //else if (minG<minR&&minG<minb)
+            //     NewMin = minG + x;
+            // else
+            //     NewMin = minb + x;
+
+            // if (minR > minb && minR > minG)
+            //     NewMax = maxR + y;
+            // else if (minG > minR && minG > minb)
+            //     NewMax = maxG + y;
+            // else
+            //     NewMax = maxb + y;
+            NewMinR = minR + x;
+            NewMinG = minG + x;
+            NewMinB = minb + x;
+
+            NewMaxR = maxR + y;
+            NewMaxB = maxb + y;
+            NewMaxG = maxG + y;
+
+
+            for (int i = 0; i < temp.Height; i++)
+            {
+                for (int j = 0; j < temp.Width; j++)
+                {
+                    R = input.GetPixel(j, i).R;
+                    R = Convert.ToInt32(((double)(R - minR) / (maxR - minR)) * ((NewMaxR - NewMinR)) + NewMinR);
+                    G = input.GetPixel(j, i).G;
+                    G = Convert.ToInt32(((double)(G - minG) / (maxG - minG)) * ((NewMaxG - NewMinG)) + NewMinG);
+                    B = input.GetPixel(j, i).B;
+                    B = Convert.ToInt32(((B - minb) / (maxb - minb)) * ((NewMaxB - NewMinB)) + NewMinB);
+
+                    if (R > 255) R = 255;
+                    else if (R < 0) R = 0;
+                    if (G > 255) G = 255;
+                    else if (G < 0) G = 0;
+                    if (B > 255) B = 255;
+                    else if (B < 0) B = 0;
+                    temp.SetPixel(j, i, Color.FromArgb(R, G, B));
                 }
             }
             return temp;
         }
+        public Bitmap Bit_plane(Bitmap input, int number, bool R, bool G, bool B)
+        {
+            temp = new Bitmap(input);
+            int p;
+            int red = 0, blue = 0, green = 0;
+            for (int i = 0; i < temp.Height; i++)
+            {
+                for (int j = 0; j < temp.Width; j++)
+                {
+                    if (R == true)
+                    {
+                        p = input.GetPixel(j, i).R & Word[number - 1];
+                        if (p != 0)
+                            red = 255;
+                        else if (p == 0)
+                            red = 0;
+                    }
+                    if (G == true)
+                    {
+                        p = input.GetPixel(j, i).G & Word[number - 1];
+                        if (p != 0)
+                            green = 255;
+                        else if (p == 0)
+                            green = 0;
+                    }
+                    if (B == true)
+                    {
+                        p = input.GetPixel(j, i).B & Word[number - 1];
+                        if (p != 0)
+                            blue = 255;
+                        else if (p == 0)
+                            blue = 0;
+                    }
+                    temp.SetPixel(j, i, Color.FromArgb(red, green, blue));
+                }
+            }
+            return temp;
+        }
+
         public Bitmap Brightness(Bitmap input, int dif)
         {
             temp = new Bitmap(input);
@@ -85,30 +178,27 @@ namespace WindowsFormsApplication1
             }
             return input;
         }
-        public Bitmap Quantization(Bitmap input,int num)
+        public Bitmap Quantization(Bitmap input, int num)
         {
-            num = int.Parse(Math.Log(num, 2).ToString());
-            int d = 8 - num;
-            temp = new Bitmap(input);
-            byte[] word = new byte[8];
-            for (int g = 7; g >= 0; g--)
+            int sum = 0;
+            double f = 2;
+            int math = Convert.ToInt32(Math.Log(Convert.ToDouble(num), f));
+            for (int w = 7; w > 7 - math; w--)
             {
-                if (g > num - 1)
-                {
-                    word[g] = 1;
-
-                }
-                else word[g] = 0;
+                sum = sum + Convert.ToInt32(Math.Pow(f, Convert.ToInt32(w)));
             }
+            
+            temp = new Bitmap(input.Width,input.Height);
+
             int R, G, B;
             for (int i = 0; i < input.Height; i++)
             {
                 for (int j = 0; j < input.Width; j++)
                 {
-                    R = input.GetPixel(j, i).A | Byte.Parse(word.ToString());
-
-
-                    input.SetPixel(j, i, Color.FromArgb(R, G, B));
+                    R = input.GetPixel(j, i).R & sum;
+                    G = input.GetPixel(j, i).G & sum;
+                    B = input.GetPixel(j, i).B & sum;
+                    temp.SetPixel(j, i, Color.FromArgb(R, G, B));
                 }
             }
             return temp;
@@ -159,19 +249,20 @@ namespace WindowsFormsApplication1
                 {
                     for (int j = 0; j < temp.Width; j++)
                     {
-                        double w = (double)pic1.GetPixel(j, i).R;
-
                         f = ((((double)pic1.GetPixel(j, i).R)) * fraction) + (((double)pic2.GetPixel(j, i).R) * (1 - fraction));
-                        R = Int32.Parse(f.ToString());
+                        R = Convert.ToInt32(f);
                         f = ((((double)pic1.GetPixel(j, i).G)) * fraction) + (((double)pic2.GetPixel(j, i).G) * (1 - fraction));
-                        G = Int32.Parse(f.ToString());
+                        G = Convert.ToInt32(f);
                         f = ((((double)pic1.GetPixel(j, i).B)) * fraction) + (((double)pic2.GetPixel(j, i).B) * (1 - fraction));
-                        B = Int32.Parse(f.ToString());
+                        B = Convert.ToInt32(f);
                         temp.SetPixel(j, i, Color.FromArgb(R, G, B));
                     }
                 }
+                return temp;
 
             }
+            else
+                MessageBox.Show("picture 1 size is equal to picture 2 size");
             return temp;
         }
 
@@ -228,6 +319,14 @@ namespace WindowsFormsApplication1
                         R = pic1.GetPixel(j, i).R - pic2.GetPixel(j, i).R;
                         G = pic1.GetPixel(j, i).G - pic2.GetPixel(j, i).G;
                         B = pic1.GetPixel(j, i).B - pic2.GetPixel(j, i).B;
+                        if (R < 0)
+                        {
+                            R = 0;
+
+                        }
+                        if (G < 0)
+                            G = 0;
+                        if (B < 0) B = 0;
                         temp.SetPixel(j, i, Color.FromArgb(R, G, B));
                     }
                 }

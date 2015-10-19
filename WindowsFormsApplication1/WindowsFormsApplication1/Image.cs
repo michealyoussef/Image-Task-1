@@ -115,8 +115,8 @@ namespace WindowsFormsApplication1
             {
                 for (int lx = 0; lx < ImageWidth; ++lx)
                 {
-                    Color p = ImageBitmap.GetPixel(ImageWidth-lx-1, i);
-                    mimg.SetPixel(lx , i, p);
+                    Color p = ImageBitmap.GetPixel(ImageWidth - lx - 1, i);
+                    mimg.SetPixel(lx, i, p);
                 }
             }
             return mimg;
@@ -131,11 +131,40 @@ namespace WindowsFormsApplication1
             {
                 for (int lx = 0; lx < ImageWidth; ++lx)
                 {
-                    Color p = ImageBitmap.GetPixel(lx ,ImageHigh- i-1);
+                    Color p = ImageBitmap.GetPixel(lx, ImageHigh - i - 1);
                     mimg.SetPixel(lx, i, p);
                 }
             }
             return mimg;
+        }
+        public Bitmap subtraction(Bitmap input1)
+        {
+            op = new Pixel_logic__Operations();
+            return op.Subtraction(input1, this.ImageBitmap);
+
+        }
+        public Bitmap addtion(Bitmap input1, double diff)
+        {
+            op = new Pixel_logic__Operations();
+            return op.Addpictures(input1, this.ImageBitmap, diff);
+
+        }
+        public Bitmap Bit_plane_slicing(int x,bool R,bool G,bool B)
+        {
+            op = new Pixel_logic__Operations();
+            return op.Bit_plane(this.ImageBitmap, x,R,G,B);
+        }
+        public Bitmap cont(int x, int y)
+        {
+            op = new Pixel_logic__Operations();
+            return op.contrast(this.ImageBitmap, x, y);
+
+        }
+        public Bitmap Quantization(int x)
+        {
+            op = new Pixel_logic__Operations();
+            return op.Quantization(this.ImageBitmap, x);
+
         }
 
 
