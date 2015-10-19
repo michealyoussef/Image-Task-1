@@ -125,6 +125,7 @@ namespace WindowsFormsApplication1
             for (int w = 0; w < 256; w++)
             {
                 chart1.Series["Red"].Points.AddXY(w, his.Rarray[w]);
+
                 chart1.Series["Green"].Points.AddXY(w, his.Garray[w]);
                 chart1.Series["Blue"].Points.AddXY(w, his.Garray[w]);
 
