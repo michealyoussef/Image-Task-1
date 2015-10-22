@@ -32,7 +32,7 @@ namespace WindowsFormsApplication1
         {
             try
             {
-                FileStream fsw = new FileStream(pt + "/123.ppm", FileMode.Append, FileAccess.Write);
+                FileStream fsw = new FileStream(pt + "/saving image.ppm", FileMode.Append, FileAccess.Write);
                 StreamWriter SR = new StreamWriter(fsw);
                 /*
                  * read the ppm file 

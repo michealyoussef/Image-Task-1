@@ -15,8 +15,7 @@ namespace WindowsFormsApplication1
         public Bitmap ImageBitmap = new Bitmap(1000, 800);
         public int ImageWidth;
         public int ImageHigh;
-        private int ImageMaxColorValue;
-        private String ImageFormat;
+
         private PP36FileReading P3file;
         public bufferedLockBitmap ImageLockBitmap;
         public Pixel_logic__Operations op;
@@ -37,8 +36,13 @@ namespace WindowsFormsApplication1
             }
             else
                 ImageBitmap = new Bitmap(path);
+            op = new Pixel_logic__Operations(this.ImageBitmap);
             ImageLockBitmap = new bufferedLockBitmap(ImageBitmap);
+            ImageLockBitmap.LockBits();
+            ImageLockBitmap.UnlockBits();
+              
             return ImageBitmap;
+
         }
         public void savingpicture(String writen_path, Bitmap bt)
         {
@@ -85,23 +89,23 @@ namespace WindowsFormsApplication1
         }
         public Bitmap Grayscale()
         {
-            op = new Pixel_logic__Operations();
+
             return op.Grayscale(this.ImageBitmap);
         }
         public Bitmap NOT()
         {
-            op = new Pixel_logic__Operations();
+            
             return op.notoperation(this.ImageBitmap);
         }
         public Bitmap Brightness(int dif)
         {
-            op = new Pixel_logic__Operations();
+           
             return op.Brightness(this.ImageBitmap, dif);
 
         }
         public Bitmap Gamma(int dif)
         {
-            op = new Pixel_logic__Operations();
+            
             return op.Gamma(this.ImageBitmap, dif);
 
         }
@@ -139,34 +143,23 @@ namespace WindowsFormsApplication1
         }
         public Bitmap subtraction(Bitmap input1)
         {
-            op = new Pixel_logic__Operations();
             return op.Subtraction(input1, this.ImageBitmap);
-
         }
         public Bitmap addtion(Bitmap input1, double diff)
         {
-            op = new Pixel_logic__Operations();
             return op.Addpictures(input1, this.ImageBitmap, diff);
-
         }
-        public Bitmap Bit_plane_slicing(int x,bool R,bool G,bool B)
+        public Bitmap Bit_plane_slicing(int x, bool R, bool G, bool B)
         {
-            op = new Pixel_logic__Operations();
-            return op.Bit_plane(this.ImageBitmap, x,R,G,B);
+            return op.Bit_plane(this.ImageBitmap, x, R, G, B);
         }
         public Bitmap cont(int x, int y)
         {
-            op = new Pixel_logic__Operations();
             return op.contrast(this.ImageBitmap, x, y);
-
         }
         public Bitmap Quantization(int x)
         {
-            op = new Pixel_logic__Operations();
             return op.Quantization(this.ImageBitmap, x);
-
         }
-
-
     }
 }

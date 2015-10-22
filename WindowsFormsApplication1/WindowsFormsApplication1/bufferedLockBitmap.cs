@@ -22,7 +22,10 @@ namespace WindowsFormsApplication1
         public bufferedLockBitmap(Bitmap source)
         {
             this.source = source;
-            
+            this.Width = source.Width;
+            this.Height = source.Height;
+          
+           
         }
         public void LockBits()
         {

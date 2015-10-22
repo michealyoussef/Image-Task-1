@@ -18,6 +18,16 @@ namespace WindowsFormsApplication1
             Rarray = new int[256];
             Garray = new int[256];
             Barray = new int[256];
+            for(int u=0; u<256;u++)
+            {
+                Rarray[u] = 0;
+                Garray[u] = 0;
+                Barray[u] = 0;
+            }
+
+
+
+
         }
         public void drawing(Bitmap input_image)
         {

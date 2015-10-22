@@ -62,7 +62,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Benchmark.cs" />
-    <Compile Include="ImageTransformations.cs" />
+    <Compile Include="BilinearInterpolation.cs" />
+    <Compile Include="BufferedImage.cs" />
+    <Compile Include="ImageMatrixTransformations.cs" />
     <Compile Include="Pixel logic  Operations.cs" />
     <Compile Include="PP36FileReading.cs" />
     <Compile Include="Form1.cs">

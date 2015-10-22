@@ -35,7 +35,7 @@ namespace WindowsFormsApplication1
             String WidthHight = SR.ReadLine();
             if (WidthHight[0] == '#')
             {
-                Comment = WidthHight;
+              this.Comment = WidthHight;
                 WidthHight = SR.ReadLine();
             }
             String[] resolution = WidthHight.Split(' ');
@@ -60,7 +60,9 @@ namespace WindowsFormsApplication1
         public int saving(Bitmap bt,String pt)
         {
             if (ImageType == "P3")
-                return p3.saving(ImageBitmap,this.Comment, ImageType,pt);
+                return p3.saving(ImageBitmap, this.Comment, ImageType, pt);
+            else if (ImageType == "P6")
+                p6.saving(ImageBitmap, this.Comment, ImageType, pt);
             return 0;
         }
 

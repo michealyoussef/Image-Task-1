@@ -11,7 +11,7 @@ namespace TestMatrixTransformations
 {
     class BilinearInterpolation
     {
-        
+
         /**
          * find 4 adjacent pixels
             X1 = floor (OldX)	; X2 = X1 + 1
@@ -27,7 +27,8 @@ namespace TestMatrixTransformations
             Interpolate in Y-Direction
             NewPixel = Z1 × (1 – Yfraction) + Z2 × Yfraction
          */
-        public Color calculate(BufferedImage _original_buffer, float _old_x, float _old_y) {
+        public Color calculate(BufferedImage _original_buffer, float _old_x, float _old_y)
+        {
             int new_red, new_green, new_blue;
             Color ret;
             int x_1 = (int)Math.Floor(_old_x);

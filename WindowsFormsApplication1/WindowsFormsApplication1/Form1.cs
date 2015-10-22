@@ -121,7 +121,8 @@ namespace WindowsFormsApplication1
             numericUpDown1.Value = trackBar1.Value;
             pictureBox1.Image = im.Brightness(trackBar1.Value);
             Histogramdrawing his = new Histogramdrawing();
-            his.drawing(im.ImageBitmap);
+            his.drawing(new Bitmap(pictureBox1.Image));
+          
             for (int w = 0; w < 256; w++)
             {
                 chart1.Series["Red"].Points.AddXY(w, his.Rarray[w]);
@@ -144,6 +145,7 @@ namespace WindowsFormsApplication1
             pictureBox1.Image = im.Brightness(trackBar1.Value);
             Histogramdrawing his = new Histogramdrawing();
             his.drawing(im.ImageBitmap);
+            
             for (int w = 0; w < 256; w++)
             {
                 chart1.Series["Red"].Points.AddXY(w, his.Rarray[w]);

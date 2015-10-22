@@ -12,30 +12,15 @@ namespace WindowsFormsApplication1
     {
         Bitmap temp;
         byte[] Word;
-        public Pixel_logic__Operations()
+        int maxR = 0, maxG = 0, maxb = 0;
+        int minR = 1000, minG = 1000, minb = 1000;
+        public Pixel_logic__Operations(Bitmap input)
         {
-            Word = new byte[8];
-            Word[0] = 1;
-            Word[1] = 2;
-            Word[2] = 4;
-            Word[3] = 8;
-            Word[4] = 16;
-            Word[5] = 32;
-            Word[6] = 64;
-            Word[7] = 128;
-        }
-
-        public Bitmap contrast(Bitmap input, int x, int y)
-        {
-            int NewMinR = 0, NewMinG = 0, NewMinB = 0, NewMaxR = 0, NewMaxG = 0, NewMaxB = 0;
-            temp = new Bitmap(input.Width, input.Height);
-            int minR = 1000, minG = 1000, minb = 1000;
-            int maxR = 0, maxG = 0, maxb = 0;
             int te = 0;
-            int R, G, B;
-            for (int i = 0; i < temp.Height; i++)
+            
+            for (int i = 0; i < input.Height; i++)
             {
-                for (int j = 0; j < temp.Width; j++)
+                for (int j = 0; j < input.Width; j++)
                 {
                     te = input.GetPixel(j, i).R;
                     if (te > maxR) maxR = te;
@@ -57,19 +42,22 @@ namespace WindowsFormsApplication1
 
                 }
             }
-            // if(minR<minb&&minR<minG)
-            // NewMin = minR + x;
-            //else if (minG<minR&&minG<minb)
-            //     NewMin = minG + x;
-            // else
-            //     NewMin = minb + x;
+            Word = new byte[8];
+            Word[0] = 1;
+            Word[1] = 2;
+            Word[2] = 4;
+            Word[3] = 8;
+            Word[4] = 16;
+            Word[5] = 32;
+            Word[6] = 64;
+            Word[7] = 128;
+        }
 
-            // if (minR > minb && minR > minG)
-            //     NewMax = maxR + y;
-            // else if (minG > minR && minG > minb)
-            //     NewMax = maxG + y;
-            // else
-            //     NewMax = maxb + y;
+        public Bitmap contrast(Bitmap input, int x, int y)
+        {
+            int NewMinR = 0, NewMinG = 0, NewMinB = 0, NewMaxR = 0, NewMaxG = 0, NewMaxB = 0;
+            temp = new Bitmap(input.Width, input.Height);
+            int R, G, B;
             NewMinR = minR + x;
             NewMinG = minG + x;
             NewMinB = minb + x;
@@ -88,7 +76,7 @@ namespace WindowsFormsApplication1
                     G = input.GetPixel(j, i).G;
                     G = Convert.ToInt32(((double)(G - minG) / (maxG - minG)) * ((NewMaxG - NewMinG)) + NewMinG);
                     B = input.GetPixel(j, i).B;
-                    B = Convert.ToInt32(((B - minb) / (maxb - minb)) * ((NewMaxB - NewMinB)) + NewMinB);
+                    B = Convert.ToInt32(((double)(B - minb) / (maxb - minb)) * ((NewMaxB - NewMinB)) + NewMinB);
 
                     if (R > 255) R = 255;
                     else if (R < 0) R = 0;

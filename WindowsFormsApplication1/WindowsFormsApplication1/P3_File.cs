@@ -43,7 +43,7 @@ namespace WindowsFormsApplication1
         {
             try
             {
-                FileStream fsw = new FileStream(pt + "/123.ppm", FileMode.Append, FileAccess.Write);
+                FileStream fsw = new FileStream(pt + "/saving.ppm", FileMode.Append, FileAccess.Write);
                 StreamWriter SR = new StreamWriter(fsw);
                 /*
                  * read the ppm file 
@@ -61,6 +61,7 @@ namespace WindowsFormsApplication1
                 for (int i = 0; i < bt.Height; i++)
                 {
                     write = "";
+                   
                     for (int j = 0; j < bt.Width; j++)
                     {
                         write += ImageBitmap.GetPixel(j, i).R + " " + ImageBitmap.GetPixel(j, i).G + " " + ImageBitmap.GetPixel(j, i).B + " ";
