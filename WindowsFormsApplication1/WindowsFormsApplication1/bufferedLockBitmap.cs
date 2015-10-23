@@ -13,8 +13,12 @@ namespace WindowsFormsApplication1
     class bufferedLockBitmap
     {
         public Bitmap source = null;
+        public Bitmap source2 = null;
+
         IntPtr Iptr = IntPtr.Zero;
         BitmapData bitmapData = null;
+        Bitmap result = null;
+        BitmapData bitmapData2 = null;
         public byte[] pixels { get; set; }
         public int Depth { get; private set; }
         public int Width { get; private set; }
@@ -24,7 +28,7 @@ namespace WindowsFormsApplication1
             this.source = source;
             this.Width = source.Width;
             this.Height = source.Height;
-          
+            source2 = new Bitmap(Width, Height);
            
         }
         public void LockBits()
@@ -35,16 +39,20 @@ namespace WindowsFormsApplication1
                 Height = source.Height;
                 int PixelCount = Width * Height;
                 Rectangle rect = new Rectangle(0, 0, Width, Height);
+                Rectangle rect2 = new Rectangle(0, 0, Width, Height);
                 Depth = System.Drawing.Bitmap.GetPixelFormatSize(source.PixelFormat);
                 if (Depth != 8 && Depth != 24 && Depth != 32)
                 {
                     throw new ArgumentException("Only 8 , 24 , 32 bpp images are supported. ");
                 }
+                bitmapData2 = source2.LockBits(rect2, ImageLockMode.ReadWrite, source.PixelFormat);
                 bitmapData = source.LockBits(rect, ImageLockMode.ReadWrite, source.PixelFormat);
+               
                 int step = Depth / 8;
                 pixels = new byte[PixelCount * step];
                 Iptr = bitmapData.Scan0;
                 Marshal.Copy(Iptr, pixels, 0, pixels.Length);
+                
             }
             catch (Exception ex)
             {
@@ -55,8 +63,11 @@ namespace WindowsFormsApplication1
         {
             try
             {
-                Marshal.Copy(pixels, 0, Iptr, pixels.Length);
                 source.UnlockBits(bitmapData);
+                Iptr = bitmapData2.Scan0;
+                Marshal.Copy(pixels,0,Iptr,pixels.Length);
+                source2.UnlockBits(bitmapData2);
+                
             }
             catch (Exception ex)
             {

@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace WindowsFormsApplication1
 {
@@ -24,26 +25,39 @@ namespace WindowsFormsApplication1
                 Garray[u] = 0;
                 Barray[u] = 0;
             }
-
-
-
-
         }
-        public void drawing(Bitmap input_image)
+        public void drawing(bufferedLockBitmap pixel, Chart chart1)
         {
             int R, G, B;
-            for (int i = 0; i < input_image.Height; i++)
+            for (int i = 0; i < pixel.Height; i++)
             {
-                for (int j = 0; j < input_image.Width; j++)
+                for (int j = 0; j <pixel.Width; j++)
                 {
-                    R = input_image.GetPixel(j, i).R;
+                    R = pixel.Getpixel(j,i).R;
                     Rarray[R]++;
-                    G = input_image.GetPixel(j, i).G;
+                    G = pixel.Getpixel(j, i).G;
                     Garray[G]++;
-                    B = input_image.GetPixel(j, i).B;
+                    B = pixel.Getpixel(j, i).B;
                     Barray[B]++;
                 }
             }
+
+            for (int w = 0; w < 256; w++)
+            {
+                chart1.Series["Red"].Points.AddXY(w, this.Rarray[w]);
+                chart1.Series["Green"].Points.AddXY(w, this.Garray[w]);
+                chart1.Series["Blue"].Points.AddXY(w, this.Barray[w]);
+
+            }
+            chart1.Series["Green"].ChartType = SeriesChartType.SplineArea;
+            chart1.Series["Green"].Color = Color.Green;
+
+            chart1.Series["Red"].ChartType = SeriesChartType.SplineArea;
+            chart1.Series["Red"].Color = Color.Red;
+
+            chart1.Series["Blue"].ChartType = SeriesChartType.SplineArea;
+            chart1.Series["Blue"].Color = Color.Blue;
+
         }
         public void get_series_for_chart_component()
         {

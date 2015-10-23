@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Drawing.Drawing2D;
 using System.Drawing;
 using System.Windows.Forms;
+using WindowsFormsApplication1;
 
 namespace TestMatrixTransformations
 {
@@ -22,9 +23,10 @@ namespace TestMatrixTransformations
             7 - Invert the matrix
             8 - Use the inverted version to reverse transform all new locations in the new image buffer
         **/
-        public BufferedImage perform_concat_matrices_operations(BufferedImage _src_img, TextBox _console, float _shear_x = (float)0, float _shear_y = (float)0, float _scale_x = (float)1, float _scale_y = (float)1, float _rotate_theta = (float)0)
+        public Bitmap perform_concat_matrices_operations(bufferedLockBitmap _src_img, float _shear_x = (float)0, float _shear_y = (float)0, float _scale_x = (float)1, float _scale_y = (float)1, float _rotate_theta = (float)0)
         {
-            BufferedImage ret;
+                  bufferedLockBitmap ret;
+            
             // 1 - Create new object with identity matrix (empty constructor)
             Matrix transformations_matrix = new Matrix();
             // 2 - Apply a set of transformations that you want to this matrix
@@ -44,9 +46,9 @@ namespace TestMatrixTransformations
              */
             Point[] corner_points = {
                                         new Point(0, 0),
-                                        new Point(_src_img.width - 1, 0),
-                                        new Point(0, _src_img.height - 1),
-                                        new Point(_src_img.width - 1, _src_img.height - 1)
+                                        new Point(_src_img.source.Width - 1, 0),
+                                        new Point(0, _src_img.source.Height - 1),
+                                        new Point(_src_img.source.Width - 1, _src_img.source.Height - 1)
                                     };
 
             transformations_matrix.TransformPoints(corner_points);
@@ -60,30 +62,6 @@ namespace TestMatrixTransformations
             int new_width = max_x - min_x;
             int new_height = max_y - min_y;
 
-            _console.Text += "Min X = ";
-            _console.Text += min_x;
-            _console.Text += Environment.NewLine;
-
-            _console.Text += "Min Y = ";
-            _console.Text += min_y;
-            _console.Text += Environment.NewLine;
-
-            _console.Text += "Max X = ";
-            _console.Text += max_x;
-            _console.Text += Environment.NewLine;
-
-            _console.Text += "Max Y = ";
-            _console.Text += max_y;
-            _console.Text += Environment.NewLine;
-
-            _console.Text += "New Width = ";
-            _console.Text += new_width;
-            _console.Text += Environment.NewLine;
-
-            _console.Text += "New Height = ";
-            _console.Text += new_height;
-            _console.Text += Environment.NewLine;
-
             // 4 - The min X and min Y of the transformed image
             /**
              * To make the transformed image totally fit inside the buffer, a translation with (- min X, - min Y) should be appended to the original transformation matrix (W) before inverting it.
@@ -96,8 +74,8 @@ namespace TestMatrixTransformations
             transformations_matrix.Invert();
 
             // 8 - Use the inverted version to reverse transform all new locations in the new image buffer
-            ret = apply_transformation_matrix_to_bitmap_or_buffer(transformations_matrix, _src_img, new_width, new_height, _console);
-            return ret;
+            return apply_transformation_matrix_to_bitmap_or_buffer(transformations_matrix, _src_img, new_width, new_height).source2;
+            
         }
 
         public int find_min_x(Point[] _hay_stack)
@@ -150,9 +128,11 @@ namespace TestMatrixTransformations
             Validate that this old location lie inside the original image boundary (i.e. 0 ≤ OldX < W,  0  ≤ Old Y < H). Otherwise, set the new empty pixel to 0 and continue to next location.
             If Validated, apply Bilinear Interpolation Algorithm to get the new pixel value, as follows:(Refer to above figure)
                 */
-        public BufferedImage apply_transformation_matrix_to_bitmap_or_buffer(Matrix _transformations_matrix, BufferedImage _src_img, int _new_width, int _new_height, TextBox _console)
+        public bufferedLockBitmap apply_transformation_matrix_to_bitmap_or_buffer(Matrix _transformations_matrix, bufferedLockBitmap _src_img, int _new_width, int _new_height)
         {
-            BufferedImage ret = new BufferedImage(_new_width, _new_height);
+            Bitmap temp = new Bitmap(_new_width, _new_height);
+            bufferedLockBitmap ret = new bufferedLockBitmap(temp);
+            ret.LockBits();
             BilinearInterpolation obj_bi_lin_interpol = new BilinearInterpolation();
             for (int i = 0; i < _new_width; i++)
             {
@@ -162,17 +142,15 @@ namespace TestMatrixTransformations
                                           new PointF(i, j)
                                       };
                     _transformations_matrix.TransformPoints(points);
-                    _console.Text += "P = (" + points[0].X + ", " + points[0].Y + ")";
-                    _console.Text += Environment.NewLine;
-                    _console.Text += "P' = (" + i + ", " + j + ")";
-                    _console.Text += Environment.NewLine;
+
 
                     Color _color = Color.FromArgb(0);
-                    if (points[0].X >= 0 && points[0].X < _src_img.width && points[0].Y >= 0 && points[0].Y < _src_img.height)
+                    if (points[0].X >= 0 && points[0].X < _src_img.source.Width && points[0].Y >= 0 && points[0].Y < _src_img.source.Height)
                         _color = obj_bi_lin_interpol.calculate(_src_img, points[0].X, points[0].Y);
-                    ret.buffer[i, j] = _color;
+                    ret.SetPixel(i, j, _color);
                 }
             }
+            ret.UnlockBits();
             return ret;
         }
 

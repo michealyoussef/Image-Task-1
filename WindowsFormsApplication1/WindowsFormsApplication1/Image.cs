@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Drawing;
 using System.IO;
 using System.Drawing.Drawing2D;
+using TestMatrixTransformations;
 
 namespace WindowsFormsApplication1
 {
@@ -19,7 +20,7 @@ namespace WindowsFormsApplication1
         private PP36FileReading P3file;
         public bufferedLockBitmap ImageLockBitmap;
         public Pixel_logic__Operations op;
-
+        ImageMatrixTransformations mat = new ImageMatrixTransformations();
         public ImageController()
         {
 
@@ -36,81 +37,68 @@ namespace WindowsFormsApplication1
             }
             else
                 ImageBitmap = new Bitmap(path);
-            op = new Pixel_logic__Operations(this.ImageBitmap);
             ImageLockBitmap = new bufferedLockBitmap(ImageBitmap);
             ImageLockBitmap.LockBits();
-            ImageLockBitmap.UnlockBits();
-              
-            return ImageBitmap;
+            op = new Pixel_logic__Operations(this.ImageLockBitmap);
+            
+            return ImageLockBitmap.source;
 
         }
-        public void savingpicture(String writen_path, Bitmap bt)
+        public void savingpicture(String writen_path, bufferedLockBitmap bt)
         {
-            P3file.saving(bt, writen_path);
-            //  P3file.saving();
+            P3file.saving(bt.source2, writen_path);
         }
-        public void Scale(float Xsize, float Ysize, Graphics gg)
+        public Bitmap Scale(float Xsize, float Ysize)
         {
-            ImageWidth *= int.Parse(Xsize.ToString());
-            ImageHigh *= int.Parse(Ysize.ToString());
+            return mat.perform_concat_matrices_operations(this.ImageLockBitmap, 0, 0, Xsize, Ysize, 0);
+        }
+        public Bitmap Rotate(float angle)
+        {
+            
+            return mat.perform_concat_matrices_operations(ImageLockBitmap,0,0,1,1,angle);
+            
 
-            Matrix mat = new Matrix();
-            mat.Scale(Xsize, Ysize);
-            Graphics g = gg;
-            gg.Transform = mat;
+        }
+        public Bitmap Shearing(float x, float y)
+        {
+            return mat.perform_concat_matrices_operations(ImageLockBitmap, x, y, 1, 1, 0);
 
-            gg.DrawImage(ImageBitmap, 0, 0, ImageBitmap.Width, ImageBitmap.Height);
-        }
-        public void Rotate(float angle, Graphics gg)
-        {
-            Matrix mat = new Matrix();
-            mat.Rotate(angle);
-            Graphics g = gg;
-            g.Transform = mat;
-            g.DrawImage(ImageBitmap, 0, 0, ImageBitmap.Width, ImageBitmap.Height);
-        }
-        public void Shearing(float x, float y, Graphics gg)
-        {
-            Matrix mat = new Matrix();
-            mat.Scale(x, y);
-            Graphics g = gg;
-            g.Transform = mat;
-            g.DrawImage(ImageBitmap, 0, 0, ImageBitmap.Width, ImageBitmap.Height);
         }
         public void all(float Xsize, float ysize, float angle, float shx, float shy, Graphics gg)
         {
-            Matrix mat = new Matrix();
-            mat.Scale(Xsize, ysize);
-            mat.Rotate(angle);
-            mat.Shear(shx, shy);
-            Graphics g = gg;
-            g.Transform = mat;
-            g.DrawImage(ImageBitmap, 0, 0, ImageBitmap.Width, ImageBitmap.Height);
+           
         }
         public Bitmap Grayscale()
         {
-
-            return op.Grayscale(this.ImageBitmap);
+            this.ImageLockBitmap.LockBits();
+            op.Grayscale(this.ImageLockBitmap);
+            this.ImageLockBitmap.UnlockBits();
+            return this.ImageLockBitmap.source2;
         }
         public Bitmap NOT()
         {
-            
-            return op.notoperation(this.ImageBitmap);
+            this.ImageLockBitmap.LockBits();
+            op.notoperation(this.ImageLockBitmap);
+            this.ImageLockBitmap.UnlockBits();
+            return this.ImageLockBitmap.source2;
         }
         public Bitmap Brightness(int dif)
         {
-           
-            return op.Brightness(this.ImageBitmap, dif);
-
+            return op.Brightness(this.ImageLockBitmap, dif);
         }
-        public Bitmap Gamma(int dif)
+        public Bitmap Gamma(Double dif)
         {
-            
-            return op.Gamma(this.ImageBitmap, dif);
-
+            this.ImageLockBitmap.LockBits();
+            op.Gamma(this.ImageLockBitmap, dif);
+            this.ImageLockBitmap.UnlockBits();
+            return this.ImageLockBitmap.source2;
         }
         public Bitmap Flipping()
         {
+            Bitmap temp = new Bitmap(ImageLockBitmap.Width, ImageLockBitmap.Height);
+            bufferedLockBitmap t = new bufferedLockBitmap(temp);
+            t.LockBits();
+            ImageLockBitmap.LockBits();
             //flip images
             ImageWidth = ImageBitmap.Width;
             ImageHigh = ImageBitmap.Height;
@@ -119,47 +107,62 @@ namespace WindowsFormsApplication1
             {
                 for (int lx = 0; lx < ImageWidth; ++lx)
                 {
-                    Color p = ImageBitmap.GetPixel(ImageWidth - lx - 1, i);
-                    mimg.SetPixel(lx, i, p);
+                    Color p = ImageLockBitmap.Getpixel(ImageWidth - lx - 1, i);
+                    t.SetPixel(lx, i, p);
                 }
             }
-            return mimg;
+            ImageLockBitmap.UnlockBits();
+            t.UnlockBits();
+            temp.Dispose();
+            return t.source2;
         }
         public Bitmap Flippingvertical()
         {
+            Bitmap temp = new Bitmap(ImageLockBitmap.Width, ImageLockBitmap.Height);
+            bufferedLockBitmap t = new bufferedLockBitmap(temp);
+            t.LockBits();
+            ImageLockBitmap.LockBits();
             //flip images
-            ImageWidth = ImageBitmap.Width;
-            ImageHigh = ImageBitmap.Height;
+            Color p;
+            ImageWidth = ImageLockBitmap.Width;
+            ImageHigh = ImageLockBitmap.Height;
             Bitmap mimg = new Bitmap(ImageWidth, ImageHigh);
             for (int i = 0; i < ImageHigh; i++)
             {
                 for (int lx = 0; lx < ImageWidth; ++lx)
                 {
-                    Color p = ImageBitmap.GetPixel(lx, ImageHigh - i - 1);
-                    mimg.SetPixel(lx, i, p);
+                    p = ImageLockBitmap.Getpixel(lx, ImageHigh - i - 1);
+                 
+                    t.SetPixel(lx, i, p);
                 }
             }
-            return mimg;
+            ImageLockBitmap.UnlockBits();
+            t.UnlockBits();
+            temp.Dispose();
+            return t.source2;
         }
-        public Bitmap subtraction(Bitmap input1)
-        {
-            return op.Subtraction(input1, this.ImageBitmap);
+        public Bitmap subtraction(bufferedLockBitmap input1)
+        { 
+            return op.Subtraction(input1, this.ImageLockBitmap);
         }
-        public Bitmap addtion(Bitmap input1, double diff)
+        public Bitmap addtion(bufferedLockBitmap input1, double diff)
         {
-            return op.Addpictures(input1, this.ImageBitmap, diff);
+            return op.Addpictures(input1, this.ImageLockBitmap, diff);
         }
         public Bitmap Bit_plane_slicing(int x, bool R, bool G, bool B)
         {
-            return op.Bit_plane(this.ImageBitmap, x, R, G, B);
+            return op.Bit_plane(this.ImageLockBitmap, x, R, G, B);
         }
         public Bitmap cont(int x, int y)
         {
-            return op.contrast(this.ImageBitmap, x, y);
+            this.ImageLockBitmap.LockBits();
+            op.contrast(this.ImageLockBitmap, x, y);
+            this.ImageLockBitmap.UnlockBits();
+            return this.ImageLockBitmap.source2;
         }
         public Bitmap Quantization(int x)
         {
-            return op.Quantization(this.ImageBitmap, x);
+            return op.Quantization(this.ImageLockBitmap, x);
         }
     }
 }

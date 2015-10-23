@@ -15,7 +15,7 @@ namespace WindowsFormsApplication1
     {
         ImageController im = new ImageController();
         ImageController im2 = new ImageController();
-
+        int exbrigth = 0;
         public Form1()
         {
 
@@ -44,13 +44,12 @@ namespace WindowsFormsApplication1
         {
             if (string.IsNullOrEmpty(textBox1.Text) == false && string.IsNullOrEmpty(textBox2.Text) == false)
             {
-                im.Scale(int.Parse(textBox1.Text.ToString()), int.Parse(textBox2.Text.ToString()), pictureBox1.CreateGraphics());
+                pictureBox1.Image = im.Scale(int.Parse(textBox1.Text.ToString()), int.Parse(textBox2.Text.ToString()));
 
             }
             else
             {
-
-                MessageBox.Show("please fill text box", "Error");
+               MessageBox.Show("please fill text box", "Error");
             }
         }
 
@@ -71,8 +70,8 @@ namespace WindowsFormsApplication1
         {
             if (string.IsNullOrEmpty(textBox3.Text) == false)
             {
-
-                im.Rotate(int.Parse(textBox3.Text), pictureBox1.CreateGraphics());
+             //   pictureBox1.Dispose();
+              pictureBox1.Image = im.Rotate(int.Parse(textBox3.Text));
             }
             else
             {
@@ -84,7 +83,7 @@ namespace WindowsFormsApplication1
         {
             if (string.IsNullOrEmpty(textBox4.Text) == false && string.IsNullOrEmpty(textBox5.Text) == false)
             {
-                im.Shearing(int.Parse(textBox4.Text), int.Parse(textBox4.Text), pictureBox1.CreateGraphics());
+                pictureBox1.Image = im.Shearing(int.Parse(textBox4.Text), int.Parse(textBox4.Text));
 
             }
             else
@@ -102,12 +101,13 @@ namespace WindowsFormsApplication1
             FolderBrowserDialog ofd = new FolderBrowserDialog();
             if (ofd.ShowDialog() == DialogResult.OK && !string.IsNullOrEmpty(ofd.SelectedPath))
             {
-                im.savingpicture(ofd.SelectedPath, im.ImageBitmap);
+                im.savingpicture(ofd.SelectedPath, im.ImageLockBitmap);
             }
         }
 
         private void grayscaleToolStripMenuItem_Click(object sender, EventArgs e)
         {
+
             pictureBox1.Image = im.Grayscale();
         }
 
@@ -118,59 +118,29 @@ namespace WindowsFormsApplication1
 
         private void trackBar1_Scroll(object sender, EventArgs e)
         {
+
             numericUpDown1.Value = trackBar1.Value;
             pictureBox1.Image = im.Brightness(trackBar1.Value);
-            Histogramdrawing his = new Histogramdrawing();
-            his.drawing(new Bitmap(pictureBox1.Image));
-          
-            for (int w = 0; w < 256; w++)
-            {
-                chart1.Series["Red"].Points.AddXY(w, his.Rarray[w]);
-
-                chart1.Series["Green"].Points.AddXY(w, his.Garray[w]);
-                chart1.Series["Blue"].Points.AddXY(w, his.Garray[w]);
-
-            }
-            chart1.Series["Green"].ChartType = SeriesChartType.SplineArea;
-            chart1.Series["Green"].Color = Color.Green;
-            chart1.Series["Red"].ChartType = SeriesChartType.SplineArea;
-            chart1.Series["Red"].Color = Color.Red;
-            chart1.Series["Blue"].ChartType = SeriesChartType.SplineArea;
-            chart1.Series["Blue"].Color = Color.Blue;
+            this.exbrigth = trackBar1.Value;
         }
 
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
         {
             trackBar1.Value = decimal.ToInt32(numericUpDown1.Value);
             pictureBox1.Image = im.Brightness(trackBar1.Value);
-            Histogramdrawing his = new Histogramdrawing();
-            his.drawing(im.ImageBitmap);
-            
-            for (int w = 0; w < 256; w++)
-            {
-                chart1.Series["Red"].Points.AddXY(w, his.Rarray[w]);
-                chart1.Series["Green"].Points.AddXY(w, his.Garray[w]);
-                chart1.Series["Blue"].Points.AddXY(w, his.Garray[w]);
 
-            }
-            chart1.Series["Green"].ChartType = SeriesChartType.SplineArea;
-            chart1.Series["Green"].Color = Color.Green;
-            chart1.Series["Red"].ChartType = SeriesChartType.SplineArea;
-            chart1.Series["Red"].Color = Color.Red;
-            chart1.Series["Blue"].ChartType = SeriesChartType.SplineArea;
-            chart1.Series["Blue"].Color = Color.Blue;
         }
 
         private void numericUpDown2_ValueChanged(object sender, EventArgs e)
         {
-            trackBar1.Value = decimal.ToInt32(numericUpDown1.Value);
-            pictureBox1.Image = im.Brightness(Convert.ToInt32(numericUpDown2.Value));
+            trackBar2.Value = Convert.ToInt32(numericUpDown2.Value);
+            pictureBox1.Image = im.Gamma(Convert.ToInt32(numericUpDown2.Value));
         }
 
         private void trackBar2_Scroll(object sender, EventArgs e)
         {
             numericUpDown2.Value = trackBar2.Value;
-            pictureBox1.Image = im.Brightness(trackBar2.Value);
+            pictureBox1.Image = im.Gamma(trackBar2.Value);
 
         }
 
@@ -202,23 +172,11 @@ namespace WindowsFormsApplication1
             if (ofd.ShowDialog() == DialogResult.OK && !string.IsNullOrEmpty(ofd.FileName))
             {
                 pictureBox1.Image = im.Read(ofd.FileName);
-                pictureBox1.Size = im.ImageBitmap.Size;
+                im.ImageLockBitmap.UnlockBits();
+                //   pictureBox1.Size = im.ImageBitmap.Size;
             }
             Histogramdrawing his = new Histogramdrawing();
-            his.drawing(im.ImageBitmap);
-            for (int w = 0; w < 256; w++)
-            {
-                chart1.Series["Red"].Points.AddXY(w, his.Rarray[w]);
-                chart1.Series["Green"].Points.AddXY(w, his.Garray[w]);
-                chart1.Series["Blue"].Points.AddXY(w, his.Garray[w]);
-
-            }
-            chart1.Series["Green"].ChartType = SeriesChartType.SplineArea;
-            chart1.Series["Green"].Color = Color.Green;
-            chart1.Series["Red"].ChartType = SeriesChartType.SplineArea;
-            chart1.Series["Red"].Color = Color.Red;
-            chart1.Series["Blue"].ChartType = SeriesChartType.SplineArea;
-            chart1.Series["Blue"].Color = Color.Blue;
+            his.drawing(im.ImageLockBitmap, chart1);
         }
 
         private void image2ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -227,6 +185,7 @@ namespace WindowsFormsApplication1
             if (ofd.ShowDialog() == DialogResult.OK && !string.IsNullOrEmpty(ofd.FileName))
             {
                 pictureBox2.Image = im2.Read(ofd.FileName);
+                im2.ImageLockBitmap.UnlockBits();
                 pictureBox2.Size = im2.ImageBitmap.Size;
             }
 
@@ -234,10 +193,13 @@ namespace WindowsFormsApplication1
 
         private void subtractionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            im.ImageLockBitmap.LockBits();
+            im2.ImageLockBitmap.LockBits();
+            Bitmap x = im.subtraction(im2.ImageLockBitmap);
+            im.ImageLockBitmap.UnlockBits();
+            im2.ImageLockBitmap.UnlockBits();
             resultform f = new resultform();
             f.Show();
-            Bitmap x = im.subtraction(im2.ImageBitmap);
             f.draw(x);
         }
 
@@ -245,25 +207,25 @@ namespace WindowsFormsApplication1
         {
             resultform f = new resultform();
             f.Show();
-            Bitmap x = im.addtion(im2.ImageBitmap, double.Parse(textBox6.Text.ToString()));
+            Bitmap x = im.addtion(im2.ImageLockBitmap, double.Parse(textBox6.Text.ToString()));
             f.draw(x);
         }
 
         private void trackBar3_Scroll(object sender, EventArgs e)
         {
             numericUpDown3.Value = trackBar3.Value;
-           // pictureBox1.Image = im.cont(-Convert.ToInt32(trackBar3.Value), Convert.ToInt32(trackBar3.Value));
+            pictureBox1.Image = im.cont(-Convert.ToInt32(numericUpDown3.Value), Convert.ToInt32(numericUpDown3.Value));
         }
 
         private void numericUpDown3_ValueChanged(object sender, EventArgs e)
         {
             trackBar3.Value = decimal.ToInt32(numericUpDown3.Value);
-           pictureBox1.Image = im.cont(-Convert.ToInt32(numericUpDown3.Value),Convert.ToInt32(numericUpDown3.Value));
+            pictureBox1.Image = im.cont(-Convert.ToInt32(numericUpDown3.Value), Convert.ToInt32(numericUpDown3.Value));
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            pictureBox1.Image = im.Bit_plane_slicing(int.Parse(textBox7.Text.ToString()),ch1.Checked, ch2.Checked, ch3.Checked);
+            pictureBox1.Image = im.Bit_plane_slicing(int.Parse(textBox7.Text.ToString()), ch1.Checked, ch2.Checked, ch3.Checked);
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -271,11 +233,15 @@ namespace WindowsFormsApplication1
             pictureBox1.Image = im.Quantization(int.Parse(textBox8.Text.ToString()));
         }
 
-        private void button10_Click(object sender, EventArgs e)
+        private void button12_Click(object sender, EventArgs e)
         {
-            pictureBox1.Image = im.cont(int.Parse(textBox9.Text.ToString()), int.Parse(textBox10.Text.ToString()));
+            pictureBox1.Image = null;
+            chart1.Series.Clear();
         }
 
+        private void pictureBox2_Click(object sender, EventArgs e)
+        {
 
+        }
     }
 }

@@ -10,34 +10,35 @@ namespace WindowsFormsApplication1
 {
     class Pixel_logic__Operations
     {
+        bufferedLockBitmap bf;
         Bitmap temp;
         byte[] Word;
         int maxR = 0, maxG = 0, maxb = 0;
         int minR = 1000, minG = 1000, minb = 1000;
-        public Pixel_logic__Operations(Bitmap input)
+        public Pixel_logic__Operations(bufferedLockBitmap input)
         {
             int te = 0;
-            
+
             for (int i = 0; i < input.Height; i++)
             {
                 for (int j = 0; j < input.Width; j++)
                 {
-                    te = input.GetPixel(j, i).R;
+                    te = input.Getpixel(j, i).R;
                     if (te > maxR) maxR = te;
 
-                    te = input.GetPixel(j, i).G;
+                    te = input.Getpixel(j, i).G;
                     if (te > maxG) maxG = te;
 
-                    te = input.GetPixel(j, i).B;
+                    te = input.Getpixel(j, i).B;
                     if (te > maxb) maxb = te;
 
-                    te = input.GetPixel(j, i).R;
+                    te = input.Getpixel(j, i).R;
                     if (te < minR) minR = te;
 
-                    te = input.GetPixel(j, i).G;
+                    te = input.Getpixel(j, i).G;
                     if (te < minG) minG = te;
 
-                    te = input.GetPixel(j, i).B;
+                    te = input.Getpixel(j, i).B;
                     if (te < minb) minb = te;
 
                 }
@@ -53,8 +54,9 @@ namespace WindowsFormsApplication1
             Word[7] = 128;
         }
 
-        public Bitmap contrast(Bitmap input, int x, int y)
+        public Bitmap contrast(bufferedLockBitmap input, int x, int y)
         {
+
             int NewMinR = 0, NewMinG = 0, NewMinB = 0, NewMaxR = 0, NewMaxG = 0, NewMaxB = 0;
             temp = new Bitmap(input.Width, input.Height);
             int R, G, B;
@@ -66,16 +68,15 @@ namespace WindowsFormsApplication1
             NewMaxB = maxb + y;
             NewMaxG = maxG + y;
 
-
-            for (int i = 0; i < temp.Height; i++)
+            for (int i = 0; i < input.Height; i++)
             {
-                for (int j = 0; j < temp.Width; j++)
+                for (int j = 0; j < input.Width; j++)
                 {
-                    R = input.GetPixel(j, i).R;
+                    R = input.Getpixel(j, i).R;
                     R = Convert.ToInt32(((double)(R - minR) / (maxR - minR)) * ((NewMaxR - NewMinR)) + NewMinR);
-                    G = input.GetPixel(j, i).G;
+                    G = input.Getpixel(j, i).G;
                     G = Convert.ToInt32(((double)(G - minG) / (maxG - minG)) * ((NewMaxG - NewMinG)) + NewMinG);
-                    B = input.GetPixel(j, i).B;
+                    B = input.Getpixel(j, i).B;
                     B = Convert.ToInt32(((double)(B - minb) / (maxb - minb)) * ((NewMaxB - NewMinB)) + NewMinB);
 
                     if (R > 255) R = 255;
@@ -84,14 +85,17 @@ namespace WindowsFormsApplication1
                     else if (G < 0) G = 0;
                     if (B > 255) B = 255;
                     else if (B < 0) B = 0;
-                    temp.SetPixel(j, i, Color.FromArgb(R, G, B));
+                    input.SetPixel(j, i, Color.FromArgb(R, G, B));
                 }
             }
-            return temp;
+
+            return input.source2;
         }
-        public Bitmap Bit_plane(Bitmap input, int number, bool R, bool G, bool B)
+        public Bitmap Bit_plane(bufferedLockBitmap input, int number, bool R, bool G, bool B)
         {
-            temp = new Bitmap(input);
+            temp = new Bitmap(input.source);
+            bf = new bufferedLockBitmap(temp);
+            bf.LockBits();
             int p;
             int red = 0, blue = 0, green = 0;
             for (int i = 0; i < temp.Height; i++)
@@ -100,7 +104,7 @@ namespace WindowsFormsApplication1
                 {
                     if (R == true)
                     {
-                        p = input.GetPixel(j, i).R & Word[number - 1];
+                        p = bf.Getpixel(j, i).R & Word[number - 1];
                         if (p != 0)
                             red = 255;
                         else if (p == 0)
@@ -108,7 +112,7 @@ namespace WindowsFormsApplication1
                     }
                     if (G == true)
                     {
-                        p = input.GetPixel(j, i).G & Word[number - 1];
+                        p = bf.Getpixel(j, i).G & Word[number - 1];
                         if (p != 0)
                             green = 255;
                         else if (p == 0)
@@ -116,57 +120,62 @@ namespace WindowsFormsApplication1
                     }
                     if (B == true)
                     {
-                        p = input.GetPixel(j, i).B & Word[number - 1];
+                        p = bf.Getpixel(j, i).B & Word[number - 1];
                         if (p != 0)
                             blue = 255;
                         else if (p == 0)
                             blue = 0;
                     }
-                    temp.SetPixel(j, i, Color.FromArgb(red, green, blue));
+                    bf.SetPixel(j, i, Color.FromArgb(red, green, blue));
                 }
             }
-            return temp;
+            bf.UnlockBits();
+            return bf.source2;
         }
 
-        public Bitmap Brightness(Bitmap input, int dif)
+        public Bitmap Brightness(bufferedLockBitmap input, int dif)
         {
-            temp = new Bitmap(input);
+            temp = new Bitmap(input.source);
+            bf = new bufferedLockBitmap(temp);
+            bf.LockBits();
             int R, G, B = 0;
-            for (int i = 0; i < temp.Height; i++)
+            for (int i = 0; i < input.Height; i++)
             {
-                for (int j = 0; j < temp.Width; j++)
+                for (int j = 0; j < input.Width; j++)
                 {
-                    R = input.GetPixel(j, i).R + dif;
-                    G = input.GetPixel(j, i).G + dif;
-                    B = input.GetPixel(j, i).B + dif;
+                    R = input.Getpixel(j, i).R + dif;
+                    G = input.Getpixel(j, i).G + dif;
+                    B = input.Getpixel(j, i).B + dif;
                     if (R > 255) R = 255;
                     else if (R < 0) R = 0;
                     if (G > 255) G = 255;
                     else if (G < 0) G = 0;
                     if (B > 255) B = 255;
                     else if (B < 0) B = 0;
-                    temp.SetPixel(j, i, Color.FromArgb(R, G, B));
+                    bf.SetPixel(j, i, Color.FromArgb(R, G, B));
                 }
             }
-            return temp;
-
+            bf.UnlockBits();
+            return bf.source2;
         }
-        public Bitmap Grayscale(Bitmap input)
+        public void Grayscale(bufferedLockBitmap input)
         {
+            temp = new Bitmap(input.Width, input.Height);
             int sum = 0;
             for (int i = 0; i < input.Height; i++)
             {
                 for (int j = 0; j < input.Width; j++)
                 {
                     sum = 0;
-                    sum = input.GetPixel(j, i).R + input.GetPixel(j, i).G + input.GetPixel(j, i).B;
+                    sum = input.Getpixel(j, i).R + input.Getpixel(j, i).G + input.Getpixel(j, i).B;
                     sum /= 3;
                     input.SetPixel(j, i, Color.FromArgb(sum, sum, sum));
                 }
+
             }
-            return input;
+
         }
-        public Bitmap Quantization(Bitmap input, int num)
+        public Bitmap Quantization(bufferedLockBitmap input, int num)
         {
             int sum = 0;
             double f = 2;
@@ -175,78 +184,83 @@ namespace WindowsFormsApplication1
             {
                 sum = sum + Convert.ToInt32(Math.Pow(f, Convert.ToInt32(w)));
             }
-            
-            temp = new Bitmap(input.Width,input.Height);
-
+            temp = new Bitmap(input.Width, input.Height);
+            bf = new bufferedLockBitmap(temp);
+            bf.LockBits();
             int R, G, B;
             for (int i = 0; i < input.Height; i++)
             {
                 for (int j = 0; j < input.Width; j++)
                 {
-                    R = input.GetPixel(j, i).R & sum;
-                    G = input.GetPixel(j, i).G & sum;
-                    B = input.GetPixel(j, i).B & sum;
-                    temp.SetPixel(j, i, Color.FromArgb(R, G, B));
+                    R = input.Getpixel(j, i).R & sum;
+                    G = input.Getpixel(j, i).G & sum;
+                    B = input.Getpixel(j, i).B & sum;
+                    bf.SetPixel(j, i, Color.FromArgb(R, G, B));
                 }
             }
-            return temp;
+            bf.UnlockBits();
+            return bf.source2;
 
         }
-        public Bitmap notoperation(Bitmap input)
+        public void notoperation(bufferedLockBitmap input)
         {
             for (int i = 0; i < input.Height; i++)
             {
                 for (int j = 0; j < input.Width; j++)
                 {
-                    input.SetPixel(j, i, Color.FromArgb(255 - input.GetPixel(j, i).R, 255 - input.GetPixel(j, i).G, 255 - input.GetPixel(j, i).B));
+                    input.SetPixel(j, i, Color.FromArgb(255 - input.Getpixel(j, i).R, 255 - input.Getpixel(j, i).G, 255 - input.Getpixel(j, i).B));
                 }
             }
-            return input;
-        }
-        public Bitmap Gamma(Bitmap input, int dif)
-        {
-            temp = new Bitmap(input);
-            int R, G, B = 0;
-            for (int i = 0; i < temp.Height; i++)
-            {
-                for (int j = 0; j < temp.Width; j++)
-                {
 
-                    R = int.Parse(Math.Pow(double.Parse(input.GetPixel(j, i).R.ToString()), dif).ToString());
-                    G = int.Parse(Math.Pow(double.Parse(input.GetPixel(j, i).G.ToString()), dif).ToString());
-                    B = int.Parse(Math.Pow(double.Parse(input.GetPixel(j, i).B.ToString()), dif).ToString());
+        }
+        public void Gamma(bufferedLockBitmap input, double dif)
+        {
+            if (dif == 0)
+                return;
+
+            double R, G, B = 0;
+            for (int i = 0; i < input.Height; i++)
+            {
+                for (int j = 0; j < input.Width; j++)
+                {
+                    R = double.Parse(Math.Pow(double.Parse(input.Getpixel(j, i).R.ToString()), dif).ToString());
+                    G = double.Parse(Math.Pow(double.Parse(input.Getpixel(j, i).G.ToString()), dif).ToString());
+                    B = double.Parse(Math.Pow(double.Parse(input.Getpixel(j, i).B.ToString()), dif).ToString());
                     if (R > 255) R = 255;
                     else if (R < 0) R = 0;
                     if (G > 255) G = 255;
                     else if (G < 0) G = 0;
                     if (B > 255) B = 255;
                     else if (B < 0) B = 0;
-                    temp.SetPixel(j, i, Color.FromArgb(R, G, B));
+                    input.SetPixel(j, i, Color.FromArgb(Convert.ToInt32(R), Convert.ToInt32(G), Convert.ToInt32(B)));
                 }
             }
-            return temp;
+
         }
-        public Bitmap Addpictures(Bitmap pic1, Bitmap pic2, double fraction)
+        public Bitmap Addpictures(bufferedLockBitmap pic1, bufferedLockBitmap pic2, double fraction)
         {
-            if (pic1.Size == pic2.Size)
+            if (pic1.Width == pic2.Width && pic1.Height == pic2.Height)
             {
-                Bitmap temp = new Bitmap(pic1.Size.Width, pic1.Size.Height);
+                temp = new Bitmap(pic1.Width, pic1.Height);
+                bufferedLockBitmap r = new bufferedLockBitmap(temp);
+                r.LockBits();
                 int R, G, B = 0;
                 double f;
                 for (int i = 0; i < temp.Height; i++)
                 {
                     for (int j = 0; j < temp.Width; j++)
                     {
-                        f = ((((double)pic1.GetPixel(j, i).R)) * fraction) + (((double)pic2.GetPixel(j, i).R) * (1 - fraction));
+                        f = ((((double)pic1.Getpixel(j, i).R)) * fraction) + (((double)pic2.Getpixel(j, i).R) * (1 - fraction));
                         R = Convert.ToInt32(f);
-                        f = ((((double)pic1.GetPixel(j, i).G)) * fraction) + (((double)pic2.GetPixel(j, i).G) * (1 - fraction));
+                        f = ((((double)pic1.Getpixel(j, i).G)) * fraction) + (((double)pic2.Getpixel(j, i).G) * (1 - fraction));
                         G = Convert.ToInt32(f);
-                        f = ((((double)pic1.GetPixel(j, i).B)) * fraction) + (((double)pic2.GetPixel(j, i).B) * (1 - fraction));
+                        f = ((((double)pic1.Getpixel(j, i).B)) * fraction) + (((double)pic2.Getpixel(j, i).B) * (1 - fraction));
                         B = Convert.ToInt32(f);
-                        temp.SetPixel(j, i, Color.FromArgb(R, G, B));
+                        r.SetPixel(j, i, Color.FromArgb(R, G, B));
                     }
                 }
-                return temp;
+                r.UnlockBits();
+                return r.source2;
 
             }
             else
@@ -254,73 +268,32 @@ namespace WindowsFormsApplication1
             return temp;
         }
 
-        public Bitmap OR(Bitmap pic1, Bitmap pic2)
-        {
-            if (pic1.Size == pic2.Size)
-            {
-                Bitmap temp = new Bitmap(pic1.Size.Width, pic1.Size.Height);
-                int R, G, B = 0;
-                for (int i = 0; i < temp.Height; i++)
-                {
-                    for (int j = 0; j < temp.Width; j++)
-                    {
-                        R = pic1.GetPixel(j, i).R | pic2.GetPixel(j, i).R;
-                        G = pic1.GetPixel(j, i).G | pic2.GetPixel(j, i).G;
-                        B = pic1.GetPixel(j, i).B | pic2.GetPixel(j, i).B;
-                        temp.SetPixel(j, i, Color.FromArgb(R, G, B));
-                    }
-                }
-            }
-            return temp;
-        }
-        public Bitmap AND(Bitmap pic1, Bitmap pic2)//////na2s el contrast
-        {
-            if (pic1.Size == pic2.Size)
-            {
-                Bitmap temp = new Bitmap(pic1.Size.Width, pic1.Size.Height);
-                int R, G, B = 0;
-                for (int i = 0; i < temp.Height; i++)
-                {
-                    for (int j = 0; j < temp.Width; j++)
-                    {
-                        R = pic1.GetPixel(j, i).R & pic2.GetPixel(j, i).R;
-                        G = pic1.GetPixel(j, i).G & pic2.GetPixel(j, i).G;
-                        B = pic1.GetPixel(j, i).B & pic2.GetPixel(j, i).B;
-                        temp.SetPixel(j, i, Color.FromArgb(R, G, B));
-                    }
-                }
-            }
-            return temp;
-        }
 
 
-        public Bitmap Subtraction(Bitmap pic1, Bitmap pic2)//////na2s el contrast
+        public Bitmap Subtraction(bufferedLockBitmap pic1, bufferedLockBitmap pic2)//////na2s el contrast
         {
-            if (pic1.Size == pic2.Size)
+            temp = new Bitmap(pic1.Width, pic1.Height);
+            bufferedLockBitmap bf = new bufferedLockBitmap(temp);
+            bf.LockBits();
+            if (pic1.Width == pic2.Width)
             {
-                temp = new Bitmap(pic1.Size.Width, pic1.Size.Height);
                 int R, G, B = 0;
-                for (int i = 0; i < temp.Height; i++)
+                for (int i = 0; i < pic1.Height; i++)
                 {
-                    for (int j = 0; j < temp.Width; j++)
+                    for (int j = 0; j < pic1.Width; j++)
                     {
-                        R = pic1.GetPixel(j, i).R - pic2.GetPixel(j, i).R;
-                        G = pic1.GetPixel(j, i).G - pic2.GetPixel(j, i).G;
-                        B = pic1.GetPixel(j, i).B - pic2.GetPixel(j, i).B;
-                        if (R < 0)
-                        {
-                            R = 0;
-
-                        }
-                        if (G < 0)
-                            G = 0;
+                        R = pic1.Getpixel(j, i).R - pic2.Getpixel(j, i).R;
+                        G = pic1.Getpixel(j, i).G - pic2.Getpixel(j, i).G;
+                        B = pic1.Getpixel(j, i).B - pic2.Getpixel(j, i).B;
+                        if (R < 0) R = 0;
+                        if (G < 0) G = 0;
                         if (B < 0) B = 0;
-                        temp.SetPixel(j, i, Color.FromArgb(R, G, B));
+                        bf.SetPixel(j, i, Color.FromArgb(R, G, B));
                     }
                 }
             }
-            return temp;
+            bf.UnlockBits();
+            return bf.source2;
         }
-
     }
 }
