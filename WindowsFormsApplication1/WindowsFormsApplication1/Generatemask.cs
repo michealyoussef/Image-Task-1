@@ -12,7 +12,7 @@ namespace WindowsFormsApplication1
         public double[,] Generatingmean(int w, int h)
         {
             mask = new double[w, h];
-            int mul = w * h;
+            double mul = w * h;
             for (int s = 0; s < w; s++)
                 for (int g = 0; g < h; g++)
                     mask[s, g] = 1 / mul;
