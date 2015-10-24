@@ -28,7 +28,7 @@ namespace TestMatrixTransformations
             Interpolate in Y-Direction
             NewPixel = Z1 × (1 – Yfraction) + Z2 × Yfraction
          */
-        public Color calculate(bufferedLockBitmap _original_buffer, float _old_x, float _old_y)
+        public Color calculate(bufferedLockBitmap _original_buffer, float _old_x, float _old_y,int _new_width, int _new_height)
         {
             int new_red, new_green, new_blue;
             Color ret;
@@ -38,10 +38,18 @@ namespace TestMatrixTransformations
             int y_1 = (int)Math.Floor(_old_y);
             int y_2 = y_1 + 1;
 
-            Color p_1 = _original_buffer.Getpixel(x_1, y_1);
-            Color p_2 = _original_buffer.Getpixel(x_2, y_2);
-            Color p_3 = _original_buffer.Getpixel(x_1, y_2);
-            Color p_4 = _original_buffer.Getpixel(x_2, y_2);
+            Color p_1 = Color.FromArgb(0);
+            Color p_2 = Color.FromArgb(0); 
+            Color p_3 = Color.FromArgb(0);
+            Color p_4 = Color.FromArgb(0);
+            if (x_2 < _new_width && y_2 < _new_height)
+            {
+                p_1 = _original_buffer.Getpixel(x_1, y_1);
+                p_2 = _original_buffer.Getpixel(x_2, y_2);
+                p_3 = _original_buffer.Getpixel(x_1, y_2);
+                p_4 = _original_buffer.Getpixel(x_2, y_2);
+
+            }
 
             float x_fraction = _old_x - x_1;
             float y_fraction = _old_y - y_1;

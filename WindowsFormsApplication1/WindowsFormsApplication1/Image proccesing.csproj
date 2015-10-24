@@ -63,6 +63,7 @@
   <ItemGroup>
     <Compile Include="Benchmark.cs" />
     <Compile Include="BilinearInterpolation.cs" />
+    <Compile Include="Generatemask.cs" />
     <Compile Include="ImageMatrixTransformations.cs" />
     <Compile Include="NeighborhoodOperations.cs" />
     <Compile Include="Pixel logic  Operations.cs" />

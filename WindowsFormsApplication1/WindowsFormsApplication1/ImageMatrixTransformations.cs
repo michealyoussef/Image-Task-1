@@ -30,9 +30,9 @@ namespace TestMatrixTransformations
             // 1 - Create new object with identity matrix (empty constructor)
             Matrix transformations_matrix = new Matrix();
             // 2 - Apply a set of transformations that you want to this matrix
-            transformations_matrix.Rotate(_rotate_theta);
-            transformations_matrix.Scale(_scale_x, _scale_y);
-            transformations_matrix.Shear(_shear_x, _shear_y);
+            transformations_matrix.Rotate(_rotate_theta, MatrixOrder.Append);
+            transformations_matrix.Scale(_scale_x, _scale_y, MatrixOrder.Append);
+            transformations_matrix.Shear(_shear_x, _shear_y, MatrixOrder.Append);
             // 3 - Transform the four corners of the original image to calculate
             /**
              * To get the size of the new (destination) image,
@@ -59,8 +59,8 @@ namespace TestMatrixTransformations
             int max_x = find_max_x(corner_points);
             int max_y = find_max_y(corner_points);
 
-            int new_width = max_x - min_x;
-            int new_height = max_y - min_y;
+            int new_width =Math.Abs(Math.Abs(max_x) - Math.Abs(min_x));//edited
+            int new_height = Math.Abs(max_y) - Math.Abs(min_y);//edited
 
             // 4 - The min X and min Y of the transformed image
             /**
@@ -68,7 +68,7 @@ namespace TestMatrixTransformations
              */
 
             // 6 - Translate this matrix by (- min X, - min Y)
-            transformations_matrix.Translate(-min_x, -min_y);
+            transformations_matrix.Translate(-min_x, -min_y, MatrixOrder.Append);
 
             // 7 - Invert the matrix
             transformations_matrix.Invert();
@@ -146,7 +146,7 @@ namespace TestMatrixTransformations
 
                     Color _color = Color.FromArgb(0);
                     if (points[0].X >= 0 && points[0].X < _src_img.source.Width && points[0].Y >= 0 && points[0].Y < _src_img.source.Height)
-                        _color = obj_bi_lin_interpol.calculate(_src_img, points[0].X, points[0].Y);
+                        _color = obj_bi_lin_interpol.calculate(_src_img, points[0].X, points[0].Y, _new_width, _new_height);
                     ret.SetPixel(i, j, _color);
                 }
             }

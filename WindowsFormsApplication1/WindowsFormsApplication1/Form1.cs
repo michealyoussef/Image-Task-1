@@ -70,8 +70,10 @@ namespace WindowsFormsApplication1
         {
             if (string.IsNullOrEmpty(textBox3.Text) == false)
             {
-             //   pictureBox1.Dispose();
-              pictureBox1.Image = im.Rotate(int.Parse(textBox3.Text));
+                Bitmap tmp = im.Rotate(int.Parse(textBox3.Text));                
+                pictureBox1.Image = tmp;
+                pictureBox1.Size = tmp.Size;
+                tmp.Save("temp.bmp");
             }
             else
             {
