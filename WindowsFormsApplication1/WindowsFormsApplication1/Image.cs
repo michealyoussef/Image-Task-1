@@ -12,11 +12,10 @@ namespace WindowsFormsApplication1
 {
     class ImageController
     {
-        private String ImagePath;
         public Bitmap ImageBitmap = new Bitmap(1000, 800);
         public int ImageWidth;
         public int ImageHigh;
-
+        NeighborhoodOperations NO = new NeighborhoodOperations();
         private PP36FileReading P3file;
         public bufferedLockBitmap ImageLockBitmap;
         public Pixel_logic__Operations op;
@@ -163,6 +162,11 @@ namespace WindowsFormsApplication1
         public Bitmap Quantization(int x)
         {
             return op.Quantization(this.ImageLockBitmap, x);
+        }
+        public Bitmap meanfilter(int w,int h,int x,int y)
+        {
+            Generatemask gn = new Generatemask();
+            return NO.LinearFilter(this.ImageLockBitmap,gn.Generatingmean(w, h),w,h,x,y,"NO").source2;
         }
     }
 }

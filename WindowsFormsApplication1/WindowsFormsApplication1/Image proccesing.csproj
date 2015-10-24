@@ -65,6 +65,12 @@
     <Compile Include="BilinearInterpolation.cs" />
     <Compile Include="Generatemask.cs" />
     <Compile Include="ImageMatrixTransformations.cs" />
+    <Compile Include="Meanform.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Meanform.Designer.cs">
+      <DependentUpon>Meanform.cs</DependentUpon>
+    </Compile>
     <Compile Include="NeighborhoodOperations.cs" />
     <Compile Include="Pixel logic  Operations.cs" />
     <Compile Include="PP36FileReading.cs" />
@@ -106,6 +112,9 @@
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Meanform.resx">
+      <DependentUpon>Meanform.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

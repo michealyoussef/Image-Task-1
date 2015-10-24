@@ -245,5 +245,12 @@ namespace WindowsFormsApplication1
         {
 
         }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+            input inp = new input();
+            inp.ShowDialog();
+            pictureBox1.Image = im.meanfilter(inp.width,inp.heigth,inp.x,inp.y);
+        }
     }
 }
