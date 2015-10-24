@@ -23,8 +23,6 @@ namespace WindowsFormsApplication1
                 for (int j = 0; j < input.Width; j++)
                 {
                     sumG = 0; sumB = 0; sumR = 0;
-                    if (j == 33)
-                        R = 0;
                     for (int maskh = 0; maskh < h; maskh++)
                     {
                         for (int maskw = 0; maskw < w; maskw++)
@@ -42,14 +40,12 @@ namespace WindowsFormsApplication1
                                 sumR += (double)input.Getpixel(j + maskw - x, i + maskh - y).R * mask[maskw, maskh];
                                 sumG += (double)input.Getpixel(j + maskw - x, i + maskh - y).G * mask[maskw, maskh];
                                 sumB += (double)input.Getpixel(j + maskw - x, i + maskh - y).B * mask[maskw, maskh];
-
                             }
                         }
 
                     }
 
                     bf.SetPixel(j, i, Color.FromArgb(Convert.ToInt32(sumR), Convert.ToInt32(sumG), Convert.ToInt32(sumB)));
-                   
 
                 }
             }

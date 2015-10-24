@@ -26,11 +26,19 @@ namespace WindowsFormsApplication1
 
         private void button1_Click(object sender, EventArgs e)
         {
+            if (this.textBox1.Visible == true)
+            {
+                this.heigth = Convert.ToInt32(this.textBox1.Text);
+            }
+            if (this.textBox2.Visible == true)
+                this.width = Convert.ToInt32(this.textBox2.Text);
+            if (this.textBox3.Visible == true)
+                this.x = Convert.ToInt32(this.textBox3.Text);
+            if (this.textBox4.Visible == true)
+
+                this.y = Convert.ToInt32(this.textBox4.Text);
             this.Hide();
-            this.heigth = Convert.ToInt32(this.textBox1.Text);
-            this.width = Convert.ToInt32(this.textBox2.Text);
-            this.x = Convert.ToInt32(this.textBox3.Text);
-            this.y = Convert.ToInt32(this.textBox4.Text);
+
         }
     }
 }

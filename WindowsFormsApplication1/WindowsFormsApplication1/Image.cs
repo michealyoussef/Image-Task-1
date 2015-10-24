@@ -168,5 +168,17 @@ namespace WindowsFormsApplication1
             Generatemask gn = new Generatemask();
             return NO.LinearFilter(this.ImageLockBitmap,gn.Generatingmean(w, h),w,h,x,y,"NO").source2;
         }
+        public Bitmap Gus1(int ms, int s)
+        {
+            Generatemask gn = new Generatemask();
+            return NO.LinearFilter(this.ImageLockBitmap,gn.Gaussian_Filter_Option1(ms,s), 0, 0, 0, 0, "NO").source2;
+           
+        }
+        public Bitmap Gus2(int s)
+        {
+            Generatemask gn = new Generatemask();
+            return NO.LinearFilter(this.ImageLockBitmap, gn.Gaussian_Filter_Option2(s), 0, 0, 0, 0, "NO").source2;
+
+        }
     }
 }

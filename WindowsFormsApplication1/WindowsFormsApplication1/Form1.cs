@@ -49,7 +49,7 @@ namespace WindowsFormsApplication1
             }
             else
             {
-               MessageBox.Show("please fill text box", "Error");
+                MessageBox.Show("please fill text box", "Error");
             }
         }
 
@@ -70,7 +70,7 @@ namespace WindowsFormsApplication1
         {
             if (string.IsNullOrEmpty(textBox3.Text) == false)
             {
-                Bitmap tmp = im.Rotate(int.Parse(textBox3.Text));                
+                Bitmap tmp = im.Rotate(int.Parse(textBox3.Text));
                 pictureBox1.Image = tmp;
                 pictureBox1.Size = tmp.Size;
                 tmp.Save("temp.bmp");
@@ -235,11 +235,8 @@ namespace WindowsFormsApplication1
             pictureBox1.Image = im.Quantization(int.Parse(textBox8.Text.ToString()));
         }
 
-        private void button12_Click(object sender, EventArgs e)
-        {
-            pictureBox1.Image = null;
-            chart1.Series.Clear();
-        }
+
+
 
         private void pictureBox2_Click(object sender, EventArgs e)
         {
@@ -250,7 +247,41 @@ namespace WindowsFormsApplication1
         {
             input inp = new input();
             inp.ShowDialog();
-            pictureBox1.Image = im.meanfilter(inp.width,inp.heigth,inp.x,inp.y);
+            pictureBox1.Image = im.meanfilter(inp.width, inp.heigth, inp.x, inp.y);
+        }
+
+        private void button11_Click(object sender, EventArgs e)
+        {
+            input inp = new input();
+            foreach (Control x in inp.Controls)
+            {
+                x.Hide();
+            }
+            inp.label1.Text = "Mask Size  ";
+            inp.label1.Show();
+            inp.label2.Text = "Sigma";
+            inp.label2.Show();
+            inp.textBox1.Show();
+            inp.textBox2.Show();
+            inp.button1.Show();
+            inp.ShowDialog();
+            pictureBox1.Image = im.Gus1(inp.heigth, inp.width);
+        }
+
+        private void button12_Click(object sender, EventArgs e)
+        {
+            input inp = new input();
+            foreach (Control x in inp.Controls)
+            {
+                x.Hide();
+            }
+            inp.label1.Text = "Mask Size  ";
+            inp.label1.Show();
+            inp.textBox1.Show();
+
+            inp.button1.Show();
+            inp.ShowDialog();
+            pictureBox1.Image = im.Gus2(inp.heigth);
         }
     }
 }
