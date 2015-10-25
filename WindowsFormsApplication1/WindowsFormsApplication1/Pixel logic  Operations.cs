@@ -54,9 +54,11 @@ namespace WindowsFormsApplication1
             Word[7] = 128;
         }
 
-        public Bitmap contrast(bufferedLockBitmap input, int x, int y)
+        public bufferedLockBitmap contrast(bufferedLockBitmap input, int x, int y)
         {
-
+            temp = new Bitmap(input.Width,input.Height);
+            bf = new bufferedLockBitmap(temp);
+            bf.LockBits();
             int NewMinR = 0, NewMinG = 0, NewMinB = 0, NewMaxR = 0, NewMaxG = 0, NewMaxB = 0;
             temp = new Bitmap(input.Width, input.Height);
             int R, G, B;
@@ -85,11 +87,11 @@ namespace WindowsFormsApplication1
                     else if (G < 0) G = 0;
                     if (B > 255) B = 255;
                     else if (B < 0) B = 0;
-                    input.SetPixel(j, i, Color.FromArgb(R, G, B));
+                    bf.SetPixel(j, i, Color.FromArgb(R, G, B));
                 }
             }
-
-            return input.source2;
+            bf.UnlockBits();
+            return bf;
         }
         public Bitmap Bit_plane(bufferedLockBitmap input, int number, bool R, bool G, bool B)
         {
@@ -133,7 +135,7 @@ namespace WindowsFormsApplication1
             return bf.source2;
         }
 
-        public Bitmap Brightness(bufferedLockBitmap input, int dif)
+        public bufferedLockBitmap Brightness(bufferedLockBitmap input, int dif)
         {
             temp = new Bitmap(input.source);
             bf = new bufferedLockBitmap(temp);
@@ -156,7 +158,7 @@ namespace WindowsFormsApplication1
                 }
             }
             bf.UnlockBits();
-            return bf.source2;
+            return bf;
         }
         public void Grayscale(bufferedLockBitmap input)
         {
@@ -213,29 +215,35 @@ namespace WindowsFormsApplication1
             }
 
         }
-        public void Gamma(bufferedLockBitmap input, double dif)
+        public Bitmap Gamma(bufferedLockBitmap input, double dif)
         {
             if (dif == 0)
-                return;
+                return input.source;
+            if (dif < 0)
+                dif = 1 / Math.Abs(dif);
 
+            temp = new Bitmap(input.source);
+            bf = new bufferedLockBitmap(temp);
+            bf.LockBits();
             double R, G, B = 0;
             for (int i = 0; i < input.Height; i++)
             {
                 for (int j = 0; j < input.Width; j++)
                 {
-                    R = double.Parse(Math.Pow(double.Parse(input.Getpixel(j, i).R.ToString()), dif).ToString());
-                    G = double.Parse(Math.Pow(double.Parse(input.Getpixel(j, i).G.ToString()), dif).ToString());
-                    B = double.Parse(Math.Pow(double.Parse(input.Getpixel(j, i).B.ToString()), dif).ToString());
+                    R = (Math.Pow((bf.Getpixel(j, i).R), dif));
+                    G = (Math.Pow(bf.Getpixel(j, i).G, dif));
+                    B = (Math.Pow(bf.Getpixel(j, i).B, dif));
                     if (R > 255) R = 255;
                     else if (R < 0) R = 0;
                     if (G > 255) G = 255;
                     else if (G < 0) G = 0;
                     if (B > 255) B = 255;
                     else if (B < 0) B = 0;
-                    input.SetPixel(j, i, Color.FromArgb(Convert.ToInt32(R), Convert.ToInt32(G), Convert.ToInt32(B)));
+                    bf.SetPixel(j, i, Color.FromArgb(Convert.ToInt32(R), Convert.ToInt32(G), Convert.ToInt32(B)));
                 }
             }
-
+            bf.UnlockBits();
+            return bf.source2;
         }
         public Bitmap Addpictures(bufferedLockBitmap pic1, bufferedLockBitmap pic2, double fraction)
         {

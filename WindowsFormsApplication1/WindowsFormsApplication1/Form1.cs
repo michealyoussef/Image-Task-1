@@ -15,6 +15,8 @@ namespace WindowsFormsApplication1
     {
         ImageController im = new ImageController();
         ImageController im2 = new ImageController();
+        Histogramdrawing his;
+        bufferedLockBitmap bf;
         int exbrigth = 0;
         public Form1()
         {
@@ -121,22 +123,26 @@ namespace WindowsFormsApplication1
         private void trackBar1_Scroll(object sender, EventArgs e)
         {
 
-            numericUpDown1.Value = trackBar1.Value;
-            pictureBox1.Image = im.Brightness(trackBar1.Value);
-            this.exbrigth = trackBar1.Value;
+            numericUpDown1.Value = (trackBar1.Value);
+            bf = im.Brightness(trackBar1.Value);
+            his = new Histogramdrawing();
+            his.drawing(bf, chart1);
+            pictureBox1.Image = bf.source2;
         }
 
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
         {
             trackBar1.Value = decimal.ToInt32(numericUpDown1.Value);
-            pictureBox1.Image = im.Brightness(trackBar1.Value);
-
+            bf = im.Brightness(trackBar1.Value);
+            his = new Histogramdrawing();
+            his.drawing(bf, chart1);
+            pictureBox1.Image = bf.source2;
         }
 
         private void numericUpDown2_ValueChanged(object sender, EventArgs e)
         {
             trackBar2.Value = Convert.ToInt32(numericUpDown2.Value);
-            pictureBox1.Image = im.Gamma(Convert.ToInt32(numericUpDown2.Value));
+            pictureBox1.Image = im.Gamma(trackBar2.Value);
         }
 
         private void trackBar2_Scroll(object sender, EventArgs e)
@@ -148,10 +154,7 @@ namespace WindowsFormsApplication1
 
         private void button1_Click_1(object sender, EventArgs e)
         {
-
             pictureBox1.Image = im.Flipping();
-            im.ImageBitmap = im.Flipping();
-
         }
 
         private void button2_Click_1(object sender, EventArgs e)
@@ -177,7 +180,7 @@ namespace WindowsFormsApplication1
                 im.ImageLockBitmap.UnlockBits();
                 //   pictureBox1.Size = im.ImageBitmap.Size;
             }
-            Histogramdrawing his = new Histogramdrawing();
+            his = new Histogramdrawing();
             his.drawing(im.ImageLockBitmap, chart1);
         }
 
@@ -216,13 +219,20 @@ namespace WindowsFormsApplication1
         private void trackBar3_Scroll(object sender, EventArgs e)
         {
             numericUpDown3.Value = trackBar3.Value;
-            pictureBox1.Image = im.cont(-Convert.ToInt32(numericUpDown3.Value), Convert.ToInt32(numericUpDown3.Value));
+            bf = im.cont(-trackBar3.Value, trackBar3.Value);
+            pictureBox1.Image = bf.source2;
+            his = new Histogramdrawing();
+            his.drawing(bf, chart1);
         }
 
         private void numericUpDown3_ValueChanged(object sender, EventArgs e)
         {
             trackBar3.Value = decimal.ToInt32(numericUpDown3.Value);
-            pictureBox1.Image = im.cont(-Convert.ToInt32(numericUpDown3.Value), Convert.ToInt32(numericUpDown3.Value));
+            bf = im.cont(-trackBar3.Value, trackBar3.Value);
+            his.zeros();
+            pictureBox1.Image = bf.source2;
+            his = new Histogramdrawing();
+            his.drawing(bf, chart1);
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -234,20 +244,18 @@ namespace WindowsFormsApplication1
         {
             pictureBox1.Image = im.Quantization(int.Parse(textBox8.Text.ToString()));
         }
-
-
-
-
         private void pictureBox2_Click(object sender, EventArgs e)
         {
-
         }
 
         private void button10_Click(object sender, EventArgs e)
         {
             input inp = new input();
             inp.ShowDialog();
-            pictureBox1.Image = im.meanfilter(inp.width, inp.heigth, inp.x, inp.y);
+            pictureBox2.Image = im.meanfilter(inp.width, inp.heigth, inp.x, inp.y).source2;
+            //his = new Histogramdrawing();
+            //his.drawing(bf,chart1);
+            //= bf.source;
         }
 
         private void button11_Click(object sender, EventArgs e)
@@ -265,7 +273,10 @@ namespace WindowsFormsApplication1
             inp.textBox2.Show();
             inp.button1.Show();
             inp.ShowDialog();
-            pictureBox1.Image = im.Gus1(inp.heigth, inp.width);
+            //his = new Histogramdrawing();
+            //his.drawing(bf, chart1);
+            pictureBox1.Image = im.Gus1(inp.heigth, inp.width).source2;
+            //pictureBox1.Image = bf.source2;
         }
 
         private void button12_Click(object sender, EventArgs e)
@@ -281,7 +292,8 @@ namespace WindowsFormsApplication1
 
             inp.button1.Show();
             inp.ShowDialog();
-            pictureBox1.Image = im.Gus2(inp.heigth);
+            pictureBox1.Image = im.Gus2(inp.heigth).source2;
+            //pictureBox1.Image = bf.source2;
         }
     }
 }

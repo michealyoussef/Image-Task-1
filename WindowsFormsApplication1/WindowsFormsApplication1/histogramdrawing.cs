@@ -41,6 +41,9 @@ namespace WindowsFormsApplication1
                     Barray[B]++;
                 }
             }
+            chart1.Series["Red"].Points.Clear();
+            chart1.Series["Green"].Points.Clear();
+            chart1.Series["Blue"].Points.Clear();
 
             for (int w = 0; w < 256; w++)
             {
@@ -59,9 +62,14 @@ namespace WindowsFormsApplication1
             chart1.Series["Blue"].Color = Color.Blue;
 
         }
-        public void get_series_for_chart_component()
+        public void zeros()
         {
-            // return series array to be rendered in chart
+            for (int u = 0; u < 256; u++)
+            {
+                Rarray[u] = 0;
+                Garray[u] = 0;
+                Barray[u] = 0;
+            }
         }
 
 

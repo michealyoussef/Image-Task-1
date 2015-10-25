@@ -39,7 +39,7 @@ namespace WindowsFormsApplication1
             ImageLockBitmap = new bufferedLockBitmap(ImageBitmap);
             ImageLockBitmap.LockBits();
             op = new Pixel_logic__Operations(this.ImageLockBitmap);
-            
+
             return ImageLockBitmap.source;
 
         }
@@ -53,9 +53,9 @@ namespace WindowsFormsApplication1
         }
         public Bitmap Rotate(float angle)
         {
-            
-            return mat.perform_concat_matrices_operations(ImageLockBitmap,0,0,1,1,angle);
-            
+
+            return mat.perform_concat_matrices_operations(ImageLockBitmap, 0, 0, 1, 1, angle);
+
 
         }
         public Bitmap Shearing(float x, float y)
@@ -65,7 +65,7 @@ namespace WindowsFormsApplication1
         }
         public void all(float Xsize, float ysize, float angle, float shx, float shy, Graphics gg)
         {
-           
+
         }
         public Bitmap Grayscale()
         {
@@ -81,16 +81,14 @@ namespace WindowsFormsApplication1
             this.ImageLockBitmap.UnlockBits();
             return this.ImageLockBitmap.source2;
         }
-        public Bitmap Brightness(int dif)
+        public bufferedLockBitmap Brightness(int dif)
         {
             return op.Brightness(this.ImageLockBitmap, dif);
         }
-        public Bitmap Gamma(Double dif)
+        public Bitmap Gamma(double dif)
         {
-            this.ImageLockBitmap.LockBits();
-            op.Gamma(this.ImageLockBitmap, dif);
-            this.ImageLockBitmap.UnlockBits();
-            return this.ImageLockBitmap.source2;
+            return op.Gamma(this.ImageLockBitmap, dif);
+
         }
         public Bitmap Flipping()
         {
@@ -131,7 +129,7 @@ namespace WindowsFormsApplication1
                 for (int lx = 0; lx < ImageWidth; ++lx)
                 {
                     p = ImageLockBitmap.Getpixel(lx, ImageHigh - i - 1);
-                 
+
                     t.SetPixel(lx, i, p);
                 }
             }
@@ -141,7 +139,7 @@ namespace WindowsFormsApplication1
             return t.source2;
         }
         public Bitmap subtraction(bufferedLockBitmap input1)
-        { 
+        {
             return op.Subtraction(input1, this.ImageLockBitmap);
         }
         public Bitmap addtion(bufferedLockBitmap input1, double diff)
@@ -152,32 +150,32 @@ namespace WindowsFormsApplication1
         {
             return op.Bit_plane(this.ImageLockBitmap, x, R, G, B);
         }
-        public Bitmap cont(int x, int y)
+        public bufferedLockBitmap cont(int x, int y)
         {
-            this.ImageLockBitmap.LockBits();
-            op.contrast(this.ImageLockBitmap, x, y);
-            this.ImageLockBitmap.UnlockBits();
-            return this.ImageLockBitmap.source2;
+            return op.contrast(this.ImageLockBitmap, x, y);
         }
         public Bitmap Quantization(int x)
         {
             return op.Quantization(this.ImageLockBitmap, x);
         }
-        public Bitmap meanfilter(int w,int h,int x,int y)
+        public bufferedLockBitmap meanfilter(int w, int h, int x, int y)
         {
             Generatemask gn = new Generatemask();
-            return NO.LinearFilter(this.ImageLockBitmap,gn.Generatingmean(w, h),w,h,x,y,"NO").source2;
+            return NO.LinearFilter(this.ImageLockBitmap, gn.Generatingmean(w, h), w, h, x, y, "NO");
         }
-        public Bitmap Gus1(int ms, int s)
+        public bufferedLockBitmap Gus1(int ms, int s)
         {
             Generatemask gn = new Generatemask();
-            return NO.LinearFilter(this.ImageLockBitmap,gn.Gaussian_Filter_Option1(ms,s), 0, 0, 0, 0, "NO").source2;
-           
+            return NO.LinearFilter(this.ImageLockBitmap, gn.Gaussian_Filter_Option1(ms, s), ms, ms, 0, 0, "NO");
+
         }
-        public Bitmap Gus2(int s)
+        public bufferedLockBitmap Gus2(int s)
         {
             Generatemask gn = new Generatemask();
-            return NO.LinearFilter(this.ImageLockBitmap, gn.Gaussian_Filter_Option2(s), 0, 0, 0, 0, "NO").source2;
+            double constant = 1 / (2 * s * s * Math.PI);
+            int N = Convert.ToInt32(3.7 * s - 0.5);
+            int masksize = 2 * N + 1;
+            return NO.LinearFilter(this.ImageLockBitmap, gn.Gaussian_Filter_Option2(s), masksize, masksize, 0, 0, "NO");
 
         }
     }
