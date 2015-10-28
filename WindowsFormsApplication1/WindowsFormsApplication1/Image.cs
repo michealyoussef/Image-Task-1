@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Drawing;
-using System.IO;
-using System.Drawing.Drawing2D;
 using TestMatrixTransformations;
 
 namespace WindowsFormsApplication1
@@ -17,6 +11,7 @@ namespace WindowsFormsApplication1
         public int ImageHigh;
         NeighborhoodOperations NO = new NeighborhoodOperations();
         private PP36FileReading P3file;
+        Generatemask gn = new Generatemask();
         public bufferedLockBitmap ImageLockBitmap;
         public Pixel_logic__Operations op;
         ImageMatrixTransformations mat = new ImageMatrixTransformations();
@@ -36,6 +31,7 @@ namespace WindowsFormsApplication1
             }
             else
                 ImageBitmap = new Bitmap(path);
+
             ImageLockBitmap = new bufferedLockBitmap(ImageBitmap);
             ImageLockBitmap.LockBits();
             op = new Pixel_logic__Operations(this.ImageLockBitmap);
@@ -43,9 +39,10 @@ namespace WindowsFormsApplication1
             return ImageLockBitmap.source;
 
         }
-        public void savingpicture(String writen_path, bufferedLockBitmap bt)
+        public void savingpicture(String writen_path)
         {
-            P3file.saving(bt.source2, writen_path);
+            P3file.ImageBitmap = ImageLockBitmap.source2;
+            P3file.saving(this.ImageLockBitmap.source, writen_path);
         }
         public Bitmap Scale(float Xsize, float Ysize)
         {
@@ -69,9 +66,7 @@ namespace WindowsFormsApplication1
         }
         public Bitmap Grayscale()
         {
-            this.ImageLockBitmap.LockBits();
-            op.Grayscale(this.ImageLockBitmap);
-            this.ImageLockBitmap.UnlockBits();
+            this.ImageLockBitmap = op.Grayscale(this.ImageLockBitmap);
             return this.ImageLockBitmap.source2;
         }
         public Bitmap NOT()
@@ -83,60 +78,23 @@ namespace WindowsFormsApplication1
         }
         public bufferedLockBitmap Brightness(int dif)
         {
-            return op.Brightness(this.ImageLockBitmap, dif);
+            this.ImageLockBitmap = op.Brightness(this.ImageLockBitmap, dif);
+            return this.ImageLockBitmap;
         }
-        public Bitmap Gamma(double dif)
+        public bufferedLockBitmap Gamma(double dif)
         {
-            return op.Gamma(this.ImageLockBitmap, dif);
-
+            this.ImageLockBitmap = op.Gamma(this.ImageLockBitmap, dif);
+            return this.ImageLockBitmap;
         }
         public Bitmap Flipping()
-        {
-            Bitmap temp = new Bitmap(ImageLockBitmap.Width, ImageLockBitmap.Height);
-            bufferedLockBitmap t = new bufferedLockBitmap(temp);
-            t.LockBits();
-            ImageLockBitmap.LockBits();
-            //flip images
-            ImageWidth = ImageBitmap.Width;
-            ImageHigh = ImageBitmap.Height;
-            Bitmap mimg = new Bitmap(ImageWidth, ImageHigh);
-            for (int i = 0; i < ImageHigh; i++)
-            {
-                for (int lx = 0; lx < ImageWidth; ++lx)
-                {
-                    Color p = ImageLockBitmap.Getpixel(ImageWidth - lx - 1, i);
-                    t.SetPixel(lx, i, p);
-                }
-            }
-            ImageLockBitmap.UnlockBits();
-            t.UnlockBits();
-            temp.Dispose();
-            return t.source2;
+        {            
+            this.ImageLockBitmap = op.FlippingHorizontal(this.ImageLockBitmap);
+            return this.ImageLockBitmap.source2;
         }
         public Bitmap Flippingvertical()
         {
-            Bitmap temp = new Bitmap(ImageLockBitmap.Width, ImageLockBitmap.Height);
-            bufferedLockBitmap t = new bufferedLockBitmap(temp);
-            t.LockBits();
-            ImageLockBitmap.LockBits();
-            //flip images
-            Color p;
-            ImageWidth = ImageLockBitmap.Width;
-            ImageHigh = ImageLockBitmap.Height;
-            Bitmap mimg = new Bitmap(ImageWidth, ImageHigh);
-            for (int i = 0; i < ImageHigh; i++)
-            {
-                for (int lx = 0; lx < ImageWidth; ++lx)
-                {
-                    p = ImageLockBitmap.Getpixel(lx, ImageHigh - i - 1);
-
-                    t.SetPixel(lx, i, p);
-                }
-            }
-            ImageLockBitmap.UnlockBits();
-            t.UnlockBits();
-            temp.Dispose();
-            return t.source2;
+            this.ImageLockBitmap = op.Flippingvertical(this.ImageLockBitmap);
+            return this.ImageLockBitmap.source2;
         }
         public Bitmap subtraction(bufferedLockBitmap input1)
         {
@@ -160,23 +118,76 @@ namespace WindowsFormsApplication1
         }
         public bufferedLockBitmap meanfilter(int w, int h, int x, int y)
         {
-            Generatemask gn = new Generatemask();
-            return NO.LinearFilter(this.ImageLockBitmap, gn.Generatingmean(w, h), w, h, x, y, "NO");
+            this.ImageLockBitmap = NO.LinearFilter(this.ImageLockBitmap, gn.Generatingmean(w, h), w, h, x, y, "NO");
+            return this.ImageLockBitmap;
         }
-        public bufferedLockBitmap Gus1(int ms, int s)
+        public bufferedLockBitmap Gus1(int ms, double s)
         {
-            Generatemask gn = new Generatemask();
-            return NO.LinearFilter(this.ImageLockBitmap, gn.Gaussian_Filter_Option1(ms, s), ms, ms, 0, 0, "NO");
+            NO.LinearFilter(this.ImageLockBitmap, gn.Gaussian_Filter_Option1(ms, s), ms / 2, ms / 2, 0, 0, "NO");
+            return this.ImageLockBitmap;
+        }
+        public bufferedLockBitmap Gus2(double s)
+        {
 
-        }
-        public bufferedLockBitmap Gus2(int s)
-        {
-            Generatemask gn = new Generatemask();
-            double constant = 1 / (2 * s * s * Math.PI);
             int N = Convert.ToInt32(3.7 * s - 0.5);
             int masksize = 2 * N + 1;
-            return NO.LinearFilter(this.ImageLockBitmap, gn.Gaussian_Filter_Option2(s), masksize, masksize, 0, 0, "NO");
+            NO.LinearFilter(this.ImageLockBitmap, gn.Gaussian_Filter_Option2(s), masksize, masksize, masksize / 2, masksize / 2, "NO");
+            return this.ImageLockBitmap;
 
+        }
+        public bufferedLockBitmap mean1D(int masksize)
+        {
+            this.ImageLockBitmap = NO.LinearFilter(this.ImageLockBitmap, gn.Generatingmean(1, masksize), 1, masksize, 0, 0, "NO");
+            return this.ImageLockBitmap;
+        }
+        public bufferedLockBitmap laplacian()
+        {
+            this.ImageLockBitmap = NO.LinearFilter(this.ImageLockBitmap, gn.lap(), 3, 3, 0, 0, "cutoff");
+            return this.ImageLockBitmap;
+        }
+        public bufferedLockBitmap line_detectionh()
+        {
+            this.ImageLockBitmap = NO.LinearFilter(this.ImageLockBitmap, gn.line_detect_Horizontal(), 3, 3, 1, 1, "cutoff");
+            return this.ImageLockBitmap;
+        }
+
+        public bufferedLockBitmap line_detectionv()
+        {
+            this.ImageLockBitmap = NO.LinearFilter(this.ImageLockBitmap, gn.line_detect_vertical(), 3, 3, 0, 0, "cutoff");
+            return this.ImageLockBitmap;
+        }
+        public bufferedLockBitmap EdgeMagnitude()
+        {
+            bufferedLockBitmap pic1 = NO.LinearFilter(this.ImageLockBitmap, gn.line_detect_vertical(), 3, 3, 0, 0, "abs");
+            bufferedLockBitmap pic2 = NO.LinearFilter(this.ImageLockBitmap, gn.line_detect_Horizontal(), 3, 3, 0, 0, "cutoff");
+            Bitmap temp = new Bitmap(this.ImageLockBitmap.Width, this.ImageLockBitmap.Height);
+            bufferedLockBitmap bt = new bufferedLockBitmap(temp);
+            bt.LockBits();
+            double sumR = 0, sumG = 0, sumB = 0;
+            for (int i = 0; i < this.ImageLockBitmap.Height; i++)
+            {
+                for (int j = 0; j < this.ImageLockBitmap.Width; j++)
+                {
+                    sumR += (double)pic1.Getpixel(j, i).R + pic2.Getpixel(j, i).R;
+                    sumG += (double)pic1.Getpixel(j, i).G + pic2.Getpixel(j, i).G;
+                    sumB += (double)pic1.Getpixel(j, i).B + pic2.Getpixel(j, i).B;
+
+                    if (sumR > 255) sumR = 255;
+                    else if (sumR < 0) sumR = 0;
+                    if (sumG > 255) sumG = 255;
+                    else if (sumG < 0) sumG = 0;
+                    if (sumB > 255) sumB = 255;
+                    else if (sumB < 0) sumB = 0;
+
+                    bt.SetPixel(j, i, Color.FromArgb(Convert.ToInt32(sumR), Convert.ToInt32(sumG), Convert.ToInt32(sumB)));
+                    sumR = 0;
+                    sumG = 0;
+                    sumB = 0;
+                }
+            }
+            bt.UnlockBits();
+            this.ImageLockBitmap = bt;
+            return this.ImageLockBitmap;
         }
     }
 }

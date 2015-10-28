@@ -25,6 +25,7 @@ namespace WindowsFormsApplication1
         public int Height { get; private set; }
         public bufferedLockBitmap(Bitmap source)
         {
+
             this.source = source;
             this.Width = source.Width;
             this.Height = source.Height;
@@ -46,8 +47,7 @@ namespace WindowsFormsApplication1
                     throw new ArgumentException("Only 8 , 24 , 32 bpp images are supported. ");
                 }
                 bitmapData2 = source2.LockBits(rect2, ImageLockMode.ReadWrite, source.PixelFormat);
-                bitmapData = source.LockBits(rect, ImageLockMode.ReadWrite, source.PixelFormat);
-               
+                bitmapData = source.LockBits(rect, ImageLockMode.ReadWrite, source.PixelFormat);               
                 int step = Depth / 8;
                 pixels = new byte[PixelCount * step];
                 Iptr = bitmapData.Scan0;

@@ -109,6 +109,8 @@
       <DependentUpon>Test_Matrix_Transformations.cs</DependentUpon>
     </Compile>
     <Compile Include="Universal_Image_File_Handler.cs" />
+    <Compile Include="WindowState.cs" />
+    <Compile Include="WindowStatesStack.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

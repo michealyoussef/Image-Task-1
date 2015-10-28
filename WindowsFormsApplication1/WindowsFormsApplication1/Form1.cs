@@ -6,6 +6,8 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
+
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 
@@ -17,11 +19,12 @@ namespace WindowsFormsApplication1
         ImageController im2 = new ImageController();
         Histogramdrawing his;
         bufferedLockBitmap bf;
-        int exbrigth = 0;
+        WindowState win = new WindowState();
+        int dif = 0;
         public Form1()
         {
-
             InitializeComponent();
+
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -31,16 +34,6 @@ namespace WindowsFormsApplication1
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-
-
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-
-        }
 
         private void button5_Click(object sender, EventArgs e)
         {
@@ -95,17 +88,13 @@ namespace WindowsFormsApplication1
                 MessageBox.Show("please fill text box", "Error");
             }
         }
-        private void button9_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FolderBrowserDialog ofd = new FolderBrowserDialog();
             if (ofd.ShowDialog() == DialogResult.OK && !string.IsNullOrEmpty(ofd.SelectedPath))
             {
-                im.savingpicture(ofd.SelectedPath, im.ImageLockBitmap);
+                im.savingpicture(ofd.SelectedPath);
             }
         }
 
@@ -122,9 +111,10 @@ namespace WindowsFormsApplication1
 
         private void trackBar1_Scroll(object sender, EventArgs e)
         {
-
             numericUpDown1.Value = (trackBar1.Value);
-            bf = im.Brightness(trackBar1.Value);
+            dif = trackBar1.Value - win.brigth;
+            win.brigth = trackBar1.Value;
+            bf = im.Brightness(dif);
             his = new Histogramdrawing();
             his.drawing(bf, chart1);
             pictureBox1.Image = bf.source2;
@@ -133,7 +123,9 @@ namespace WindowsFormsApplication1
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
         {
             trackBar1.Value = decimal.ToInt32(numericUpDown1.Value);
-            bf = im.Brightness(trackBar1.Value);
+            dif = trackBar1.Value - win.brigth;
+            win.brigth = trackBar1.Value;
+            bf = im.Brightness(dif);
             his = new Histogramdrawing();
             his.drawing(bf, chart1);
             pictureBox1.Image = bf.source2;
@@ -142,13 +134,20 @@ namespace WindowsFormsApplication1
         private void numericUpDown2_ValueChanged(object sender, EventArgs e)
         {
             trackBar2.Value = Convert.ToInt32(numericUpDown2.Value);
-            pictureBox1.Image = im.Gamma(trackBar2.Value);
+            dif = trackBar2.Value - win.gamma;
+            win.gamma = trackBar2.Value;
+            pictureBox1.Image = im.Gamma(dif).source2;
         }
 
         private void trackBar2_Scroll(object sender, EventArgs e)
         {
             numericUpDown2.Value = trackBar2.Value;
-            pictureBox1.Image = im.Gamma(trackBar2.Value);
+            dif = trackBar2.Value - win.gamma;
+            win.gamma = trackBar2.Value;
+            bf = im.Gamma(dif);
+            his = new Histogramdrawing();
+            his.drawing(bf, chart1);
+            pictureBox1.Image = im.Gamma(dif).source2;
 
         }
 
@@ -157,12 +156,6 @@ namespace WindowsFormsApplication1
             pictureBox1.Image = im.Flipping();
         }
 
-        private void button2_Click_1(object sender, EventArgs e)
-        {
-            pictureBox1.Image = im.Flippingvertical();
-            im.ImageBitmap = im.Flippingvertical();
-
-        }
 
         private void image1ToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -172,12 +165,17 @@ namespace WindowsFormsApplication1
             numericUpDown1.Value = 0;
             numericUpDown2.Value = 0;
             numericUpDown3.Value = 0;
+            win.rest();
 
             OpenFileDialog ofd = new OpenFileDialog();
             if (ofd.ShowDialog() == DialogResult.OK && !string.IsNullOrEmpty(ofd.FileName))
             {
+                Benchmark.Start();
                 pictureBox1.Image = im.Read(ofd.FileName);
+                Benchmark.End();
                 im.ImageLockBitmap.UnlockBits();
+                Benchmark.End();
+                this.textBox1.Text = Benchmark.GetSeconds().ToString();
                 //   pictureBox1.Size = im.ImageBitmap.Size;
             }
             his = new Histogramdrawing();
@@ -186,13 +184,13 @@ namespace WindowsFormsApplication1
 
         private void image2ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OpenFileDialog ofd = new OpenFileDialog();
-            if (ofd.ShowDialog() == DialogResult.OK && !string.IsNullOrEmpty(ofd.FileName))
-            {
-                pictureBox2.Image = im2.Read(ofd.FileName);
-                im2.ImageLockBitmap.UnlockBits();
-                pictureBox2.Size = im2.ImageBitmap.Size;
-            }
+            //OpenFileDialog ofd = new OpenFileDialog();
+            //if (ofd.ShowDialog() == DialogResult.OK && !string.IsNullOrEmpty(ofd.FileName))
+            //{
+            //    pictureBox2.Image = im2.Read(ofd.FileName);
+            //    im2.ImageLockBitmap.UnlockBits();
+            //    pictureBox2.Size = im2.ImageBitmap.Size;
+            //}
 
         }
 
@@ -220,6 +218,7 @@ namespace WindowsFormsApplication1
         {
             numericUpDown3.Value = trackBar3.Value;
             bf = im.cont(-trackBar3.Value, trackBar3.Value);
+
             pictureBox1.Image = bf.source2;
             his = new Histogramdrawing();
             his.drawing(bf, chart1);
@@ -244,21 +243,70 @@ namespace WindowsFormsApplication1
         {
             pictureBox1.Image = im.Quantization(int.Parse(textBox8.Text.ToString()));
         }
-        private void pictureBox2_Click(object sender, EventArgs e)
+
+
+        private void laplasinToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            Benchmark.Start();
+            pictureBox1.Image = im.laplacian().source2;
+            Benchmark.End();
+            textBox1.Text = Benchmark.GetSeconds().ToString();
         }
 
-        private void button10_Click(object sender, EventArgs e)
+        private void meanFilter1DToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            input inp = new input();
+            foreach (Control x in inp.Controls)
+            {
+                x.Hide();
+            }
+            inp.label1.Text = "Mask Size  ";
+            inp.label1.Show();
+            inp.textBox1.Show();
+            inp.button1.Show();
+            inp.ShowDialog();
+            Benchmark.Start();
+            pictureBox1.Image = im.mean1D(Convert.ToInt32(inp.heigth)).source2;
+            Benchmark.End();
+            textBox1.Text = "";
+            textBox1.Text = Benchmark.GetSeconds().ToString();
+        }
+
+        private void meanFilter2DToolStripMenuItem_Click(object sender, EventArgs e)
         {
             input inp = new input();
             inp.ShowDialog();
-            pictureBox2.Image = im.meanfilter(inp.width, inp.heigth, inp.x, inp.y).source2;
-            //his = new Histogramdrawing();
-            //his.drawing(bf,chart1);
-            //= bf.source;
+            Benchmark.Start();
+            pictureBox1.Image = im.meanfilter(Convert.ToInt32(inp.width), Convert.ToInt32(inp.heigth), Convert.ToInt32(inp.x), Convert.ToInt32(inp.y)).source2;
+            Benchmark.End();
+            textBox1.Text = Benchmark.GetSeconds().ToString();
         }
 
-        private void button11_Click(object sender, EventArgs e)
+        private void sobelFilterslineDetectionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Benchmark.Start();
+            pictureBox1.Image = im.line_detectionh().source2;
+            Benchmark.End();
+            textBox1.Text = Benchmark.GetSeconds().ToString();
+        }
+
+        private void verticalLineDetectionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Benchmark.Start();
+            pictureBox1.Image = im.line_detectionv().source2;
+            Benchmark.End();
+            textBox1.Text = Benchmark.GetSeconds().ToString();
+        }
+
+        private void sobelEdgeMagnitudeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Benchmark.Start();
+            pictureBox1.Image = im.EdgeMagnitude().source2;
+            Benchmark.End();
+            textBox1.Text = Benchmark.GetSeconds().ToString();
+        }
+
+        private void gaussianoption1ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             input inp = new input();
             foreach (Control x in inp.Controls)
@@ -273,13 +321,13 @@ namespace WindowsFormsApplication1
             inp.textBox2.Show();
             inp.button1.Show();
             inp.ShowDialog();
-            //his = new Histogramdrawing();
-            //his.drawing(bf, chart1);
-            pictureBox1.Image = im.Gus1(inp.heigth, inp.width).source2;
-            //pictureBox1.Image = bf.source2;
+            Benchmark.Start();
+            pictureBox1.Image = im.Gus1(Convert.ToInt32(inp.heigth), inp.width).source2;
+            Benchmark.End();
+            textBox1.Text = Benchmark.GetSeconds().ToString();
         }
 
-        private void button12_Click(object sender, EventArgs e)
+        private void gaussianOption2ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             input inp = new input();
             foreach (Control x in inp.Controls)
@@ -293,7 +341,22 @@ namespace WindowsFormsApplication1
             inp.button1.Show();
             inp.ShowDialog();
             pictureBox1.Image = im.Gus2(inp.heigth).source2;
-            //pictureBox1.Image = bf.source2;
+        }
+
+        private void filpHorizontalToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            pictureBox1.Image = im.Flipping();
+
+        }
+
+        private void filpVerticalToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            pictureBox1.Image = im.Flippingvertical();
+        }
+
+        private void closeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

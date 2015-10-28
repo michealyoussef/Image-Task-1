@@ -39,11 +39,11 @@ namespace WindowsFormsApplication1
             SR.Close();
 
         }
-        public int saving(Bitmap bt, String ct, String ImageType, String pt)
+        public int saving(String ct, String ImageType, String pt, string fn)
         {
             try
             {
-                FileStream fsw = new FileStream(pt + "/saving.ppm", FileMode.Append, FileAccess.Write);
+                FileStream fsw = new FileStream(pt + "/" + fn + ".ppm", FileMode.Create, FileAccess.Write);
                 StreamWriter SR = new StreamWriter(fsw);
                 /*
                  * read the ppm file 
@@ -58,11 +58,11 @@ namespace WindowsFormsApplication1
                 SR.WriteLine(ct);
                 SR.WriteLine(ImageBitmap.Width + " " + ImageBitmap.Height);
                 SR.WriteLine("255");
-                for (int i = 0; i < bt.Height; i++)
+                for (int i = 0; i < ImageBitmap.Height; i++)
                 {
                     write = "";
-                   
-                    for (int j = 0; j < bt.Width; j++)
+
+                    for (int j = 0; j < ImageBitmap.Width; j++)
                     {
                         write += ImageBitmap.GetPixel(j, i).R + " " + ImageBitmap.GetPixel(j, i).G + " " + ImageBitmap.GetPixel(j, i).B + " ";
                     }

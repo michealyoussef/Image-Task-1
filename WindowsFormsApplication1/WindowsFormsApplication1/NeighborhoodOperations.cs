@@ -1,20 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 
 namespace WindowsFormsApplication1
 {
     class NeighborhoodOperations
     {
-        bufferedLockBitmap f;
-        Bitmap temp;
-        public bufferedLockBitmap LinearFilter(bufferedLockBitmap input, double[,] mask, int w, int h, int x, int y, String word)
+
+        public bufferedLockBitmap LinearFilter( bufferedLockBitmap input, double[,] mask, int w, int h, int x, int y, String word)
         {
-            temp = new Bitmap(input.Width, input.Height);
-            f = new bufferedLockBitmap(temp);
-            f.LockBits();
+            Bitmap temp = new Bitmap(input.Width,input.Height);
+            bufferedLockBitmap bt = new bufferedLockBitmap(temp);
+            bt.LockBits();
             double sumR = 0, sumG = 0, sumB = 0;
             for (int i = 0; i < input.Height; i++)
             {
@@ -34,21 +30,36 @@ namespace WindowsFormsApplication1
                                 continue;
                             else
                             {
-                                sumR += (double)input.source.GetPixel(j + maskw - x, i + maskh - y).R * mask[maskw, maskh];
-                                sumG += (double)input.source.GetPixel(j + maskw - x, i + maskh - y).G * mask[maskw, maskh];
-                                sumB += (double)input.source.GetPixel(j + maskw - x, i + maskh - y).B * mask[maskw, maskh];
+                                sumR += (double)input.Getpixel(j + maskw - x, i + maskh - y).R * mask[maskh, maskw];
+                                sumG += (double)input.Getpixel(j + maskw - x, i + maskh - y).G * mask[maskh, maskw];
+                                sumB += (double)input.Getpixel(j + maskw - x, i + maskh - y).B * mask[maskh, maskw];
                             }
                         }
                     }
 
-                    f.SetPixel(j, i, Color.FromArgb(Convert.ToInt32(sumR), Convert.ToInt32(sumG), Convert.ToInt32(sumB)));
+                    if (word == "cutoff")
+                    {
+                        if (sumR > 255) sumR = 255;
+                        else if (sumR < 0) sumR = 0;
+                        if (sumG > 255) sumG = 255;
+                        else if (sumG < 0) sumG = 0;
+                        if (sumB > 255) sumB = 255;
+                        else if (sumB < 0) sumB = 0;
+                    }
+                    else if (word == "abs")
+                    {
+                        sumB = Math.Abs(sumB);
+                        sumR = Math.Abs(sumR);
+                        sumG = Math.Abs(sumG);
+                    }
+                    bt.SetPixel(j, i, Color.FromArgb(Convert.ToInt32(sumR), Convert.ToInt32(sumG), Convert.ToInt32(sumB)));
                     sumR = 0;
                     sumG = 0;
                     sumB = 0;
                 }
             }
-            f.UnlockBits();
-            return f;
+            bt.UnlockBits();
+            return bt;
         }
     }
 }

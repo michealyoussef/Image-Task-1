@@ -56,7 +56,7 @@ namespace WindowsFormsApplication1
 
         public bufferedLockBitmap contrast(bufferedLockBitmap input, int x, int y)
         {
-            temp = new Bitmap(input.Width,input.Height);
+            temp = new Bitmap(input.Width, input.Height);
             bf = new bufferedLockBitmap(temp);
             bf.LockBits();
             int NewMinR = 0, NewMinG = 0, NewMinB = 0, NewMaxR = 0, NewMaxG = 0, NewMaxB = 0;
@@ -135,9 +135,30 @@ namespace WindowsFormsApplication1
             return bf.source2;
         }
 
+        public bufferedLockBitmap FlippingHorizontal(bufferedLockBitmap imageLockBitmap)
+        {
+            Bitmap temp = new Bitmap(imageLockBitmap.Width, imageLockBitmap.Height);
+            bufferedLockBitmap t = new bufferedLockBitmap(temp);
+            t.LockBits();
+            //flip images
+            int ImageWidth = imageLockBitmap.Width;
+            int ImageHigh = imageLockBitmap.Height;
+            Bitmap mimg = new Bitmap(ImageWidth, ImageHigh);
+            for (int i = 0; i < ImageHigh; i++)
+            {
+                for (int lx = 0; lx < ImageWidth; ++lx)
+                {
+                    Color p = imageLockBitmap.Getpixel(ImageWidth - lx - 1, i);
+                    t.SetPixel(lx, i, p);
+                }
+            }
+            t.UnlockBits();
+            return t;
+        }
+
         public bufferedLockBitmap Brightness(bufferedLockBitmap input, int dif)
         {
-            temp = new Bitmap(input.source);
+            temp = new Bitmap(input.Width,input.Height);
             bf = new bufferedLockBitmap(temp);
             bf.LockBits();
             int R, G, B = 0;
@@ -160,9 +181,9 @@ namespace WindowsFormsApplication1
             bf.UnlockBits();
             return bf;
         }
-        public void Grayscale(bufferedLockBitmap input)
+        public bufferedLockBitmap Grayscale(bufferedLockBitmap input)
         {
-            temp = new Bitmap(input.Width, input.Height);
+            input.LockBits();
             int sum = 0;
             for (int i = 0; i < input.Height; i++)
             {
@@ -173,9 +194,9 @@ namespace WindowsFormsApplication1
                     sum /= 3;
                     input.SetPixel(j, i, Color.FromArgb(sum, sum, sum));
                 }
-
             }
-
+            input.UnlockBits();
+            return input;
         }
         public Bitmap Quantization(bufferedLockBitmap input, int num)
         {
@@ -213,16 +234,15 @@ namespace WindowsFormsApplication1
                     input.SetPixel(j, i, Color.FromArgb(255 - input.Getpixel(j, i).R, 255 - input.Getpixel(j, i).G, 255 - input.Getpixel(j, i).B));
                 }
             }
-
         }
-        public Bitmap Gamma(bufferedLockBitmap input, double dif)
+        public bufferedLockBitmap Gamma(bufferedLockBitmap input, double dif)
         {
             if (dif == 0)
-                return input.source;
+                return input;
             if (dif < 0)
                 dif = 1 / Math.Abs(dif);
 
-            temp = new Bitmap(input.source);
+            temp = new Bitmap(input.Width, input.Height);
             bf = new bufferedLockBitmap(temp);
             bf.LockBits();
             double R, G, B = 0;
@@ -230,9 +250,9 @@ namespace WindowsFormsApplication1
             {
                 for (int j = 0; j < input.Width; j++)
                 {
-                    R = (Math.Pow((bf.Getpixel(j, i).R), dif));
-                    G = (Math.Pow(bf.Getpixel(j, i).G, dif));
-                    B = (Math.Pow(bf.Getpixel(j, i).B, dif));
+                    R = (Math.Pow((input.Getpixel(j, i).R), dif));
+                    G = (Math.Pow(input.Getpixel(j, i).G, dif));
+                    B = (Math.Pow(input.Getpixel(j, i).B, dif));
                     if (R > 255) R = 255;
                     else if (R < 0) R = 0;
                     if (G > 255) G = 255;
@@ -243,7 +263,7 @@ namespace WindowsFormsApplication1
                 }
             }
             bf.UnlockBits();
-            return bf.source2;
+            return bf;
         }
         public Bitmap Addpictures(bufferedLockBitmap pic1, bufferedLockBitmap pic2, double fraction)
         {
@@ -275,9 +295,6 @@ namespace WindowsFormsApplication1
                 MessageBox.Show("picture 1 size is equal to picture 2 size");
             return temp;
         }
-
-
-
         public Bitmap Subtraction(bufferedLockBitmap pic1, bufferedLockBitmap pic2)//////na2s el contrast
         {
             temp = new Bitmap(pic1.Width, pic1.Height);
@@ -303,5 +320,28 @@ namespace WindowsFormsApplication1
             bf.UnlockBits();
             return bf.source2;
         }
+        public bufferedLockBitmap Flippingvertical(bufferedLockBitmap pic1)//////na2s el contrast
+        {
+            Bitmap temp = new Bitmap(pic1.Width, pic1.Height);
+            bufferedLockBitmap t = new bufferedLockBitmap(temp);
+            t.LockBits();
+            //flip images
+            Color p;
+            int ImageWidth = pic1.Width;
+            int ImageHigh = pic1.Height;
+            Bitmap mimg = new Bitmap(ImageWidth, ImageHigh);
+            for (int i = 0; i < ImageHigh; i++)
+            {
+                for (int lx = 0; lx < ImageWidth; ++lx)
+                {
+                    p = pic1.Getpixel(lx, ImageHigh - i - 1);
+
+                    t.SetPixel(lx, i, p);
+                }
+            }
+            t.UnlockBits();
+            return t;
+        }
+
     }
 }

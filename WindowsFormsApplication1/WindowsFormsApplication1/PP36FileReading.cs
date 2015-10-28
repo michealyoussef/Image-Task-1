@@ -18,10 +18,11 @@ namespace WindowsFormsApplication1
         private int ImageHight;
         private int ImageMaxColoredValue;
         public Bitmap ImageBitmap;
+        string namefile;
         public PP36FileReading(String path)
         {
             FileStream FS = new FileStream(path, FileMode.OpenOrCreate);
-            StreamReader SR = new StreamReader(FS);            
+            StreamReader SR = new StreamReader(FS);
             /*
             * read the ppm file 
             * P3
@@ -30,12 +31,14 @@ namespace WindowsFormsApplication1
             * max colored pixel 
             * width * hight (R G B) pixels
             */
+            namefile = path.Split('\\').Last();
+            namefile = namefile.Split('.').First();
             ImageType = SR.ReadLine();
             Console.WriteLine("\n type : " + ImageType);
             String WidthHight = SR.ReadLine();
             if (WidthHight[0] == '#')
             {
-              this.Comment = WidthHight;
+                this.Comment = WidthHight;
                 WidthHight = SR.ReadLine();
             }
             String[] resolution = WidthHight.Split(' ');
@@ -50,19 +53,26 @@ namespace WindowsFormsApplication1
             }
             else if (ImageType == "P6")
             {
-               
+
                 p6 = new P6_File(ref FS, ImageWidth, ImageHight);
                 this.ImageBitmap = p6.ImageBitmap;
                 SR.Close();
                 FS.Close();
             }
         }
-        public int saving(Bitmap bt,String pt)
+        public int saving(Bitmap bt, String pt)
         {
             if (ImageType == "P3")
-                return p3.saving(ImageBitmap, this.Comment, ImageType, pt);
+            {
+                p3.ImageBitmap = this.ImageBitmap;
+                return p3.saving(this.Comment, ImageType, pt, this.namefile);
+            }
             else if (ImageType == "P6")
-                p6.saving(ImageBitmap, this.Comment, ImageType, pt);
+            {
+                p6.ImageBitmap = this.ImageBitmap;
+                p6.saving(bt, this.Comment, ImageType, pt, this.namefile);
+            }
+
             return 0;
         }
 
