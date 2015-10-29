@@ -10,7 +10,7 @@ namespace WindowsFormsApplication1
         public int ImageWidth;
         public int ImageHigh;
         NeighborhoodOperations NO = new NeighborhoodOperations();
-        private PP36FileReading P3file;
+        public PP36FileReading P3file;
         Generatemask gn = new Generatemask();
         public bufferedLockBitmap ImageLockBitmap;
         public Pixel_logic__Operations op;
@@ -35,13 +35,14 @@ namespace WindowsFormsApplication1
             ImageLockBitmap = new bufferedLockBitmap(ImageBitmap);
             ImageLockBitmap.LockBits();
             op = new Pixel_logic__Operations(this.ImageLockBitmap);
-
             return ImageLockBitmap.source;
 
         }
         public void savingpicture(String writen_path)
         {
+            ImageLockBitmap.LockBits();
             P3file.ImageBitmap = ImageLockBitmap.source2;
+            ImageLockBitmap.UnlockBits();
             P3file.saving(this.ImageLockBitmap.source, writen_path);
         }
         public Bitmap Scale(float Xsize, float Ysize)

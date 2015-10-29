@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.Drawing;
 using System.IO;
 using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
+
 namespace WindowsFormsApplication1
 {
     public class PP36FileReading
@@ -18,7 +20,7 @@ namespace WindowsFormsApplication1
         private int ImageHight;
         private int ImageMaxColoredValue;
         public Bitmap ImageBitmap;
-        string namefile;
+        public string namefile;
         public PP36FileReading(String path)
         {
             FileStream FS = new FileStream(path, FileMode.OpenOrCreate);
@@ -58,6 +60,7 @@ namespace WindowsFormsApplication1
                 this.ImageBitmap = p6.ImageBitmap;
                 SR.Close();
                 FS.Close();
+               
             }
         }
         public int saving(Bitmap bt, String pt)
@@ -72,7 +75,10 @@ namespace WindowsFormsApplication1
                 p6.ImageBitmap = this.ImageBitmap;
                 p6.saving(bt, this.Comment, ImageType, pt, this.namefile);
             }
-
+            else
+            {
+                bt.Save(@pt,ImageFormat.Bmp);              
+            }
             return 0;
         }
 
