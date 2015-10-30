@@ -69,7 +69,7 @@ namespace TestMatrixTransformations
             transformations_matrix.Invert();
 
             // 8 - Use the inverted version to reverse transform all new locations in the new image buffer
-            return apply_transformation_matrix_to_bitmap_or_buffer(transformations_matrix, _src_img, new_width, new_height).source2;
+            return apply_transformation_matrix_to_bitmap_or_buffer(transformations_matrix, _src_img, new_width, new_height).source;
             
         }
 

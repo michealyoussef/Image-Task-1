@@ -21,6 +21,10 @@ namespace WindowsFormsApplication1
         private int ImageMaxColoredValue;
         public Bitmap ImageBitmap;
         public string namefile;
+        public PP36FileReading()
+        {
+
+        }
         public PP36FileReading(String path)
         {
             FileStream FS = new FileStream(path, FileMode.OpenOrCreate);
@@ -55,14 +59,21 @@ namespace WindowsFormsApplication1
             }
             else if (ImageType == "P6")
             {
-
                 p6 = new P6_File(ref FS, ImageWidth, ImageHight);
                 this.ImageBitmap = p6.ImageBitmap;
                 SR.Close();
                 FS.Close();
-               
             }
+            
         }
+        public void readbitmap(string path)
+        {            
+            this.ImageBitmap = new Bitmap(path);
+            ImageHight = this.ImageBitmap.Width;
+            ImageWidth = this.ImageBitmap.Height;
+            namefile = path.Split('\\').Last();
+        }
+       
         public int saving(Bitmap bt, String pt)
         {
             if (ImageType == "P3")
@@ -77,7 +88,7 @@ namespace WindowsFormsApplication1
             }
             else
             {
-                bt.Save(@pt,ImageFormat.Bmp);              
+                this.ImageBitmap.Save(@pt+"//"+this.namefile+".Bmp",ImageFormat.Bmp);
             }
             return 0;
         }

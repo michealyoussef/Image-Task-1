@@ -4,13 +4,13 @@ using TestMatrixTransformations;
 
 namespace WindowsFormsApplication1
 {
-    class ImageController
+   public class ImageController
     {
         public Bitmap ImageBitmap = new Bitmap(1000, 800);
         public int ImageWidth;
         public int ImageHigh;
         NeighborhoodOperations NO = new NeighborhoodOperations();
-        public PP36FileReading P3file;
+        public PP36FileReading PP36File;
         Generatemask gn = new Generatemask();
         public bufferedLockBitmap ImageLockBitmap;
         public Pixel_logic__Operations op;
@@ -24,13 +24,20 @@ namespace WindowsFormsApplication1
             String[] pa = path.Split('.');
             if (pa[pa.Length - 1] == "ppm" || pa[pa.Length - 1] == "PPM")
             {
-                P3file = new PP36FileReading(path);
-                ImageBitmap = P3file.ImageBitmap;
+                PP36File = new PP36FileReading(path);
+                ImageBitmap = PP36File.ImageBitmap;
                 ImageHigh = ImageBitmap.Height;
                 ImageWidth = ImageBitmap.Width;
             }
             else
-                ImageBitmap = new Bitmap(path);
+            {
+
+                PP36File = new PP36FileReading();
+                PP36File.readbitmap(path);
+                ImageBitmap = PP36File.ImageBitmap;
+                ImageHigh = ImageBitmap.Height;
+                ImageWidth = ImageBitmap.Width;
+            }
 
             ImageLockBitmap = new bufferedLockBitmap(ImageBitmap);
             ImageLockBitmap.LockBits();
@@ -40,10 +47,9 @@ namespace WindowsFormsApplication1
         }
         public void savingpicture(String writen_path)
         {
-            ImageLockBitmap.LockBits();
-            P3file.ImageBitmap = ImageLockBitmap.source2;
-            ImageLockBitmap.UnlockBits();
-            P3file.saving(this.ImageLockBitmap.source, writen_path);
+            
+            PP36File.ImageBitmap = ImageLockBitmap.source;
+            PP36File.saving(this.ImageLockBitmap.source, writen_path);
         }
         public Bitmap Scale(float Xsize, float Ysize)
         {
@@ -68,14 +74,14 @@ namespace WindowsFormsApplication1
         public Bitmap Grayscale()
         {
             this.ImageLockBitmap = op.Grayscale(this.ImageLockBitmap);
-            return this.ImageLockBitmap.source2;
+            return this.ImageLockBitmap.source;
         }
-        public Bitmap NOT()
+        public Bitmap NOT(int x)
         {
             this.ImageLockBitmap.LockBits();
-            op.notoperation(this.ImageLockBitmap);
+            op.notoperation(this.ImageLockBitmap, x);
             this.ImageLockBitmap.UnlockBits();
-            return this.ImageLockBitmap.source2;
+            return this.ImageLockBitmap.source;
         }
         public bufferedLockBitmap Brightness(int dif)
         {
@@ -88,14 +94,14 @@ namespace WindowsFormsApplication1
             return this.ImageLockBitmap;
         }
         public Bitmap Flipping()
-        {            
+        {
             this.ImageLockBitmap = op.FlippingHorizontal(this.ImageLockBitmap);
-            return this.ImageLockBitmap.source2;
+            return this.ImageLockBitmap.source;
         }
         public Bitmap Flippingvertical()
         {
             this.ImageLockBitmap = op.Flippingvertical(this.ImageLockBitmap);
-            return this.ImageLockBitmap.source2;
+            return this.ImageLockBitmap.source;
         }
         public Bitmap subtraction(bufferedLockBitmap input1)
         {
@@ -141,26 +147,28 @@ namespace WindowsFormsApplication1
             this.ImageLockBitmap = NO.LinearFilter(this.ImageLockBitmap, gn.Generatingmean(1, masksize), 1, masksize, 0, 0, "NO");
             return this.ImageLockBitmap;
         }
-        public bufferedLockBitmap laplacian()
-        {
+        public Bitmap laplacian()
+        {    
             this.ImageLockBitmap = NO.LinearFilter(this.ImageLockBitmap, gn.lap(), 3, 3, 0, 0, "cutoff");
-            return this.ImageLockBitmap;
+        
+            return this.ImageLockBitmap.source;
         }
         public bufferedLockBitmap line_detectionh()
         {
-            this.ImageLockBitmap = NO.LinearFilter(this.ImageLockBitmap, gn.line_detect_Horizontal(), 3, 3, 1, 1, "cutoff");
+            this.ImageLockBitmap = NO.LinearFilter(this.ImageLockBitmap, gn.line_detect_Horizontal(), 3, 3, 1 ,1, "abs");
+            
             return this.ImageLockBitmap;
         }
 
         public bufferedLockBitmap line_detectionv()
         {
-            this.ImageLockBitmap = NO.LinearFilter(this.ImageLockBitmap, gn.line_detect_vertical(), 3, 3, 0, 0, "cutoff");
+            this.ImageLockBitmap = NO.LinearFilter(this.ImageLockBitmap, gn.line_detect_vertical(), 3, 3, 1, 1, "abs");
             return this.ImageLockBitmap;
         }
         public bufferedLockBitmap EdgeMagnitude()
         {
-            bufferedLockBitmap pic1 = NO.LinearFilter(this.ImageLockBitmap, gn.line_detect_vertical(), 3, 3, 0, 0, "abs");
-            bufferedLockBitmap pic2 = NO.LinearFilter(this.ImageLockBitmap, gn.line_detect_Horizontal(), 3, 3, 0, 0, "cutoff");
+            bufferedLockBitmap pic1 = NO.LinearFilter(this.ImageLockBitmap, gn.line_detect_vertical(), 3, 3, 1, 1, "abs");
+            bufferedLockBitmap pic2 = NO.LinearFilter(this.ImageLockBitmap, gn.line_detect_Horizontal(), 3, 3, 1, 1, "abs");
             Bitmap temp = new Bitmap(this.ImageLockBitmap.Width, this.ImageLockBitmap.Height);
             bufferedLockBitmap bt = new bufferedLockBitmap(temp);
             bt.LockBits();
@@ -172,14 +180,12 @@ namespace WindowsFormsApplication1
                     sumR += (double)pic1.Getpixel(j, i).R + pic2.Getpixel(j, i).R;
                     sumG += (double)pic1.Getpixel(j, i).G + pic2.Getpixel(j, i).G;
                     sumB += (double)pic1.Getpixel(j, i).B + pic2.Getpixel(j, i).B;
-
                     if (sumR > 255) sumR = 255;
                     else if (sumR < 0) sumR = 0;
                     if (sumG > 255) sumG = 255;
                     else if (sumG < 0) sumG = 0;
                     if (sumB > 255) sumB = 255;
                     else if (sumB < 0) sumB = 0;
-
                     bt.SetPixel(j, i, Color.FromArgb(Convert.ToInt32(sumR), Convert.ToInt32(sumG), Convert.ToInt32(sumB)));
                     sumR = 0;
                     sumG = 0;

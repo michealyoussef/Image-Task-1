@@ -28,11 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series10 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series11 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series12 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.button5 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
@@ -54,8 +54,11 @@
             this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.operationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.adjustmentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.grayscaleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.nOTToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.with255ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.withInputToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aDDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.subtractionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.quanToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -73,17 +76,8 @@
             this.meanFilter2DToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gaussianoption1ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gaussianOption2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.label6 = new System.Windows.Forms.Label();
-            this.trackBar1 = new System.Windows.Forms.TrackBar();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
-            this.label7 = new System.Windows.Forms.Label();
-            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
-            this.trackBar2 = new System.Windows.Forms.TrackBar();
-            this.label9 = new System.Windows.Forms.Label();
-            this.trackBar3 = new System.Windows.Forms.TrackBar();
             this.label10 = new System.Windows.Forms.Label();
             this.textBox6 = new System.Windows.Forms.TextBox();
-            this.numericUpDown3 = new System.Windows.Forms.NumericUpDown();
             this.label8 = new System.Windows.Forms.Label();
             this.textBox7 = new System.Windows.Forms.TextBox();
             this.button3 = new System.Windows.Forms.Button();
@@ -92,17 +86,9 @@
             this.ch3 = new System.Windows.Forms.CheckBox();
             this.ch1 = new System.Windows.Forms.CheckBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.calculationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
-            this.tabControl1.SuspendLayout();
             this.SuspendLayout();
             // 
             // button5
@@ -247,7 +233,7 @@
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
             this.openToolStripMenuItem.Text = "Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
@@ -268,7 +254,7 @@
             // 
             this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
             this.closeToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
-            this.closeToolStripMenuItem.Text = "Close";
+            this.closeToolStripMenuItem.Text = "Exit";
             this.closeToolStripMenuItem.Click += new System.EventHandler(this.closeToolStripMenuItem_Click);
             // 
             // menuStrip1
@@ -288,16 +274,25 @@
             this.operationToolStripMenuItem.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.operationToolStripMenuItem.AutoSize = false;
             this.operationToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.adjustmentToolStripMenuItem,
             this.grayscaleToolStripMenuItem,
             this.nOTToolStripMenuItem,
             this.aDDToolStripMenuItem,
             this.subtractionToolStripMenuItem,
             this.quanToolStripMenuItem,
-            this.filppingToolStripMenuItem});
+            this.filppingToolStripMenuItem,
+            this.calculationToolStripMenuItem});
             this.operationToolStripMenuItem.Name = "operationToolStripMenuItem";
             this.operationToolStripMenuItem.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.operationToolStripMenuItem.Size = new System.Drawing.Size(94, 20);
             this.operationToolStripMenuItem.Text = "Operations";
+            // 
+            // adjustmentToolStripMenuItem
+            // 
+            this.adjustmentToolStripMenuItem.Name = "adjustmentToolStripMenuItem";
+            this.adjustmentToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.adjustmentToolStripMenuItem.Text = "Adjustment";
+            this.adjustmentToolStripMenuItem.Click += new System.EventHandler(this.adjustmentToolStripMenuItem_Click);
             // 
             // grayscaleToolStripMenuItem
             // 
@@ -311,29 +306,46 @@
             // nOTToolStripMenuItem
             // 
             this.nOTToolStripMenuItem.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.nOTToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.with255ToolStripMenuItem,
+            this.withInputToolStripMenuItem});
             this.nOTToolStripMenuItem.Name = "nOTToolStripMenuItem";
-            this.nOTToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.nOTToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.nOTToolStripMenuItem.Text = "NOT ";
             this.nOTToolStripMenuItem.Click += new System.EventHandler(this.nOTToolStripMenuItem_Click);
+            // 
+            // with255ToolStripMenuItem
+            // 
+            this.with255ToolStripMenuItem.Name = "with255ToolStripMenuItem";
+            this.with255ToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
+            this.with255ToolStripMenuItem.Text = "with 255";
+            this.with255ToolStripMenuItem.Click += new System.EventHandler(this.with255ToolStripMenuItem_Click);
+            // 
+            // withInputToolStripMenuItem
+            // 
+            this.withInputToolStripMenuItem.Name = "withInputToolStripMenuItem";
+            this.withInputToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
+            this.withInputToolStripMenuItem.Text = "with input";
+            this.withInputToolStripMenuItem.Click += new System.EventHandler(this.withInputToolStripMenuItem_Click);
             // 
             // aDDToolStripMenuItem
             // 
             this.aDDToolStripMenuItem.Name = "aDDToolStripMenuItem";
-            this.aDDToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.aDDToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.aDDToolStripMenuItem.Text = "Addition";
             this.aDDToolStripMenuItem.Click += new System.EventHandler(this.aDDToolStripMenuItem_Click);
             // 
             // subtractionToolStripMenuItem
             // 
             this.subtractionToolStripMenuItem.Name = "subtractionToolStripMenuItem";
-            this.subtractionToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.subtractionToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.subtractionToolStripMenuItem.Text = "Subtraction";
             this.subtractionToolStripMenuItem.Click += new System.EventHandler(this.subtractionToolStripMenuItem_Click);
             // 
             // quanToolStripMenuItem
             // 
             this.quanToolStripMenuItem.Name = "quanToolStripMenuItem";
-            this.quanToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.quanToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.quanToolStripMenuItem.Text = "Quantization";
             this.quanToolStripMenuItem.Click += new System.EventHandler(this.quanToolStripMenuItem_Click);
             // 
@@ -343,7 +355,7 @@
             this.filpHorizontalToolStripMenuItem1,
             this.filpVerticalToolStripMenuItem1});
             this.filppingToolStripMenuItem.Name = "filppingToolStripMenuItem";
-            this.filppingToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.filppingToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.filppingToolStripMenuItem.Text = "Filpping";
             // 
             // filpHorizontalToolStripMenuItem1
@@ -379,7 +391,7 @@
             this.verticalLineDetectionToolStripMenuItem,
             this.sobelEdgeMagnitudeToolStripMenuItem});
             this.sharpungToolStripMenuItem.Name = "sharpungToolStripMenuItem";
-            this.sharpungToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
+            this.sharpungToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.sharpungToolStripMenuItem.Text = "Sharpening";
             // 
             // laplasinToolStripMenuItem
@@ -418,7 +430,7 @@
             this.gaussianoption1ToolStripMenuItem,
             this.gaussianOption2ToolStripMenuItem});
             this.bluringToolStripMenuItem.Name = "bluringToolStripMenuItem";
-            this.bluringToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
+            this.bluringToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.bluringToolStripMenuItem.Text = "Bluring";
             // 
             // meanFilter1DToolStripMenuItem
@@ -449,116 +461,6 @@
             this.gaussianOption2ToolStripMenuItem.Text = "Gaussian [Option 2]";
             this.gaussianOption2ToolStripMenuItem.Click += new System.EventHandler(this.gaussianOption2ToolStripMenuItem_Click);
             // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(19, 535);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(95, 22);
-            this.label6.TabIndex = 21;
-            this.label6.Text = "Brightness";
-            // 
-            // trackBar1
-            // 
-            this.trackBar1.Location = new System.Drawing.Point(129, 529);
-            this.trackBar1.Maximum = 150;
-            this.trackBar1.Minimum = -150;
-            this.trackBar1.Name = "trackBar1";
-            this.trackBar1.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.trackBar1.Size = new System.Drawing.Size(322, 45);
-            this.trackBar1.SmallChange = 10;
-            this.trackBar1.TabIndex = 23;
-            this.trackBar1.TabStop = false;
-            this.trackBar1.Scroll += new System.EventHandler(this.trackBar1_Scroll);
-            // 
-            // numericUpDown1
-            // 
-            this.numericUpDown1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numericUpDown1.Location = new System.Drawing.Point(504, 536);
-            this.numericUpDown1.Maximum = new decimal(new int[] {
-            150,
-            0,
-            0,
-            0});
-            this.numericUpDown1.Minimum = new decimal(new int[] {
-            150,
-            0,
-            0,
-            -2147483648});
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.numericUpDown1.Size = new System.Drawing.Size(52, 23);
-            this.numericUpDown1.TabIndex = 24;
-            this.numericUpDown1.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(25, 595);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(72, 22);
-            this.label7.TabIndex = 22;
-            this.label7.Text = "Gamma";
-            // 
-            // numericUpDown2
-            // 
-            this.numericUpDown2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numericUpDown2.Location = new System.Drawing.Point(504, 600);
-            this.numericUpDown2.Maximum = new decimal(new int[] {
-            50,
-            0,
-            0,
-            0});
-            this.numericUpDown2.Minimum = new decimal(new int[] {
-            50,
-            0,
-            0,
-            -2147483648});
-            this.numericUpDown2.Name = "numericUpDown2";
-            this.numericUpDown2.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.numericUpDown2.Size = new System.Drawing.Size(52, 23);
-            this.numericUpDown2.TabIndex = 25;
-            this.numericUpDown2.ValueChanged += new System.EventHandler(this.numericUpDown2_ValueChanged);
-            // 
-            // trackBar2
-            // 
-            this.trackBar2.Location = new System.Drawing.Point(129, 598);
-            this.trackBar2.Maximum = 50;
-            this.trackBar2.Minimum = -50;
-            this.trackBar2.Name = "trackBar2";
-            this.trackBar2.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.trackBar2.Size = new System.Drawing.Size(322, 45);
-            this.trackBar2.SmallChange = 10;
-            this.trackBar2.TabIndex = 26;
-            this.trackBar2.TabStop = false;
-            this.trackBar2.Scroll += new System.EventHandler(this.trackBar2_Scroll);
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(19, 657);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(78, 22);
-            this.label9.TabIndex = 31;
-            this.label9.Text = "Contrast";
-            // 
-            // trackBar3
-            // 
-            this.trackBar3.LargeChange = 1;
-            this.trackBar3.Location = new System.Drawing.Point(129, 655);
-            this.trackBar3.Maximum = 20;
-            this.trackBar3.Minimum = -20;
-            this.trackBar3.Name = "trackBar3";
-            this.trackBar3.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.trackBar3.Size = new System.Drawing.Size(322, 45);
-            this.trackBar3.SmallChange = 10;
-            this.trackBar3.TabIndex = 32;
-            this.trackBar3.TabStop = false;
-            this.trackBar3.Scroll += new System.EventHandler(this.trackBar3_Scroll);
-            // 
             // label10
             // 
             this.label10.AutoSize = true;
@@ -575,26 +477,6 @@
             this.textBox6.Name = "textBox6";
             this.textBox6.Size = new System.Drawing.Size(71, 20);
             this.textBox6.TabIndex = 34;
-            // 
-            // numericUpDown3
-            // 
-            this.numericUpDown3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numericUpDown3.Location = new System.Drawing.Point(504, 658);
-            this.numericUpDown3.Maximum = new decimal(new int[] {
-            20,
-            0,
-            0,
-            0});
-            this.numericUpDown3.Minimum = new decimal(new int[] {
-            20,
-            0,
-            0,
-            -2147483648});
-            this.numericUpDown3.Name = "numericUpDown3";
-            this.numericUpDown3.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.numericUpDown3.Size = new System.Drawing.Size(52, 23);
-            this.numericUpDown3.TabIndex = 35;
-            this.numericUpDown3.ValueChanged += new System.EventHandler(this.numericUpDown3_ValueChanged);
             // 
             // label8
             // 
@@ -625,24 +507,24 @@
             // 
             // chart1
             // 
-            chartArea4.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea4);
-            legend4.Name = "Legend1";
-            this.chart1.Legends.Add(legend4);
+            chartArea1.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.chart1.Legends.Add(legend1);
             this.chart1.Location = new System.Drawing.Point(740, 443);
             this.chart1.Name = "chart1";
-            series10.ChartArea = "ChartArea1";
-            series10.Legend = "Legend1";
-            series10.Name = "Red";
-            series11.ChartArea = "ChartArea1";
-            series11.Legend = "Legend1";
-            series11.Name = "Green";
-            series12.ChartArea = "ChartArea1";
-            series12.Legend = "Legend1";
-            series12.Name = "Blue";
-            this.chart1.Series.Add(series10);
-            this.chart1.Series.Add(series11);
-            this.chart1.Series.Add(series12);
+            series1.ChartArea = "ChartArea1";
+            series1.Legend = "Legend1";
+            series1.Name = "Red";
+            series2.ChartArea = "ChartArea1";
+            series2.Legend = "Legend1";
+            series2.Name = "Green";
+            series3.ChartArea = "ChartArea1";
+            series3.Legend = "Legend1";
+            series3.Name = "Blue";
+            this.chart1.Series.Add(series1);
+            this.chart1.Series.Add(series2);
+            this.chart1.Series.Add(series3);
             this.chart1.Size = new System.Drawing.Size(610, 272);
             this.chart1.TabIndex = 45;
             this.chart1.Text = "chart1";
@@ -679,34 +561,19 @@
             // 
             // tabControl1
             // 
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Appearance = System.Windows.Forms.TabAppearance.FlatButtons;
             this.tabControl1.Location = new System.Drawing.Point(0, 27);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(588, 462);
             this.tabControl1.TabIndex = 52;
             // 
-            // tabPage1
+            // calculationToolStripMenuItem
             // 
-            this.tabPage1.AutoScroll = true;
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(580, 436);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "tabPage1";
-            this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // tabPage2
-            // 
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(192, 74);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "tabPage2";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.calculationToolStripMenuItem.Name = "calculationToolStripMenuItem";
+            this.calculationToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.calculationToolStripMenuItem.Text = "Calculation";
+            this.calculationToolStripMenuItem.Click += new System.EventHandler(this.calculationToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -720,17 +587,8 @@
             this.Controls.Add(this.button3);
             this.Controls.Add(this.textBox7);
             this.Controls.Add(this.label8);
-            this.Controls.Add(this.numericUpDown3);
             this.Controls.Add(this.textBox6);
             this.Controls.Add(this.label10);
-            this.Controls.Add(this.trackBar3);
-            this.Controls.Add(this.label9);
-            this.Controls.Add(this.trackBar2);
-            this.Controls.Add(this.numericUpDown2);
-            this.Controls.Add(this.numericUpDown1);
-            this.Controls.Add(this.trackBar1);
-            this.Controls.Add(this.label7);
-            this.Controls.Add(this.label6);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.textBox4);
@@ -757,14 +615,7 @@
             this.Load += new System.EventHandler(this.Form1_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
-            this.tabControl1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -792,19 +643,10 @@
         private System.Windows.Forms.ToolStripMenuItem operationToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem grayscaleToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem nOTToolStripMenuItem;
-        private System.Windows.Forms.Label label6;
-        public System.Windows.Forms.TrackBar trackBar1;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.NumericUpDown numericUpDown2;
-        public System.Windows.Forms.TrackBar trackBar2;
         private System.Windows.Forms.ToolStripMenuItem aDDToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem subtractionToolStripMenuItem;
-        private System.Windows.Forms.Label label9;
-        public System.Windows.Forms.TrackBar trackBar3;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TextBox textBox6;
-        private System.Windows.Forms.NumericUpDown numericUpDown3;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox textBox7;
         private System.Windows.Forms.Button button3;
@@ -829,9 +671,11 @@
         private System.Windows.Forms.ToolStripMenuItem filppingToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem filpHorizontalToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem filpVerticalToolStripMenuItem1;
-        private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.ToolStripMenuItem with255ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem withInputToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem adjustmentToolStripMenuItem;
+        public System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.ToolStripMenuItem calculationToolStripMenuItem;
     }
 }
 

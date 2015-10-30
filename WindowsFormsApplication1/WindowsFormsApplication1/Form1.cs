@@ -15,7 +15,7 @@ namespace WindowsFormsApplication1
 {
     public partial class Form1 : Form
     {
-        ImageController[] image = new ImageController[15];
+       public ImageController[] image = new ImageController[15];
         TabPage[] tabpag = new TabPage[15];
         Histogramdrawing his;
         bufferedLockBitmap bf;
@@ -26,7 +26,6 @@ namespace WindowsFormsApplication1
         public Form1()
         {
             InitializeComponent();
-
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -41,7 +40,7 @@ namespace WindowsFormsApplication1
         {
             if (string.IsNullOrEmpty(textBox1.Text) == false && string.IsNullOrEmpty(textBox2.Text) == false)
             {
-               // pictureBox1.Image = image[tabControl1.SelectedIndex].Scale(int.Parse(textBox1.Text.ToString()), int.Parse(textBox2.Text.ToString()));
+                // pictureBox1.Image = image[tabControl1.SelectedIndex].Scale(int.Parse(textBox1.Text.ToString()), int.Parse(textBox2.Text.ToString()));
             }
             else
             {
@@ -54,7 +53,7 @@ namespace WindowsFormsApplication1
             if (string.IsNullOrEmpty(textBox3.Text) == false)
             {
 
-              //  image[tabControl1.SelectedIndex].all(float.Parse(textBox1.Text), float.Parse(textBox2.Text), float.Parse(textBox3.Text), float.Parse(textBox4.Text), float.Parse(textBox5.Text), pictureBox1.CreateGraphics());
+                //  image[tabControl1.SelectedIndex].all(float.Parse(textBox1.Text), float.Parse(textBox2.Text), float.Parse(textBox3.Text), float.Parse(textBox4.Text), float.Parse(textBox5.Text), pictureBox1.CreateGraphics());
             }
             else
             {
@@ -102,59 +101,57 @@ namespace WindowsFormsApplication1
 
         private void grayscaleToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            picbox = (PictureBox)tabControl1.TabPages[tabControl1.SelectedIndex].Controls[0];
-            picbox.Image = image[tabControl1.SelectedIndex].Grayscale();
+            if (tabControl1.TabCount > 0 && image[tabControl1.SelectedIndex] != null)
+            {
+                picbox = (PictureBox)tabControl1.TabPages[tabControl1.SelectedIndex].Controls[0];
+                picbox.Image = image[tabControl1.SelectedIndex].Grayscale();
+            }
         }
 
         private void nOTToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            picbox = (PictureBox)tabControl1.TabPages[tabControl1.SelectedIndex].Controls[0];
-            picbox.Image = image[tabControl1.SelectedIndex].NOT();
+
         }
 
         private void trackBar1_Scroll(object sender, EventArgs e)
         {
-            numericUpDown1.Value = (trackBar1.Value);
-            dif = trackBar1.Value - win.brigth;
-            win.brigth = trackBar1.Value;
+
             bf = image[tabControl1.SelectedIndex].Brightness(dif);
             his = new Histogramdrawing();
             his.drawing(bf, chart1);
             picbox = (PictureBox)tabControl1.TabPages[tabControl1.SelectedIndex].Controls[0];
-            picbox.Image = bf.source2;
+            picbox.Image = bf.source;
         }
 
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
         {
-            trackBar1.Value = decimal.ToInt32(numericUpDown1.Value);
-            dif = trackBar1.Value - win.brigth;
-            win.brigth = trackBar1.Value;
+
             bf = image[tabControl1.SelectedIndex].Brightness(dif);
             his = new Histogramdrawing();
             his.drawing(bf, chart1);
             picbox = (PictureBox)tabControl1.TabPages[tabControl1.SelectedIndex].Controls[0];
-            picbox.Image = bf.source2;
+            picbox.Image = bf.source;
         }
 
         private void numericUpDown2_ValueChanged(object sender, EventArgs e)
         {
-            trackBar2.Value = Convert.ToInt32(numericUpDown2.Value);
-            dif = trackBar2.Value - win.gamma;
-            win.gamma = trackBar2.Value;
-            picbox = (PictureBox)tabControl1.TabPages[tabControl1.SelectedIndex].Controls[0];
-            picbox.Image = image[tabControl1.SelectedIndex].Gamma(dif).source2;
-        }
 
-        private void trackBar2_Scroll(object sender, EventArgs e)
-        {
-            numericUpDown2.Value = trackBar2.Value;
-            dif = trackBar2.Value - win.gamma;
-            win.gamma = trackBar2.Value;
+            picbox = (PictureBox)tabControl1.TabPages[tabControl1.SelectedIndex].Controls[0];
             bf = image[tabControl1.SelectedIndex].Gamma(dif);
             his = new Histogramdrawing();
             his.drawing(bf, chart1);
             picbox = (PictureBox)tabControl1.TabPages[tabControl1.SelectedIndex].Controls[0];
-            picbox.Image = image[tabControl1.SelectedIndex].Gamma(dif).source2;
+            picbox.Image = bf.source;
+        }
+
+        private void trackBar2_Scroll(object sender, EventArgs e)
+        {
+
+            bf = image[tabControl1.SelectedIndex].Gamma(dif);
+            his = new Histogramdrawing();
+            his.drawing(bf, chart1);
+            picbox = (PictureBox)tabControl1.TabPages[tabControl1.SelectedIndex].Controls[0];
+            picbox.Image = image[tabControl1.SelectedIndex].Gamma(dif).source;
 
         }
 
@@ -162,24 +159,6 @@ namespace WindowsFormsApplication1
         {
             picbox = (PictureBox)tabControl1.TabPages[tabControl1.SelectedIndex].Controls[0];
             picbox.Image = image[tabControl1.SelectedIndex].Flipping();
-        }
-
-
-        private void image1ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void image2ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            //OpenFileDialog ofd = new OpenFileDialog();
-            //if (ofd.ShowDialog() == DialogResult.OK && !string.IsNullOrEmpty(ofd.FileName))
-            //{
-            //    pictureBox2.Image = im2.Read(ofd.FileName);
-            //    im2.ImageLockBitmap.UnlockBits();
-            //    pictureBox2.Size = im2.ImageBitmap.Size;
-            //}
-
         }
 
         private void subtractionToolStripMenuItem_Click(object sender, EventArgs e)
@@ -202,27 +181,7 @@ namespace WindowsFormsApplication1
             //f.draw(x);
         }
 
-        private void trackBar3_Scroll(object sender, EventArgs e)
-        {
-            numericUpDown3.Value = trackBar3.Value;
-            bf = image[tabControl1.SelectedIndex].cont(-trackBar3.Value, trackBar3.Value);
 
-            picbox = (PictureBox)tabControl1.TabPages[tabControl1.SelectedIndex].Controls[0];
-            picbox.Image = bf.source2;
-            his = new Histogramdrawing();
-            his.drawing(bf, chart1);
-        }
-
-        private void numericUpDown3_ValueChanged(object sender, EventArgs e)
-        {
-            trackBar3.Value = decimal.ToInt32(numericUpDown3.Value);
-            bf = image[tabControl1.SelectedIndex].cont(-trackBar3.Value, trackBar3.Value);
-            his.zeros();
-            picbox = (PictureBox)tabControl1.TabPages[tabControl1.SelectedIndex].Controls[0];
-            picbox.Image = bf.source2;
-            his = new Histogramdrawing();
-            his.drawing(bf, chart1);
-        }
 
         private void button3_Click(object sender, EventArgs e)
         {
@@ -242,20 +201,25 @@ namespace WindowsFormsApplication1
         {
             Benchmark.Start();
             picbox = (PictureBox)tabControl1.TabPages[tabControl1.SelectedIndex].Controls[0];
-            picbox.Image = image[tabControl1.SelectedIndex].laplacian().source2;
+            picbox.Image = image[tabControl1.SelectedIndex].laplacian();
             Benchmark.End();
             textBox1.Text = Benchmark.GetSeconds().ToString();
         }
 
         private void meanFilter1DToolStripMenuItem_Click(object sender, EventArgs e)
         {
+
             Form2 inp = new Form2();
             inp.label1.Text = "Mask Size  ";
-            inp.ShowDialog();
+            inp.MdiParent = this;
+            inp.Show();
             Benchmark.Start();
-            picbox = (PictureBox)tabControl1.TabPages[tabControl1.SelectedIndex].Controls[0];
-            picbox.Image = image[tabControl1.SelectedIndex].mean1D(Convert.ToInt32(inp.textBox1.Text)).source2;
-            Benchmark.End();
+            if (!string.IsNullOrEmpty(inp.textBox1.Text))
+            {
+                picbox = (PictureBox)tabControl1.TabPages[tabControl1.SelectedIndex].Controls[0];
+                picbox.Image = image[tabControl1.SelectedIndex].mean1D(Convert.ToInt32(inp.textBox1.Text)).source;
+                Benchmark.End();
+            }
             textBox1.Text = "";
             textBox1.Text = Benchmark.GetSeconds().ToString();
         }
@@ -266,7 +230,7 @@ namespace WindowsFormsApplication1
             inp.ShowDialog();
             Benchmark.Start();
             picbox = (PictureBox)tabControl1.TabPages[tabControl1.SelectedIndex].Controls[0];
-            picbox.Image = image[tabControl1.SelectedIndex].meanfilter(Convert.ToInt32(inp.width), Convert.ToInt32(inp.heigth), Convert.ToInt32(inp.x), Convert.ToInt32(inp.y)).source2;
+            picbox.Image = image[tabControl1.SelectedIndex].meanfilter(Convert.ToInt32(inp.width), Convert.ToInt32(inp.heigth), Convert.ToInt32(inp.x), Convert.ToInt32(inp.y)).source;
             Benchmark.End();
             textBox1.Text = Benchmark.GetSeconds().ToString();
         }
@@ -275,7 +239,7 @@ namespace WindowsFormsApplication1
         {
             Benchmark.Start();
             picbox = (PictureBox)tabControl1.TabPages[tabControl1.SelectedIndex].Controls[0];
-            picbox.Image= image[tabControl1.SelectedIndex].line_detectionh().source2;
+            picbox.Image = image[tabControl1.SelectedIndex].line_detectionh().source;
             Benchmark.End();
             textBox1.Text = Benchmark.GetSeconds().ToString();
         }
@@ -284,7 +248,7 @@ namespace WindowsFormsApplication1
         {
             Benchmark.Start();
             picbox = (PictureBox)tabControl1.TabPages[tabControl1.SelectedIndex].Controls[0];
-            picbox.Image = image[tabControl1.SelectedIndex].line_detectionv().source2;
+            picbox.Image = image[tabControl1.SelectedIndex].line_detectionv().source;
             Benchmark.End();
             textBox1.Text = Benchmark.GetSeconds().ToString();
         }
@@ -293,7 +257,7 @@ namespace WindowsFormsApplication1
         {
             Benchmark.Start();
             picbox = (PictureBox)tabControl1.TabPages[tabControl1.SelectedIndex].Controls[0];
-            picbox.Image = image[tabControl1.SelectedIndex].EdgeMagnitude().source2;
+            picbox.Image = image[tabControl1.SelectedIndex].EdgeMagnitude().source;
             Benchmark.End();
             textBox1.Text = Benchmark.GetSeconds().ToString();
         }
@@ -315,7 +279,7 @@ namespace WindowsFormsApplication1
             inp.ShowDialog();
             Benchmark.Start();
             picbox = (PictureBox)tabControl1.TabPages[tabControl1.SelectedIndex].Controls[0];
-            picbox.Image  = image[tabControl1.SelectedIndex].Gus1(Convert.ToInt32(inp.heigth), inp.width).source2;
+            picbox.Image = image[tabControl1.SelectedIndex].Gus1(Convert.ToInt32(inp.heigth), inp.width).source;
             Benchmark.End();
             textBox1.Text = Benchmark.GetSeconds().ToString();
         }
@@ -326,13 +290,13 @@ namespace WindowsFormsApplication1
             fm2.label1.Text = "Mask Size  ";
             fm2.ShowDialog();
             picbox = (PictureBox)tabControl1.TabPages[tabControl1.SelectedIndex].Controls[0];
-            picbox.Image = image[tabControl1.SelectedIndex].Gus2(Convert.ToDouble(fm2.textBox1.Text)).source2;
+            picbox.Image = image[tabControl1.SelectedIndex].Gus2(Convert.ToDouble(fm2.textBox1.Text)).source;
         }
 
 
         private void closeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Application.Exit();
         }
 
         private void quanToolStripMenuItem_Click(object sender, EventArgs e)
@@ -360,13 +324,7 @@ namespace WindowsFormsApplication1
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            trackBar1.Value = 0;
-            trackBar2.Value = 0;
-            trackBar3.Value = 0;
-            numericUpDown1.Value = 0;
-            numericUpDown2.Value = 0;
-            numericUpDown3.Value = 0;
-            win.rest();
+
             OpenFileDialog ofd = new OpenFileDialog();
             image[counter] = new ImageController();
 
@@ -380,18 +338,60 @@ namespace WindowsFormsApplication1
                 this.textBox1.Text = Benchmark.GetSeconds().ToString();
                 tabpag[counter] = new TabPage();
                 PictureBox p = new PictureBox();
-                p.Size = new Size(580, 436);
-                p.SizeMode = PictureBoxSizeMode.StretchImage;
-                p.Image = (image[counter].ImageLockBitmap.source2);
+                p.Size = new Size(350, 350);
+                p.SizeMode = PictureBoxSizeMode.Zoom;
+
+                p.Image = (image[counter].ImageLockBitmap.source);
                 tabpag[counter].Controls.Add(p);
-                tabpag[counter].Text = image[counter].P3file.namefile;
+                tabpag[counter].Text = image[counter].PP36File.namefile;
                 tabControl1.TabPages.Add(tabpag[counter]);
+                his = new Histogramdrawing();
+                his.drawing(image[counter].ImageLockBitmap, chart1);
+                tabControl1.SelectedIndex = counter;
+                counter++;
             }
-            his = new Histogramdrawing();
-            his.drawing(image[counter].ImageLockBitmap, chart1);
-            tabControl1.SelectedIndex = counter;
-            counter++;
-            
+
+
+        }
+
+        private void with255ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (tabControl1.TabCount > 0 && image[tabControl1.SelectedIndex] != null)
+
+            {
+                picbox = (PictureBox)tabControl1.TabPages[tabControl1.SelectedIndex].Controls[0];
+                picbox.Image = image[tabControl1.SelectedIndex].NOT(255);
+            }
+        }
+
+        private void withInputToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (tabControl1.TabCount > 0 && image[tabControl1.SelectedIndex] != null)
+            {
+                Form2 inp = new Form2();
+                inp.label1.Text = "Mask Size  ";
+                inp.ShowDialog();
+                picbox.Image = image[tabControl1.SelectedIndex].NOT(Convert.ToInt32(inp.textBox1.Text));
+            }
+        }
+
+        private void adjustmentToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Adjustment ad = new Adjustment();
+            ad.setbt(image[tabControl1.SelectedIndex].ImageLockBitmap.source);
+            ad.MdiParent =this;
+            ad.Show();
+            picbox = (PictureBox)tabControl1.TabPages[tabControl1.SelectedIndex].Controls[0];
+            picbox.Image =ad.getbt();
+        }
+
+        private void calculationToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Calc c = new Calc();
+            c.getarrayimages(image,counter);
+            c.Show();
+            picbox = (PictureBox)tabControl1.TabPages[tabControl1.SelectedIndex].Controls[0];
+            //picbox.Image = c.getbt();
         }
     }
 }

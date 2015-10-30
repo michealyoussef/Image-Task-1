@@ -10,10 +10,10 @@ using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
 namespace WindowsFormsApplication1
 {
-    class bufferedLockBitmap
+    public class bufferedLockBitmap
     {
-        public Bitmap source = null;
-        public Bitmap source2 = null;
+         public Bitmap source = null;
+        Bitmap source2 = null;
 
         IntPtr Iptr = IntPtr.Zero;
         BitmapData bitmapData = null;
@@ -40,13 +40,13 @@ namespace WindowsFormsApplication1
                 Height = source.Height;
                 int PixelCount = Width * Height;
                 Rectangle rect = new Rectangle(0, 0, Width, Height);
-                Rectangle rect2 = new Rectangle(0, 0, Width, Height);
+              //  Rectangle rect2 = new Rectangle(0, 0, Width, Height);
                 Depth = System.Drawing.Bitmap.GetPixelFormatSize(source.PixelFormat);
                 if (Depth != 8 && Depth != 24 && Depth != 32)
                 {
                     throw new ArgumentException("Only 8 , 24 , 32 bpp images are supported. ");
                 }
-                bitmapData2 = source2.LockBits(rect2, ImageLockMode.ReadWrite, source.PixelFormat);
+              //  bitmapData2 = source2.LockBits(rect2, ImageLockMode.ReadWrite, source.PixelFormat);
                 bitmapData = source.LockBits(rect, ImageLockMode.ReadWrite, source.PixelFormat);               
                 int step = Depth / 8;
                 pixels = new byte[PixelCount * step];
@@ -63,10 +63,11 @@ namespace WindowsFormsApplication1
         {
             try
             {
-                source.UnlockBits(bitmapData);
-                Iptr = bitmapData2.Scan0;
+               
+               // Iptr = bitmapData2.Scan0;
                 Marshal.Copy(pixels,0,Iptr,pixels.Length);
-                source2.UnlockBits(bitmapData2);
+                source.UnlockBits(bitmapData);
+               // source2.UnlockBits(bitmapData2);
                 
             }
             catch (Exception ex)

@@ -29,7 +29,8 @@ namespace WindowsFormsApplication1
                             else if (i + maskh - y < 0)
                                 continue;
                             else
-                            {
+                            { 
+                         
                                 sumR += (double)input.Getpixel(j + maskw - x, i + maskh - y).R * mask[maskh, maskw];
                                 sumG += (double)input.Getpixel(j + maskw - x, i + maskh - y).G * mask[maskh, maskw];
                                 sumB += (double)input.Getpixel(j + maskw - x, i + maskh - y).B * mask[maskh, maskw];
@@ -51,6 +52,13 @@ namespace WindowsFormsApplication1
                         sumB = Math.Abs(sumB);
                         sumR = Math.Abs(sumR);
                         sumG = Math.Abs(sumG);
+
+                        if (sumR > 255) sumR = 255;
+                        else if (sumR < 0) sumR = 0;
+                        if (sumG > 255) sumG = 255;
+                        else if (sumG < 0) sumG = 0;
+                        if (sumB > 255) sumB = 255;
+                        else if (sumB < 0) sumB = 0;
                     }
                     bt.SetPixel(j, i, Color.FromArgb(Convert.ToInt32(sumR), Convert.ToInt32(sumG), Convert.ToInt32(sumB)));
                     sumR = 0;

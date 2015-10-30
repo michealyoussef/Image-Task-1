@@ -61,8 +61,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Adjustment.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Adjustment.Designer.cs">
+      <DependentUpon>Adjustment.cs</DependentUpon>
+    </Compile>
     <Compile Include="Benchmark.cs" />
     <Compile Include="BilinearInterpolation.cs" />
+    <Compile Include="Calc.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Calc.Designer.cs">
+      <DependentUpon>Calc.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form2.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -117,6 +129,12 @@
     <Compile Include="Universal_Image_File_Handler.cs" />
     <Compile Include="WindowState.cs" />
     <Compile Include="WindowStatesStack.cs" />
+    <EmbeddedResource Include="Adjustment.resx">
+      <DependentUpon>Adjustment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Calc.resx">
+      <DependentUpon>Calc.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
