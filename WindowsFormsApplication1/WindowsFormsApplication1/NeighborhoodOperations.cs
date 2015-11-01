@@ -6,9 +6,9 @@ namespace WindowsFormsApplication1
     class NeighborhoodOperations
     {
 
-        public bufferedLockBitmap LinearFilter( bufferedLockBitmap input, double[,] mask, int w, int h, int x, int y, String word)
+        public bufferedLockBitmap LinearFilter(bufferedLockBitmap input, double[,] mask, int w, int h, int x, int y, String word)
         {
-            Bitmap temp = new Bitmap(input.Width,input.Height);
+            Bitmap temp = new Bitmap(input.Width, input.Height);
             bufferedLockBitmap bt = new bufferedLockBitmap(temp);
             bt.LockBits();
             double sumR = 0, sumG = 0, sumB = 0;
@@ -29,8 +29,7 @@ namespace WindowsFormsApplication1
                             else if (i + maskh - y < 0)
                                 continue;
                             else
-                            { 
-                         
+                            {
                                 sumR += (double)input.Getpixel(j + maskw - x, i + maskh - y).R * mask[maskh, maskw];
                                 sumG += (double)input.Getpixel(j + maskw - x, i + maskh - y).G * mask[maskh, maskw];
                                 sumB += (double)input.Getpixel(j + maskw - x, i + maskh - y).B * mask[maskh, maskw];
@@ -52,7 +51,6 @@ namespace WindowsFormsApplication1
                         sumB = Math.Abs(sumB);
                         sumR = Math.Abs(sumR);
                         sumG = Math.Abs(sumG);
-
                         if (sumR > 255) sumR = 255;
                         else if (sumR < 0) sumR = 0;
                         if (sumG > 255) sumG = 255;

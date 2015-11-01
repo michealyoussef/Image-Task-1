@@ -12,12 +12,18 @@ namespace WindowsFormsApplication1
     public partial class Calc : Form
     {
         ImageController[] image;
+        public bufferedLockBitmap returned_image;
+
         public Calc()
         {
             InitializeComponent();
-            comboBox3.Items.Add("Addition");
-            comboBox3.Items.Add("Subtraction");
+            comboBox3.DisplayMember = "Text";
+            comboBox3.ValueMember = "Value";
 
+            var items = new[] {
+                    new { Text = "", Value = "" },
+    new { Text = "Addition", Value = "A" }, new { Text = "Subtraction", Value = "S" }, };
+            comboBox3.DataSource = items;
 
         }
         public void getarrayimages(ImageController[] source, int count)
@@ -47,9 +53,20 @@ namespace WindowsFormsApplication1
 
         private void comboBox3_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (comboBox3.Text == "Subtraction")
+            if (comboBox3.SelectedValue == (object)"S")
             {
-                pictureBox3.Image = image[comboBox1.SelectedIndex].subtraction(image[comboBox2.SelectedIndex].ImageLockBitmap);
+                returned_image = new bufferedLockBitmap(image[comboBox1.SelectedIndex].subtraction(image[comboBox2.SelectedIndex].ImageLockBitmap));
+                pictureBox3.Image = returned_image.source;
+            }
+            else if (comboBox3.SelectedValue == (object)"A")
+            {
+                if (!string.IsNullOrEmpty(textBox1.Text))
+                {
+                    returned_image = new bufferedLockBitmap(image[comboBox1.SelectedIndex].addtion(image[comboBox2.SelectedIndex].ImageLockBitmap, Convert.ToDouble(textBox1.Text)));
+                    pictureBox3.Image = returned_image.source;
+                }
+                else
+                    MessageBox.Show("please Enter Addition Fraction");
             }
         }
     }

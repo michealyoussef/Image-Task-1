@@ -58,15 +58,16 @@ namespace WindowsFormsApplication1
         }
         public double[,] line_detect_Horizontal()
         {
-            mask = new double[,] { { 1, 2, 1 }, { 0, 0, 0 }, { -1, -2, -1 } };
+            mask = new double[,] { { 1, 2, 1 }, 
+                                  { 0, 0, 0 }, 
+                               { -1, -2, -1 } };
             return mask;
         }
         public double[,] line_detect_vertical()
         {
-            mask = new double[3, 3];
-            mask[0, 0] = -1; mask[0, 1] = 0; mask[0, 2] = 1;
-            mask[1, 0] = -2; mask[1, 1] = 0; mask[1, 2] = 2;
-            mask[2, 0] = 1; mask[2, 1] = 0; mask[2, 2] = 1;
+            mask = new double[,] { { -1, 0, 1 },
+                                { -2, 0, 2 }, 
+                               { -1, 0, 1 } };
             return mask;
         }
     }

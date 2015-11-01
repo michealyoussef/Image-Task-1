@@ -4,7 +4,7 @@ using TestMatrixTransformations;
 
 namespace WindowsFormsApplication1
 {
-   public class ImageController
+    public class ImageController
     {
         public Bitmap ImageBitmap = new Bitmap(1000, 800);
         public int ImageWidth;
@@ -31,7 +31,6 @@ namespace WindowsFormsApplication1
             }
             else
             {
-
                 PP36File = new PP36FileReading();
                 PP36File.readbitmap(path);
                 ImageBitmap = PP36File.ImageBitmap;
@@ -47,7 +46,7 @@ namespace WindowsFormsApplication1
         }
         public void savingpicture(String writen_path)
         {
-            
+
             PP36File.ImageBitmap = ImageLockBitmap.source;
             PP36File.saving(this.ImageLockBitmap.source, writen_path);
         }
@@ -93,10 +92,10 @@ namespace WindowsFormsApplication1
             this.ImageLockBitmap = op.Gamma(this.ImageLockBitmap, dif);
             return this.ImageLockBitmap;
         }
-        public Bitmap Flipping()
+        public bufferedLockBitmap Flipping()
         {
             this.ImageLockBitmap = op.FlippingHorizontal(this.ImageLockBitmap);
-            return this.ImageLockBitmap.source;
+            return this.ImageLockBitmap;
         }
         public Bitmap Flippingvertical()
         {
@@ -111,17 +110,18 @@ namespace WindowsFormsApplication1
         {
             return op.Addpictures(input1, this.ImageLockBitmap, diff);
         }
-        public Bitmap Bit_plane_slicing(int x, bool R, bool G, bool B)
+        public bufferedLockBitmap Bit_plane_slicing(int x, bool R, bool G, bool B)
         {
-            return op.Bit_plane(this.ImageLockBitmap, x, R, G, B);
+            this.ImageLockBitmap = op.Bit_plane(this.ImageLockBitmap, x, R, G, B);
+            return this.ImageLockBitmap;
         }
         public bufferedLockBitmap cont(int x, int y)
         {
             return op.contrast(this.ImageLockBitmap, x, y);
         }
-        public Bitmap Quantization(int x)
+        public void Quantization(int x)
         {
-            return op.Quantization(this.ImageLockBitmap, x);
+            op.Quantization(this.ImageLockBitmap, x);
         }
         public bufferedLockBitmap meanfilter(int w, int h, int x, int y)
         {
@@ -135,7 +135,6 @@ namespace WindowsFormsApplication1
         }
         public bufferedLockBitmap Gus2(double s)
         {
-
             int N = Convert.ToInt32(3.7 * s - 0.5);
             int masksize = 2 * N + 1;
             NO.LinearFilter(this.ImageLockBitmap, gn.Gaussian_Filter_Option2(s), masksize, masksize, masksize / 2, masksize / 2, "NO");
@@ -148,15 +147,15 @@ namespace WindowsFormsApplication1
             return this.ImageLockBitmap;
         }
         public Bitmap laplacian()
-        {    
+        {
             this.ImageLockBitmap = NO.LinearFilter(this.ImageLockBitmap, gn.lap(), 3, 3, 0, 0, "cutoff");
-        
+
             return this.ImageLockBitmap.source;
         }
         public bufferedLockBitmap line_detectionh()
         {
-            this.ImageLockBitmap = NO.LinearFilter(this.ImageLockBitmap, gn.line_detect_Horizontal(), 3, 3, 1 ,1, "abs");
-            
+            this.ImageLockBitmap = NO.LinearFilter(this.ImageLockBitmap, gn.line_detect_Horizontal(), 3, 3, 1, 1, "abs");
+
             return this.ImageLockBitmap;
         }
 
